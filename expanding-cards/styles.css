@@ -1,7 +1,7 @@
 
 * {
     box-sizing: border-box;
-    border: 1px solid plum;
+    /* border: 1px solid plum; */
 }
 
 body {
@@ -9,8 +9,56 @@ body {
     display: flex;
     justify-content: center;
     align-self: center;
-    flex-direction: column;
     height: 100vh;
     overflow: hidden;
     margin: 0;
+}
+
+.container {
+    display: flex;
+    width: 90vw;
+    justify-content: center;
+    align-items: center;
+    gap: 2%; 
+}
+
+.panel {
+    position: relative;
+    height: 80vh;
+    border-radius: 10px;
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    cursor: pointer;
+    flex: 1;
+    position: relative;
+    transform: flex 0.7s ease-in;
+}
+
+.panel h3 {
+    font-size: 23px;
+    position: absolute;
+    left: 25px;
+    bottom: 25px;
+    margin: 0;
+    opacity: 0;
+}
+
+.panel.active {
+    flex: 5;
+}
+
+.panel.active h3 {
+    opacity: 1;
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100vw;
+    }
+
+    .panel:nth-of-type(5) {
+        display: none;
+    }
 }
