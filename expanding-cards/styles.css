@@ -34,6 +34,9 @@ body {
     flex: 1;
     position: relative;
     transform: flex 0.7s ease-in;
+    /* animation-name: fade; */
+    /* animation-duration: 2s; */
+    transition: 1s;
 }
 
 .panel h3 {
@@ -51,6 +54,8 @@ body {
 
 .panel.active h3 {
     opacity: 1;
+    /* first is which property, duration, mode, delay */
+    transition: opacity 0.3s ease-in 0.4s;
 }
 
 @media (max-width: 480px) {
