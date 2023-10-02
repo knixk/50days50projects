@@ -16,7 +16,7 @@ body {
     padding: 50px;
     width: 100vw;
     min-height: 100vh;
-    transition: 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
     transform-origin: top left;
 
 }
@@ -35,6 +35,7 @@ body {
 
 .container.show-nav .circle {
     transform: rotate(-70deg);
+    position: fixed;
 }
 
 .circle-container {
