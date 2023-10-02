@@ -16,12 +16,23 @@ body {
     padding: 50px;
     width: 100vw;
     min-height: 100vh;
+
 }
+
 
 .container.show-nav {
     transform: rotate(-20deg);
     transform-origin: top left;
-    transition: transform 0.5s linear;
+    transition: transform 0.5s ease-in-out;
+}
+
+.container.show-nav + nav li {
+    transform: translateX(0);
+    transition: 0.5s ease-in-out;
+}
+
+.container.show-nav .circle {
+    transform: rotate(-70deg);
 }
 
 .circle-container {
@@ -85,6 +96,19 @@ nav ul li {
     text-transform: uppercase;
     color: #fafafa;
     margin: 50px 0;
+    transform: translateX(-100%);
+    transition: transform 0.5 ease-in;
+
+}
+
+nav ul li + li  {
+    margin-left: 15px;
+    transform: translateX(-150%);
+}
+
+nav ul li + li + li  {
+    margin-left: 30px;
+    transform: translateX(-200%);
 
 }
 
