@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+    /* border: 1px solid plum; */
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    background-color: #efedd6;
+    color: black;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    gap: 20px;
+}
+
+h1 {
+    margin: 10px;
+}
+
+
+.box {
+    background-color: steelblue;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 2px 4px 5px rgb(0, 0, 0, 0.3);
+    transform: translateX(200%);
+    transition: transform 0.5s ease-in-out;
+}
+
+/* allows to set the each even child */
+.box:nth-of-type(even) {
+    transform: translateX(-200%);
+}
+
+.box.show {
+    transform: translateX(0);
+}
+
+.box h2 {
+    font-size: 45px;
+}
