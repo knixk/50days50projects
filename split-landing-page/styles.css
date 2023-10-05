@@ -5,7 +5,7 @@
     --right-btn-hover-color: rgba(28, 122, 28, 1);
     --hover-width: 75%;
     --other-width: 25%;
-    --speed: 1000ms;
+    --speed: 1000ms;    
 }
 
 * {
@@ -124,4 +124,17 @@ h1 {
     width: var(--hover-width);
 }
 
+/* iske andar */
+@media (max-width: 800px) {
+    h1 {
+        font-size: 2rem;
+        top: 30%;
+    }
 
+    .btn {
+        width: 12rem;
+        padding: 1.2rem;
+    }
+
+
+}
