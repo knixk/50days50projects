@@ -1,0 +1,79 @@
+:root {
+    --left-bg-color: rgba(87, 84, 236, 0.7); 
+    --right-bg-color: rgba(43, 43, 43, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    border: 1px solid plum;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+}
+
+h1 {
+    font-size: 4rem;
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20%;
+    white-space: nowrap;
+}
+
+.btn {
+    posi
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;    
+    background-color: #333;
+}
+
+.split {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.split.left {
+    left: 0;
+    background: url('https://images.augustman.com/wp-content/uploads/sites/3/2023/07/05232515/ps5.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.split.left::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--left-bg-color);
+}
+
+.split.right {
+    right: 0;
+    background: url('https://images.hindustantimes.com/tech/img/2023/09/20/960x540/billy-freeman-DPOdCl4bGJU-unsplash_1687420418942_1695190423226.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--right-bg-color);
+
+}
+
+.split.right::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--right-bg-color);
+}
+
