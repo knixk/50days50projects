@@ -12,5 +12,39 @@ body {
     height: 100vh;
     overflow: hidden;
     margin: 0;
+    background-color: slateblue;
+    color: #fff;
+}
+
+.container {
+    background-color: rgb(0, 0, 0, 0.3);
+    padding: 20px 50px;
+}
+
+.container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container a {
+    color: skyblue;
+    text-decoration: none;
+}
+
+.form-control {
+    position: relative;
+    margin: 20px 0 0 40px;
+    width: 300px;
+}
+
+.form-control input {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid #fff;
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    font-size: 18px;
+    color: white;
 }
 
