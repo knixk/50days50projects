@@ -2,13 +2,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 1px solid plum;
+  /* border: 1px solid plum; */
 }
 
 nav {
   height: 50px;
-  background-color: rgb(92, 146, 85);
   color: white;
+  background-color: dodgerblue;
   font-weight: 500;
   font-size: 20px;
   text-align: center;
@@ -17,34 +17,62 @@ nav {
 
 .container {
   display: flex;
-    height: calc(100vh - 60px - 20px);
+  height: calc(100vh - 60px - 40px);
 }
 
 .sidebar {
-    background-color: rgb(83, 83, 166);
-    width: 100px;
+  background-color: cornflowerblue;
+
+  width: 100px;
 }
 
 .main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(169, 190, 126);
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: lightslategray;
+
+  flex: 1;
 }
 
+img {
+  /* width: 100px; */
+}
 
 .box {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 200px;
-    background-color: #fefefe;
-    padding: 10px;
-    border-radius: 10px;
+  display: flex;
+  text-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
+  background-color: lightslategray;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 ul {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  height: 100%;
+}
+
+textarea {
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 15px;
+}
+
+li {
+  padding: 10px;
+  color: white;
+}
+
+footer {
+  text-align: center;
+  padding: 12px;
+  background-color: dodgerblue;
+  color: white;
 }
