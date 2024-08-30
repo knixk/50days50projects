@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 1px solid plum;
+}
+
+nav {
+  height: 50px;
+  background-color: darkblue;
+  color: white;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.container {
+  display: flex;
+}
+
+.sidebar {
+    /* height: calc(100vh - 60px - 20px); */
+    background-color: blue;
+}
+
+.main {
+    background-color: yellowgreen;
+}
