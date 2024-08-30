@@ -7,7 +7,7 @@
 
 nav {
   height: 50px;
-  background-color: darkblue;
+  background-color: rgb(92, 146, 85);
   color: white;
   font-weight: 500;
   font-size: 20px;
@@ -17,13 +17,34 @@ nav {
 
 .container {
   display: flex;
+    height: calc(100vh - 60px - 20px);
 }
 
 .sidebar {
-    /* height: calc(100vh - 60px - 20px); */
-    background-color: blue;
+    background-color: rgb(83, 83, 166);
+    width: 100px;
 }
 
 .main {
-    background-color: yellowgreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(169, 190, 126);
+    flex: 1;
+}
+
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+    background-color: #fefefe;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
 }
