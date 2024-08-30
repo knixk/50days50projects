@@ -2,17 +2,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* border: 1px solid plum; */
+  border: 1px solid plum;
 }
 
 nav {
   height: 50px;
   color: white;
-  background-color: dodgerblue;
   font-weight: 500;
   font-size: 20px;
   text-align: center;
   padding-top: 10px;
+  background-color: #aeaeae;
 }
 
 .container {
@@ -21,9 +21,8 @@ nav {
 }
 
 .sidebar {
-  background-color: cornflowerblue;
-
   width: 100px;
+  background-color: #aeaeae;
 }
 
 .main {
@@ -31,9 +30,8 @@ nav {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: lightslategray;
-
   flex: 1;
+  background-color: #cecece;
 }
 
 img {
@@ -46,9 +44,9 @@ img {
   flex-direction: column;
   justify-content: space-between;
   height: 200px;
-  background-color: lightslategray;
   padding: 10px;
   border-radius: 10px;
+  background-color: rgb(184, 184, 184);
 }
 
 ul {
@@ -73,6 +71,7 @@ li {
 footer {
   text-align: center;
   padding: 12px;
-  background-color: dodgerblue;
+  background-color: #aeaeae;
+
   color: white;
 }
