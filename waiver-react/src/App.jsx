@@ -1,32 +1,38 @@
 import { useState } from "react";
 import "./App.css";
+import data from "../template_config.json";
 
 function App() {
+  const questions = data.questions;
+  console.log(questions);
 
   return (
     <div className="app__container">
-      <nav class="nav">WaiverForm</nav>
+      <nav className="nav">WaiverForm</nav>
 
-      <main class="form__wrapper">
-        <div class="form__container">
-          <div class="question__container">
-            <div class="question">I am not subject to any illness.</div>
-            <input type="text" class="answer" />
-          </div>
+      <main className="form__wrapper">
+        <div className="form__container">
+          {questions.map((question, idx) => {
+            return (
+              <div key={idx + new Date()} className="question__container">
+                <div className="question">{question.label}</div>
 
-          <div class="question__container">
-            <div class="question">I am not subject to any illness.</div>
-            <input type="text" class="answer" />
-          </div>
-
-          <div class="question__container">
-            <div class="question">I am not subject to any illness.</div>
-            <input type="text" class="answer" />
-          </div>
+                <select name="cars" id="cars">
+                  {question.values.map((elem, idx) => (
+                    <option key={idx + elem} value={elem}>
+                      {elem}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            );
+          })}
         </div>
+
+        <button className="submit btn">Submit</button>
       </main>
 
-      <footer class="footer"></footer>
+      <footer className="footer"></footer>
     </div>
   );
 }
