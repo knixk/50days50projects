@@ -2,17 +2,58 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 1px solid plum;
+  /* border: 1px solid plum; */
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: beige;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: center; */
+  /* background-color: beige; */
+  font-family: "Courier New", Courier, monospace;
 }
 
 .form__container {
   /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   margin: 1rem 1rem;
 }
+
+.form__wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
+
+nav {
+  text-align: center;
+  padding: 1rem 0;
+  background-color: rgb(126, 190, 30);
+  color: white;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.question__container {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  background-color: royalblue;
+  border-radius: 5px;
+}
+
+.question {
+  padding: 1rem;
+  color: white;
+}
+
+input {
+  /* background: none; */
+  border: 2px solid gainsboro;
+  padding: 0.5rem 0.2rem;
+  outline: none;
+}
+
+.form
