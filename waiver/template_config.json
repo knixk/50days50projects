@@ -1,0 +1,40 @@
+{
+  "questions": [
+    {
+      "label": "I understand the risks associated with this play.",
+      "values": ["yes", "no"],
+      "question_id": "some_id"
+    },
+    {
+      "label": "I would like to recieve the signed document to my email.",
+      "values": ["yes", "no"],
+      "question_id": "some_id2"
+    },
+    {
+      "label": "I am not subject to any cardiac illness.",
+      "values": ["yes", "no"],
+      "question_id": "some_id3"
+    },
+    {
+      "label": "Some message",
+      "image": "image_cdn",
+      "values": ["yes", "no"],
+      "question_id": "some_id4"
+    }
+  ],
+
+  "user_data": {
+    "name": {
+      "label": "Enter your name.",
+      "question_id": "some_id"
+    },
+    "age": {
+      "label": "Enter your age.",
+      "question_id": "some_id"
+    },
+    "email": {
+      "label": "Enter your email.",
+      "question_id": "some_id"
+    }
+  }
+}
