@@ -33,6 +33,8 @@
     }
   ],
 
+  "extra_participants_form_fields": ["name, age"],
+
   "company_logo": "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg",
 
   "user_data": {

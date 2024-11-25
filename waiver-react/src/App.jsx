@@ -26,11 +26,15 @@ const dummyParticipants = [
 function App() {
   const questions = data.questions;
   const companyLogo = data.company_logo;
+  const extraFields = data.extra_participants_form_fields;
+
+  // console.log(extraFields);
   // console.log(questions);
 
   const [form, setForm] = useState();
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState(dummyParticipants);
+  const [signImg, setSignImg] = useState();
 
   const [participantName, setParticipantName] = useState();
   const [participantAge, setParticipantAge] = useState();
@@ -39,8 +43,10 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(sign);
-    console.log("form was submitted");
+    const signatureImg = sign.getTrimmedCanvas().toDataURL("image/png");
+    setSignImg(signatureImg);
+    console.log(signatureImg);
+    // console.log("form was submitted");
   };
 
   const handleDeleteParticipant = (id) => {
@@ -129,18 +135,11 @@ function App() {
 
           <div className="participants__wrapper">
             <div className="participant__info">
-              <input
-                value={participantName}
-                onChange={(e) => setParticipantName(e.target.value)}
-                type="text"
-                placeholder="Participant name"
-              />
-              <input
-                value={participantAge}
-                onChange={(e) => setParticipantAge(e.target.value)}
-                type="text"
-                placeholder="Participant Age"
-              />
+              {data.extra_participants_form_fields.map((field_name) => {
+                console.log("run");
+                return <input />;
+              })}
+
               <button
                 className="add__participant btn"
                 onClick={handleAddParticipant}
@@ -182,6 +181,8 @@ function App() {
             </button>
           </div>
         </div>
+
+        {/* {signImg && <img src={signImg} className="signature" />} */}
 
         <button className="submit btn">Submit</button>
       </form>
