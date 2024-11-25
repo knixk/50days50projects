@@ -8,14 +8,17 @@ const dummyParticipants = [
   {
     name: "kanishk",
     age: 23,
+    id: "asdoj213s",
   },
   {
     name: "Raj",
     age: 21,
+    id: "a23sdoj213s",
   },
   {
     name: "Tushar",
     age: 22,
+    id: "asdoj213s312",
   },
 ];
 
@@ -26,7 +29,10 @@ function App() {
 
   const [form, setForm] = useState();
   const [sign, setSign] = useState();
-  const [participants, setParticipants] = useState(dummyParticipants);
+  const [participants, setParticipants] = useState([]);
+
+  const [participantName, setParticipantName] = useState();
+  const [participantAge, setParticipantAge] = useState();
 
   // console.log(participants);
 
@@ -35,14 +41,23 @@ function App() {
     console.log("form was submitted");
   };
 
+  const handleDeleteParticipant = (id) => {
+    const oldData = participants;
+    // return all the ones where the id is not eq to the currId
+    const newData = oldData.filter((currId) => currId !== id);
+    console.log(newData);
+    setParticipants(newData);
+    console.log(id);
+  };
+
   const handleAddParticipant = () => {
     console.log("add");
 
     const oldData = participants;
 
     const newData = {
-      name: "someone",
-      age: 23,
+      name: participantName,
+      age: participantAge,
     };
 
     const finalData = [...oldData, newData];
@@ -115,8 +130,18 @@ function App() {
 
           <div className="participants__wrapper">
             <div className="participant__info">
-              <input type="text" placeholder="Participant name" />
-              <input type="text" placeholder="Participant Age" />
+              <input
+                value={participantName}
+                onChange={(e) => setParticipantName(e.target.value)}
+                type="text"
+                placeholder="Participant name"
+              />
+              <input
+                value={participantAge}
+                onChange={(e) => setParticipantAge(e.target.value)}
+                type="text"
+                placeholder="Participant Age"
+              />
               <button
                 className="add__participant btn"
                 onClick={handleAddParticipant}
@@ -127,7 +152,19 @@ function App() {
             <div className="participants__container">
               {participants &&
                 participants.map((participant) => {
-                  return <div className="participant"><p className="participant__list">Name: {participant.name}, Age: {participant.age}</p> <button className="btn delete">Delete</button> </div>;
+                  return (
+                    <div className="participant">
+                      <p className="participant__list">
+                        Name: {participant.name}, Age: {participant.age}
+                      </p>{" "}
+                      <button
+                        onClick={() => handleDeleteParticipant(participant.id)}
+                        className="btn delete"
+                      >
+                        Delete
+                      </button>{" "}
+                    </div>
+                  );
                 })}
             </div>
           </div>
