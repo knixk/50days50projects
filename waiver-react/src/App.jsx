@@ -4,6 +4,21 @@ import data from "../template_config.json";
 import unicef from "./assets/unicef.png";
 import SignatureCanvas from "react-signature-canvas";
 
+const dummyParticipants = [
+  {
+    name: "kanishk",
+    age: 23,
+  },
+  {
+    name: "Raj",
+    age: 21,
+  },
+  {
+    name: "Tushar",
+    age: 22,
+  },
+];
+
 function App() {
   const questions = data.questions;
   const companyLogo = data.company_logo;
@@ -11,7 +26,7 @@ function App() {
 
   const [form, setForm] = useState();
   const [sign, setSign] = useState();
-  const [participants, setParticipants] = useState();
+  const [participants, setParticipants] = useState(dummyParticipants);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,17 +99,21 @@ function App() {
           })}
 
           <div className="participants__wrapper">
-            <div className="participant__container">
-              <div className="participant__info">
-                <input type="text" placeholder="Participant name" />
-                <input type="text" placeholder="Participant Age" />
-                <button
-                  className="add__participant btn"
-                  onClick={handleAddParticipant}
-                >
-                  + Add participant
-                </button>
-              </div>
+            <div className="participant__info">
+              <input type="text" placeholder="Participant name" />
+              <input type="text" placeholder="Participant Age" />
+              <button
+                className="add__participant btn"
+                onClick={handleAddParticipant}
+              >
+                + Add participant
+              </button>
+            </div>
+            <div className="participants__container">
+              {participants &&
+                participants.map((participant) => {
+                  <div className="participant"> {participant.name} </div>;
+                })}
             </div>
           </div>
 
