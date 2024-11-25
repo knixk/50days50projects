@@ -36,13 +36,19 @@ function App() {
                   />
                 )}
 
-                <select name="cars" id="cars">
-                  {question.values.map((elem, idx) => (
-                    <option key={idx + new Date()} value={elem}>
-                      {elem}
-                    </option>
-                  ))}
-                </select>
+                {question.input_type == "dropdown" && (
+                  <select name="cars" id="cars">
+                    {question.values.map((elem, idx) => (
+                      <option key={idx + new Date()} value={elem}>
+                        {elem}
+                      </option>
+                    ))}
+                  </select>
+                )}
+
+                {question.input_type == "file" && <input type="file" />}
+
+                {question.input_type == "text" && <input type="text" />}
               </div>
             );
           })}
