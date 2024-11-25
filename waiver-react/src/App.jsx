@@ -1,6 +1,14 @@
 import { useState } from "react";
 import "./App.css";
 import data from "../template_config.json";
+import unicef from "./assets/unicef.png";
+
+/*
+
+
+
+
+*/
 
 function App() {
   const questions = data.questions;
@@ -13,13 +21,18 @@ function App() {
       <main className="form__wrapper">
         <div className="form__container">
           {questions.map((question, idx) => {
+            question.image && console.log(question.image);
             return (
               <div key={idx + new Date()} className="question__container">
                 <div className="question">{question.label}</div>
 
+                {question.image && (
+                  <img src={question.image} alt={question.label} />
+                )}
+
                 <select name="cars" id="cars">
                   {question.values.map((elem, idx) => (
-                    <option key={idx + elem} value={elem}>
+                    <option key={idx + new Date()} value={elem}>
                       {elem}
                     </option>
                   ))}

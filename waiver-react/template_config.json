@@ -17,7 +17,7 @@
     },
     {
       "label": "Some message",
-      "image": "image_cdn",
+      "image": "./assets/unicef.png",
       "values": ["yes", "no"],
       "question_id": "some_id4"
     }
