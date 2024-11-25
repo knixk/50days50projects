@@ -104,7 +104,7 @@ function App() {
 
           <div className="signature__container">
             <SignatureCanvas
-              penColor="green"
+              penColor="black"
               canvasProps={{ width: 350, height: 300, className: "sigCanvas" }}
             />
 
@@ -115,7 +115,10 @@ function App() {
         <button className="submit btn">Submit</button>
       </form>
 
-      <footer className="footer"></footer>
+      <footer className="footer">
+        <img className="company__logo" src={companyLogo} alt="" />
+        <p className="waiver__logo">CompanyName &copy;</p>
+      </footer>
     </div>
   );
 }
