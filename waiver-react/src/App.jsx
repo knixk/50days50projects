@@ -3,6 +3,7 @@ import "./App.css";
 import data from "../template_config.json";
 import unicef from "./assets/unicef.png";
 import SignatureCanvas from "react-signature-canvas";
+import { nanoid } from "nanoid";
 
 const dummyParticipants = [
   {
@@ -43,11 +44,12 @@ function App() {
 
   const handleDeleteParticipant = (id) => {
     const oldData = participants;
+
     // return all the ones where the id is not eq to the currId
     const newData = oldData.filter((currId) => currId !== id);
     console.log(newData);
-    setParticipants(newData);
-    console.log(id);
+    // setParticipants(newData);
+    // console.log(id);
   };
 
   const handleAddParticipant = () => {
@@ -58,6 +60,7 @@ function App() {
     const newData = {
       name: participantName,
       age: participantAge,
+      id: nanoid(),
     };
 
     const finalData = [...oldData, newData];
