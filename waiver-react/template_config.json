@@ -7,21 +7,14 @@
       "question_id": "some_id"
     },
     {
-      "label": "I am not subject to any cardiac illness.",
-      "input_type": "text",
-      "input_placeholder": "Enter your text..",
-      "question_id": "some_id3"
-    },
-    {
       "label": "legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message",
       "image": "./assets/unicef.png",
       "input_type": "text",
-      "values": ["yes", "no"],
+      "input_placeholder": "Enter your text..",
       "question_id": "some_id4"
     },
     {
-      "label": "legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message",
-      "image": "./assets/unicef.png",
+      "label": "message legal message legal message legal message legal message legal message",
       "input_type": "file",
       "question_id": "some_id4"
     }

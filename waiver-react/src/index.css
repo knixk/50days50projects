@@ -42,9 +42,14 @@ nav {
 .question__container {
   display: flex;
   flex-direction: column;
+  /* justify-content: center; */
   /* align-items: center; */
   background-color: rgb(114, 133, 163);
   border-radius: 5px;
+}
+
+img {
+  /* justify-self: center; */
 }
 
 .question {
@@ -80,4 +85,11 @@ select {
 .btn:hover {
   transform: scale(1.1);
   opacity: 0.9;
+}
+
+select {
+  /* outline: 1px solid gainsboro; */
+  outline: none;  
+  /* border: none; */
+  /* border: 1px solid gainsboro; */
 }

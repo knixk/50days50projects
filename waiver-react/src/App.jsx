@@ -48,7 +48,14 @@ function App() {
 
                 {question.input_type == "file" && <input type="file" />}
 
-                {question.input_type == "text" && <input type="text" />}
+                {question.input_type == "text" && (
+                  <input
+                    placeholder={
+                      question.input_placeholder && question.input_placeholder
+                    }
+                    type="text"
+                  />
+                )}
               </div>
             );
           })}
