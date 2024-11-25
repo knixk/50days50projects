@@ -10,6 +10,8 @@ function App() {
   console.log(questions);
 
   const [form, setForm] = useState();
+  const [sign, setSign] = useState();
+  const [participants, setParticipants] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,6 +20,10 @@ function App() {
 
   const handleAddParticipant = () => {
     console.log("add");
+  };
+
+  const handleClearCanvas = () => {
+    sign && sign.clear();
   };
 
   return (
@@ -78,37 +84,30 @@ function App() {
           })}
 
           <div className="participants__wrapper">
-            <button
-              className="add__participant btn"
-              onClick={handleAddParticipant}
-            >
-              + Add participant
-            </button>
             <div className="participant__container">
               <div className="participant__info">
                 <input type="text" placeholder="Participant name" />
                 <input type="text" placeholder="Participant Age" />
-              </div>
-
-              <div className="participant__info">
-                <input type="text" placeholder="Participant name" />
-                <input type="text" placeholder="Participant Age" />
-              </div>
-
-              <div className="participant__info">
-                <input type="text" placeholder="Participant name" />
-                <input type="text" placeholder="Participant Age" />
+                <button
+                  className="add__participant btn"
+                  onClick={handleAddParticipant}
+                >
+                  + Add participant
+                </button>
               </div>
             </div>
           </div>
 
           <div className="signature__container">
             <SignatureCanvas
+              ref={(data) => setSign(data)}
               penColor="black"
               canvasProps={{ width: 350, height: 300, className: "sigCanvas" }}
             />
 
-            <button className="btn clear">Clear</button>
+            <button className="btn clear" onClick={handleClearCanvas}>
+              Clear
+            </button>
           </div>
         </div>
 

@@ -139,3 +139,9 @@ textarea {
   margin-top: 10px;
   /* height: 50px; */
 }
+
+.participant__info {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
