@@ -22,11 +22,13 @@ const dummyParticipants = [
 function App() {
   const questions = data.questions;
   const companyLogo = data.company_logo;
-  console.log(questions);
+  // console.log(questions);
 
   const [form, setForm] = useState();
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState(dummyParticipants);
+
+  console.log(participants)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,6 +37,19 @@ function App() {
 
   const handleAddParticipant = () => {
     console.log("add");
+
+    const oldData = participants;
+
+    const newData = {
+      name: "someone",
+      age: 23,
+    };
+
+    const finalData = [...oldData, newData];
+
+    setParticipants(finalData);
+
+    console.log(finalData);
   };
 
   const handleClearCanvas = () => {
@@ -52,7 +67,7 @@ function App() {
         <div className="form__container">
           {questions.map((question, idx) => {
             const required = question.required ? true : false;
-            console.log(required);
+            // console.log(required);
             return (
               <div key={idx + new Date()} className="question__container">
                 <div className="question">{question.label}</div>
