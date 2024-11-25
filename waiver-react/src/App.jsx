@@ -9,17 +9,17 @@ const dummyParticipants = [
   {
     name: "kanishk",
     age: 23,
-    id: "asdoj213s",
+    id: nanoid(),
   },
   {
     name: "Raj",
     age: 21,
-    id: "a23sdoj213s",
+    id: nanoid(),
   },
   {
     name: "Tushar",
     age: 22,
-    id: "asdoj213s312",
+    id: nanoid(),
   },
 ];
 
@@ -30,7 +30,7 @@ function App() {
 
   const [form, setForm] = useState();
   const [sign, setSign] = useState();
-  const [participants, setParticipants] = useState([]);
+  const [participants, setParticipants] = useState(dummyParticipants);
 
   const [participantName, setParticipantName] = useState();
   const [participantAge, setParticipantAge] = useState();
@@ -39,6 +39,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(sign);
     console.log("form was submitted");
   };
 
@@ -46,15 +47,13 @@ function App() {
     const oldData = participants;
 
     // return all the ones where the id is not eq to the currId
-    const newData = oldData.filter((currId) => currId !== id);
-    console.log(newData);
-    // setParticipants(newData);
-    // console.log(id);
+    const newData = oldData.filter((p) => {
+      return p.id !== id;
+    });
+    setParticipants(newData);
   };
 
   const handleAddParticipant = () => {
-    console.log("add");
-
     const oldData = participants;
 
     const newData = {
@@ -66,8 +65,6 @@ function App() {
     const finalData = [...oldData, newData];
 
     setParticipants(finalData);
-
-    console.log(finalData);
   };
 
   const handleClearCanvas = () => {
@@ -85,7 +82,6 @@ function App() {
         <div className="form__container">
           {questions.map((question, idx) => {
             const required = question.required ? true : false;
-            // console.log(required);
             return (
               <div key={idx + new Date()} className="question__container">
                 <div className="question">{question.label}</div>
@@ -149,7 +145,7 @@ function App() {
                 className="add__participant btn"
                 onClick={handleAddParticipant}
               >
-                + Add participant
+                Add participant
               </button>
             </div>
             <div className="participants__container">
@@ -174,7 +170,9 @@ function App() {
 
           <div className="signature__container">
             <SignatureCanvas
-              ref={(data) => setSign(data)}
+              ref={(data) => {
+                setSign(data);
+              }}
               penColor="black"
               canvasProps={{ width: 350, height: 300, className: "sigCanvas" }}
             />
