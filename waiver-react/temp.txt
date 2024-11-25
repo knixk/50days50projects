@@ -8,6 +8,13 @@
       "required": true
     },
     {
+      "label": "I understand the risks associated with this play.",
+      "input_type": "dropdown",
+      "values": ["yes", "no"],
+      "question_id": "some_id",
+      "required": true
+    },
+    {
       "label": "legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message",
       "image": "./assets/unicef.png",
       "input_type": "text",

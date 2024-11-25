@@ -41,7 +41,7 @@ function App() {
                 )}
 
                 {question.input_type == "file" && (
-                  <input type="file" required={required} />
+                  <input className="file" type="file" required={required} />
                 )}
 
                 {question.input_type == "text" && (

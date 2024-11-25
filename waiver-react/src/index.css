@@ -1,6 +1,6 @@
 :root {
   --bg-color: rgb(223, 223, 223);
-  --label-color: rgb(114, 133, 163);
+  --label-color: rgb(72, 108, 167);
 }
 
 * {
@@ -42,7 +42,8 @@ nav {
 .question__container {
   display: flex;
   flex-direction: column;
-  background-color: rgb(114, 133, 163);
+  /* background-color: rgb(114, 133, 163); */
+  background-color: var(--label-color);
   border-radius: 5px;
 }
 
@@ -67,6 +68,7 @@ select {
 .question__image {
   width: 180px;
   border-radius: 10px;
+  margin: 0 15px 15px 15px;
 }
 
 .btn {
@@ -92,4 +94,8 @@ textarea {
   background-color: var(--bg-color);
   height: 70px;
   resize: none;
+}
+
+.file {
+  color: white;
 }
