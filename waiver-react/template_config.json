@@ -4,19 +4,26 @@
       "label": "I understand the risks associated with this play.",
       "input_type": "dropdown",
       "values": ["yes", "no"],
-      "question_id": "some_id"
+      "question_id": "some_id",
+      "required": true
     },
     {
       "label": "legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message",
       "image": "./assets/unicef.png",
       "input_type": "text",
       "input_placeholder": "Enter your text..",
-      "question_id": "some_id4"
+      "question_id": "some_id4",
+      "required": true
     },
     {
       "label": "message legal message legal message legal message legal message legal message",
       "input_type": "file",
-      "question_id": "some_id4"
+      "question_id": "some_id5"
+    },
+    {
+      "label": "Any message you would like to leave us?",
+      "input_type": "textarea",
+      "question_id": "some_id6"
     }
   ],
 
@@ -27,11 +34,11 @@
     },
     "age": {
       "label": "Enter your age.",
-      "question_id": "some_id"
+      "question_id": "some_id1"
     },
     "email": {
       "label": "Enter your email.",
-      "question_id": "some_id"
+      "question_id": "some_id2"
     }
   }
 }

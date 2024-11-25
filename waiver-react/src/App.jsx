@@ -3,13 +3,6 @@ import "./App.css";
 import data from "../template_config.json";
 import unicef from "./assets/unicef.png";
 
-/*
-
-
-
-
-*/
-
 function App() {
   const questions = data.questions;
   console.log(questions);
@@ -23,7 +16,8 @@ function App() {
       <main className="form__wrapper">
         <div className="form__container">
           {questions.map((question, idx) => {
-            // question.image && console.log(question.image);
+            const required = question.required ? true : false;
+            console.log(required);
             return (
               <div key={idx + new Date()} className="question__container">
                 <div className="question">{question.label}</div>
@@ -37,7 +31,7 @@ function App() {
                 )}
 
                 {question.input_type == "dropdown" && (
-                  <select name="cars" id="cars">
+                  <select name="cars" id="cars" required={required}>
                     {question.values.map((elem, idx) => (
                       <option key={idx + new Date()} value={elem}>
                         {elem}
@@ -46,15 +40,24 @@ function App() {
                   </select>
                 )}
 
-                {question.input_type == "file" && <input type="file" />}
+                {question.input_type == "file" && (
+                  <input type="file" required={required} />
+                )}
 
                 {question.input_type == "text" && (
                   <input
                     placeholder={
                       question.input_placeholder && question.input_placeholder
                     }
+                    required={required}
                     type="text"
                   />
+                )}
+                {question.input_type == "textarea" && (
+                  <textarea
+                    placeholder="your text here.."
+                    required={required}
+                  ></textarea>
                 )}
               </div>
             );
