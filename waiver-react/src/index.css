@@ -115,3 +115,20 @@ textarea {
   margin: 0;
   padding: 0;
 }
+
+.sigCanvas {
+  border: 2px solid gainsboro;
+}
+
+.signature__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.clear {
+  /* height: 300px; */
+  /* width: 50px; */
+}

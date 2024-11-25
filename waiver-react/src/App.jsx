@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import data from "../template_config.json";
 import unicef from "./assets/unicef.png";
+import SignatureCanvas from "react-signature-canvas";
 
 function App() {
   const questions = data.questions;
@@ -13,6 +14,10 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("form was submitted");
+  };
+
+  const handleAddParticipant = () => {
+    console.log("add");
   };
 
   return (
@@ -71,6 +76,40 @@ function App() {
               </div>
             );
           })}
+
+          <div className="participants__wrapper">
+            <button
+              className="add__participant btn"
+              onClick={handleAddParticipant}
+            >
+              + Add participant
+            </button>
+            <div className="participant__container">
+              <div className="participant__info">
+                <input type="text" placeholder="Participant name" />
+                <input type="text" placeholder="Participant Age" />
+              </div>
+
+              <div className="participant__info">
+                <input type="text" placeholder="Participant name" />
+                <input type="text" placeholder="Participant Age" />
+              </div>
+
+              <div className="participant__info">
+                <input type="text" placeholder="Participant name" />
+                <input type="text" placeholder="Participant Age" />
+              </div>
+            </div>
+          </div>
+
+          <div className="signature__container">
+            <SignatureCanvas
+              penColor="green"
+              canvasProps={{ width: 350, height: 300, className: "sigCanvas" }}
+            />
+
+            <button className="btn clear">Clear</button>
+          </div>
         </div>
 
         <button className="submit btn">Submit</button>
