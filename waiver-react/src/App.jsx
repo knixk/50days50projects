@@ -28,7 +28,7 @@ function App() {
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState(dummyParticipants);
 
-  console.log(participants)
+  // console.log(participants);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -127,7 +127,7 @@ function App() {
             <div className="participants__container">
               {participants &&
                 participants.map((participant) => {
-                  <div className="participant"> {participant.name} </div>;
+                  return <div className="participant">{participant.name} {participant.age} <button className="btn delete">Delete</button> </div>;
                 })}
             </div>
           </div>
