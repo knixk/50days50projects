@@ -146,3 +146,24 @@ textarea {
   justify-content: space-between;
   flex-direction: column;
 }
+
+.participants__container {
+  display: flex;
+  flex-direction: column;
+  /* background-color: red; */
+  margin: 20px 0;
+  align-items: space-between;
+  gap: 20px;
+
+  /* justify-content: center; */
+  /* border: 1px solid gainsboro; */
+}
+
+.participant {
+  display: flex;
+  gap: 10px;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  align-items: center;
+
+}

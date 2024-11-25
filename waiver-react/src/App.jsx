@@ -127,7 +127,7 @@ function App() {
             <div className="participants__container">
               {participants &&
                 participants.map((participant) => {
-                  return <div className="participant">{participant.name} {participant.age} <button className="btn delete">Delete</button> </div>;
+                  return <div className="participant"><p className="participant__list">Name: {participant.name}, Age: {participant.age}</p> <button className="btn delete">Delete</button> </div>;
                 })}
             </div>
           </div>
