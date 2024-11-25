@@ -14,6 +14,8 @@ function App() {
   const questions = data.questions;
   console.log(questions);
 
+  const [form, setForm] = useState();
+
   return (
     <div className="app__container">
       <nav className="nav">WaiverForm</nav>
@@ -21,13 +23,17 @@ function App() {
       <main className="form__wrapper">
         <div className="form__container">
           {questions.map((question, idx) => {
-            question.image && console.log(question.image);
+            // question.image && console.log(question.image);
             return (
               <div key={idx + new Date()} className="question__container">
                 <div className="question">{question.label}</div>
 
                 {question.image && (
-                  <img src={question.image} alt={question.label} />
+                  <img
+                    className="question__image"
+                    src={unicef}
+                    alt={question.label}
+                  />
                 )}
 
                 <select name="cars" id="cars">
