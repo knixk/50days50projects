@@ -5,15 +5,24 @@ import unicef from "./assets/unicef.png";
 
 function App() {
   const questions = data.questions;
+  const companyLogo = data.company_logo;
   console.log(questions);
 
   const [form, setForm] = useState();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("form was submitted");
+  };
+
   return (
     <div className="app__container">
-      <nav className="nav">WaiverForm</nav>
+      <nav className="nav">
+        <img className="company__logo" src={companyLogo} alt="" />
+        <p className="waiver__logo">WaiverForm</p>
+      </nav>
 
-      <main className="form__wrapper">
+      <form onSubmit={handleSubmit} className="form__wrapper">
         <div className="form__container">
           {questions.map((question, idx) => {
             const required = question.required ? true : false;
@@ -65,7 +74,7 @@ function App() {
         </div>
 
         <button className="submit btn">Submit</button>
-      </main>
+      </form>
 
       <footer className="footer"></footer>
     </div>

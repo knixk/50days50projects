@@ -31,7 +31,13 @@ body {
 }
 
 nav {
-  text-align: center;
+  display: flex;
+  /* text-align: center; */
+  /* justify-content: space-between; */
+  justify-content: center;
+  gap: 35%;
+  align-items: center;
+  /* max-width: 700px; */
   padding: 1rem 0;
   background-color: rgb(126, 190, 30);
   color: white;
@@ -98,4 +104,14 @@ textarea {
 
 .file {
   color: white;
+}
+
+.company__logo {
+  width: 60px;
+  border-radius: 3px;
+}
+
+.waiver__logo {
+  margin: 0;
+  padding: 0;
 }
