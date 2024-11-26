@@ -14,14 +14,28 @@ CREATE TABLE templates (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- CREATE TABLE submissions (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     template_id INT NOT NULL,
+--     submission_data JSON NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (template_id) REFERENCES templates(id)
+-- );
+
 CREATE TABLE submissions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     template_id INT NOT NULL,
+    event_id INT NOT NULL,
     submission_data JSON NOT NULL,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    mobile_number VARCHAR(20),
+    status VARCHAR(50),
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (template_id) REFERENCES templates(id)
+    FOREIGN KEY (template_id) REFERENCES templates(id),
+    FOREIGN KEY (event_id) REFERENCES events(id)
 );
-
 
 CREATE TABLE devices (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -36,7 +50,6 @@ CREATE TABLE centers (
     address VARCHAR(255),
     contact_info JSON
 );
-
 
 CREATE TABLE events (
     id INT AUTO_INCREMENT PRIMARY KEY,
