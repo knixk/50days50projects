@@ -4,6 +4,8 @@ use waiver_form;
 
 show tables;
 
+describe templates;
+
 CREATE TABLE templates (
     id INT AUTO_INCREMENT PRIMARY KEY,
     template_name VARCHAR(255) NOT NULL,
@@ -20,8 +22,6 @@ CREATE TABLE submissions (
     FOREIGN KEY (template_id) REFERENCES templates(id)
 );
 
--- add device id to submissions table
--- can add centres to submissions
 
 CREATE TABLE devices (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,6 +37,7 @@ CREATE TABLE centers (
     contact_info JSON
 );
 
+
 CREATE TABLE events (
     id INT AUTO_INCREMENT PRIMARY KEY,
     event_name VARCHAR(255) NOT NULL,
@@ -47,5 +48,3 @@ CREATE TABLE events (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
--- describe templates;
