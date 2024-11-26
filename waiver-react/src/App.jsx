@@ -27,22 +27,34 @@ function App() {
   const questions = data.questions;
   const companyLogo = data.company_logo;
   const extraFields = data.extra_participants_form_fields;
-  const formStructure = {
 
-  }
+  const data3 = extraFields.map((field) => {
+    return {
+      [field]: "",
+    };
+  });
 
-  // interesting...
-
-  // console.log(extraFields);
-  // console.log(questions);
-
-  const [form, setForm] = useState();
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState(dummyParticipants);
   const [signImg, setSignImg] = useState();
 
-  const [participantName, setParticipantName] = useState();
-  const [participantAge, setParticipantAge] = useState();
+  const [participantData, setParticipantData] = useState(data3);
+
+  // Handler to update the state based on index
+  const handleInputChange = (index, event) => {
+    const { name, value } = event.target;
+
+    // Create a new copy of the state array
+    const updatedData = [...participantData];
+
+    // Update the correct object in the array
+    updatedData[index] = { ...updatedData[index], [name]: value };
+
+    // Set the new state
+    setParticipantData(updatedData);
+  };
+
+  // console.log(initialParticipantData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,15 +77,15 @@ function App() {
   const handleAddParticipant = () => {
     const oldData = participants;
 
-    const newData = {
-      name: participantName,
-      age: participantAge,
-      id: nanoid(),
-    };
+    const newData = participantData.reduce(
+      (acc, field) => ({ ...acc, ...field }),
+      {}
+    );
 
     const finalData = [...oldData, newData];
 
     setParticipants(finalData);
+    console.log(finalData);
   };
 
   const handleClearCanvas = () => {
@@ -92,7 +104,7 @@ function App() {
           {questions.map((question, idx) => {
             const required = question.required ? true : false;
             return (
-              <div key={idx + new Date()} className="question__container">
+              <div key={nanoid()} className="question__container">
                 <div className="question">{question.label}</div>
 
                 {question.image && (
@@ -106,7 +118,7 @@ function App() {
                 {question.input_type == "dropdown" && (
                   <select name="cars" id="cars" required={required}>
                     {question.values.map((elem, idx) => (
-                      <option key={idx + new Date()} value={elem}>
+                      <option key={nanoid()} value={elem}>
                         {elem}
                       </option>
                     ))}
@@ -138,9 +150,30 @@ function App() {
 
           <div className="participants__wrapper">
             <div className="participant__info">
-              {data.extra_participants_form_fields.map((field_name) => {
-                console.log("run");
-                return <input />;
+              {/* {data.extra_participants_form_fields.map((field_name, idx) => {
+                return (
+                  <input
+                    key={nanoid()}
+                    onChange={(event) => handleInputChange(idx, event)}
+                    placeholder={field_name}
+                    name={field_name}
+                    // value={participantData[idx].field_name}
+                  />
+                );
+              })} */}
+
+              {participantData.map((item, index) => {
+                // Get the key (like "name" or "age") from the object
+                const fieldKey = Object.keys(item)[0];
+                return (
+                  <input
+                    type="text"
+                    name={fieldKey} // The name attribute will be "name" or "age"
+                    placeholder={`Enter ${fieldKey}`}
+                    value={item[fieldKey]} // Value from the state
+                    onChange={(event) => handleInputChange(index, event)}
+                  />
+                );
               })}
 
               <button
@@ -152,18 +185,19 @@ function App() {
             </div>
             <div className="participants__container">
               {participants &&
-                participants.map((participant) => {
+                participants.map((participant, idx) => {
+                  const n = participant.length;
                   return (
-                    <div className="participant">
+                    <div className="participant" key={nanoid()}>
                       <p className="participant__list">
-                        Name: {participant.name}, Age: {participant.age}
-                      </p>{" "}
+                        {/* Name: {participant.name}, Age: {participant.age} */}
+                      </p>
                       <button
                         onClick={() => handleDeleteParticipant(participant.id)}
                         className="btn delete"
                       >
                         Delete
-                      </button>{" "}
+                      </button>
                     </div>
                   );
                 })}
