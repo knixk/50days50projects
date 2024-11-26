@@ -20,6 +20,9 @@ CREATE TABLE submissions (
     FOREIGN KEY (template_id) REFERENCES templates(id)
 );
 
+-- add device id to submissions table
+-- can add centres to submissions
+
 CREATE TABLE devices (
     id INT AUTO_INCREMENT PRIMARY KEY,
     device_name VARCHAR(255),

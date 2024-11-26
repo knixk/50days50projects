@@ -174,12 +174,27 @@ function App() {
             <div className="participants__container">
               {participants &&
                 participants.map((participant, idx) => {
-                  const n = participant.length;
+                  // const n = Object.keys(participant).length;
+                  // const renderArr = [];
+
+                  // for (let i = 0; i < n; i++) {
+                  //   const element = document.createElement("li");
+
+                  //   renderArr.push();
+                  // }
+                  // const renderList = participant.map((field) => {
+                  //   return (
+                  //     <li key={nanoid()}>
+                  //       {field}: {participant[field]}
+                  //     </li>
+                  //   );
+                  // });
+                  // console.log(fieldKey.length)
                   return (
                     <div className="participant" key={nanoid()}>
-                      <p className="participant__list">
-                        {/* Name: {participant.name}, Age: {participant.age} */}
-                      </p>
+                      <ul className="participant__list">
+                        asdasd
+                      </ul>
                       <button
                         onClick={() => handleDeleteParticipant(participant.id)}
                         className="btn delete"
