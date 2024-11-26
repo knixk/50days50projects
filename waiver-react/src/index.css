@@ -12,6 +12,7 @@
 
 body {
   font-family: "Courier New", Courier, monospace;
+  /* background-color: #ebebeb; */
 }
 
 .form__container {
@@ -30,7 +31,8 @@ body {
   margin: 1rem;
 }
 
-nav, footer {
+nav,
+footer {
   display: flex;
   /* text-align: center; */
   /* justify-content: space-between; */
@@ -165,5 +167,4 @@ textarea {
   /* flex-direction: column; */
   justify-content: space-between;
   align-items: center;
-
 }

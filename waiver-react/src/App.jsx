@@ -27,6 +27,11 @@ function App() {
   const questions = data.questions;
   const companyLogo = data.company_logo;
   const extraFields = data.extra_participants_form_fields;
+  const formStructure = {
+
+  }
+
+  // interesting...
 
   // console.log(extraFields);
   // console.log(questions);
@@ -38,8 +43,6 @@ function App() {
 
   const [participantName, setParticipantName] = useState();
   const [participantAge, setParticipantAge] = useState();
-
-  // console.log(participants);
 
   const handleSubmit = (e) => {
     e.preventDefault();
