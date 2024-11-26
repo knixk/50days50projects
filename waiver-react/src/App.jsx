@@ -150,18 +150,6 @@ function App() {
 
           <div className="participants__wrapper">
             <div className="participant__info">
-              {/* {data.extra_participants_form_fields.map((field_name, idx) => {
-                return (
-                  <input
-                    key={nanoid()}
-                    onChange={(event) => handleInputChange(idx, event)}
-                    placeholder={field_name}
-                    name={field_name}
-                    // value={participantData[idx].field_name}
-                  />
-                );
-              })} */}
-
               {participantData.map((item, index) => {
                 // Get the key (like "name" or "age") from the object
                 const fieldKey = Object.keys(item)[0];
