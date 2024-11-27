@@ -1,7 +1,6 @@
 import { useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
-import "./App.css";
 import data from "../template_config.json";
 
 function App() {
@@ -46,73 +45,75 @@ function App() {
 
       <form onSubmit={handleSubmit} className="form__wrapper">
         {/* Render questions dynamically */}
-        {questions.map((q) => (
-          <DynamicField
-            key={nanoid()}
-            question={q}
-            value={participantData[q.label] || ""}
-            onChange={(value) => handleInputChange(q.label, value)}
-          />
-        ))}
+        <div className="form__container">
+          {questions.map((q) => (
+            <DynamicField
+              key={nanoid()}
+              question={q}
+              value={participantData[q.label] || ""}
+              onChange={(value) => handleInputChange(q.label, value)}
+            />
+          ))}
 
-        {/* Participant Manager */}
-        <div className="participants__wrapper">
-          <div className="participant__info">
-            {Object.keys(participantData).map((field) => (
-              <input
-                key={field}
-                type="text"
-                name={field}
-                placeholder={`Enter ${field}`}
-                value={participantData[field] || ""}
-                onChange={(e) => handleInputChange(field, e.target.value)}
-              />
-            ))}
+          {/* Participant Manager */}
+          <div className="participants__wrapper">
+            <div className="participant__info">
+              {Object.keys(participantData).map((field) => (
+                <input
+                  key={field}
+                  type="text"
+                  name={field}
+                  placeholder={`Enter ${field}`}
+                  value={participantData[field] || ""}
+                  onChange={(e) => handleInputChange(field, e.target.value)}
+                />
+              ))}
+              <button
+                type="button"
+                className="add__participant btn"
+                onClick={handleAddParticipant}
+              >
+                Add Participant
+              </button>
+            </div>
+
+            <div className="participants__container">
+              {participants.map((p) => (
+                <div key={p.id} className="participant">
+                  <ul>
+                    {Object.entries(p).map(([key, value]) =>
+                      key !== "id" ? (
+                        <li key={key}>{`${key}: ${value}`}</li>
+                      ) : null
+                    )}
+                  </ul>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteParticipant(p.id)}
+                    className="btn delete"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Signature Canvas */}
+          <div className="signature__container">
+            <SignatureCanvas
+              ref={(data) => setSign(data)}
+              penColor="black"
+              canvasProps={{ width: 350, height: 300, className: "sigCanvas" }}
+            />
             <button
               type="button"
-              className="add__participant btn"
-              onClick={handleAddParticipant}
+              className="btn clear"
+              onClick={handleClearCanvas}
             >
-              Add Participant
+              Clear
             </button>
           </div>
-
-          <div className="participants__container">
-            {participants.map((p) => (
-              <div key={p.id} className="participant">
-                <ul>
-                  {Object.entries(p).map(([key, value]) =>
-                    key !== "id" ? (
-                      <li key={key}>{`${key}: ${value}`}</li>
-                    ) : null
-                  )}
-                </ul>
-                <button
-                  type="button"
-                  onClick={() => handleDeleteParticipant(p.id)}
-                  className="btn delete"
-                >
-                  Delete
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Signature Canvas */}
-        <div className="signature__container">
-          <SignatureCanvas
-            ref={(data) => setSign(data)}
-            penColor="black"
-            canvasProps={{ width: 350, height: 300, className: "sigCanvas" }}
-          />
-          <button
-            type="button"
-            className="btn clear"
-            onClick={handleClearCanvas}
-          >
-            Clear
-          </button>
         </div>
 
         <button type="submit" className="submit btn">
@@ -131,37 +132,41 @@ function App() {
 function DynamicField({ question, value, onChange }) {
   const { label, input_type, required, values } = question;
 
-  if (input_type === "dropdown") {
-    return (
-      <div>
-        <label>{label}</label>
-        <select
-          required={required}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-        >
-          {values.map((val) => (
-            <option key={val} value={val}>
-              {val}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  }
+  return (
+    <div className="question__container">
+      {input_type == "dropdown" && (
+        <div className="question">
+          <label>{label}</label>
+          <select
+            required={required}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+          >
+            {values.map((val) => (
+              <option key={val} value={val}>
+                {val}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+  );
 
-  if (input_type === "textarea") {
-    return (
-      <div>
-        <label>{label}</label>
-        <textarea
-          required={required}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="question__container">
+      {input_type == "textarea" && (
+        <div className="question">
+          <label>{label}</label>
+          <textarea
+            required={required}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        </div>
+      )}
+    </div>
+  );
 
   if (input_type === "file") {
     return (

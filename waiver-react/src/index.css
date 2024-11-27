@@ -15,6 +15,7 @@
 body {
   font-family: "Courier New", Courier, monospace;
   background-color: var(--bg-color);
+  /* display: none; */
 }
 
 .form__container {
