@@ -11,6 +11,7 @@ const con = mysql.createConnection({
 
 const selectDB = "use waiver_form;";
 const getSubmissions = "select * from submissions;";
+
 con.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
