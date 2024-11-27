@@ -1,6 +1,8 @@
 :root {
   --bg-color: rgb(223, 223, 223);
   --label-color: rgb(72, 108, 167);
+  --theme-color: rgb(160, 26, 93);
+  --header-color: rgb(30, 126, 190);
 }
 
 * {
@@ -12,7 +14,7 @@
 
 body {
   font-family: "Courier New", Courier, monospace;
-  /* background-color: #ebebeb; */
+  background-color: var(--bg-color);
 }
 
 .form__container {
@@ -34,14 +36,11 @@ body {
 nav,
 footer {
   display: flex;
-  /* text-align: center; */
-  /* justify-content: space-between; */
   justify-content: center;
   gap: 35%;
   align-items: center;
-  /* max-width: 700px; */
   padding: 1rem 0;
-  background-color: rgb(126, 190, 30);
+  background-color: var(--header-color);
   color: white;
   font-weight: bold;
   letter-spacing: 2px;
@@ -50,8 +49,7 @@ footer {
 .question__container {
   display: flex;
   flex-direction: column;
-  /* background-color: rgb(114, 133, 163); */
-  background-color: var(--label-color);
+  background-color: var(--theme-color);
   border-radius: 5px;
 }
 
@@ -87,8 +85,6 @@ select {
 }
 
 .btn:hover {
-  /* transform: scale(1.02); */
-  /* opacity: 0.8; */
   background-color: rgb(231, 231, 231);
 }
 
@@ -120,9 +116,10 @@ textarea {
 }
 
 .sigCanvas {
-  border: 2px solid gainsboro;
+  border: 2px solid rgb(179, 179, 179);
   border-radius: 5px;
   margin-top: 10px;
+  background-color: white;
 }
 
 .signature__container {
@@ -134,13 +131,10 @@ textarea {
 }
 
 .clear {
-  /* height: 300px; */
-  /* width: 50px; */
 }
 
 .footer {
   margin-top: 10px;
-  /* height: 50px; */
 }
 
 .participant__info {
@@ -152,19 +146,14 @@ textarea {
 .participants__container {
   display: flex;
   flex-direction: column;
-  /* background-color: red; */
   margin: 20px 0;
   align-items: space-between;
   gap: 20px;
-
-  /* justify-content: center; */
-  /* border: 1px solid gainsboro; */
 }
 
 .participant {
   display: flex;
   gap: 10px;
-  /* flex-direction: column; */
   justify-content: space-between;
   align-items: center;
 }

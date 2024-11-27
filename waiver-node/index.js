@@ -27,4 +27,13 @@ app.get("/", (req, res) => {
   res.send("hello word").status(200);
 });
 
-const sql = "show databases;";
+// write an api to put data in db
+
+// write an api to query data from db
+app.post("/submit", (req, res) => {
+  res.status(200).json({
+    msg: "form was submitted",
+  });
+});
+
+const getQuery = "show databases;";
