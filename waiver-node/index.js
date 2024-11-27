@@ -9,8 +9,6 @@ const con = mysql.createConnection({
   password: "Gamer12345!",
 });
 
-const selectDB = "use waiver_form;";
-
 const postASubmission = (con, data) => {
   const query = `
     INSERT INTO submissions (template_id, event_id, submission_data, name, email, mobile_number)
@@ -36,16 +34,30 @@ const postASubmission = (con, data) => {
   console.log("insertion finished..");
 };
 
-const getSubmissions = (con, id = NULL) => {
-  const getSubmissionsQuery =
-    id != NULL
-      ? `select * from submissions where id = ${id};`
-      : "select * from submissions;";
+const getSubmissions = (con, id = null) => {
+  // const getSubmissionsQuery =
+  //   id != NULL
+  //     ? `select * from submissions where id = ${id};`
+  //     : "select * from submissions;";
+
+  const getSubmissionsQuery = "select * from submissions;";
+
+  con.query(getSubmissionsQuery, (err, result) => {
+    if (err) throw err;
+    console.log("Inserted ID:", result);
+  });
 };
 
 con.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
+
+  const selectDB = "use waiver_form;";
+
+  con.query(selectDB, (err, result) => {
+    if (err) throw err;
+    console.log(`Selected DB waiver_form`);
+  });
 });
 
 app.listen(port, () => {
@@ -54,7 +66,7 @@ app.listen(port, () => {
 
 app.get("/submissions", (req, res) => {
   getSubmissions(con);
-  // res.send("hello word").status(200);
+  res.send("hello word").status(200);
 });
 
 // write an api to put data in db
