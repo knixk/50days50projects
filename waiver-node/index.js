@@ -33,31 +33,58 @@ const postASubmission = (con, data) => {
   console.log("insertion finished..");
 };
 
-const getSubmissions = async (con, id = null) => {
-  // const getSubmissionsQuery =
-  //   id != NULL
-  //     ? `select * from submissions where id = ${id};`
-  //     : "select * from submissions;";
+// const getSubmissions = async (con, id = null) => {
+//   const getSubmissionsQuery = "select * from submissions;";
 
-  const getSubmissionsQuery = "select * from submissions;";
+//   let res;
 
-  // con.query(getSubmissionsQuery, (err, result) => {
-  //   if (err) throw err;
-  //   console.log("Inserted ID:", result);
-  // });
+//   await con.query(getSubmissionsQuery, async function (err, result, fields) {
+//     if (err) throw err;
+//     console.log("=========>");
+//     console.log("result: ", result);
+//     console.log("=========>");
 
-  let res;
+//     res = await result;
+//   });
 
-  await con.query(getSubmissionsQuery, async function (err, result, fields) {
-    if (err) throw err;
-    console.log("=========>");
-    console.log("result: ", result);
-    console.log("=========>");
+//   return res;
+// };
 
-    res = await result;
+const getSubmissions = async (
+  con,
+  { name = null, mobile_number = null, email = null, days = null } = {}
+) => {
+  let getSubmissionsQuery = "SELECT * FROM submissions WHERE 1=1"; // Base query to start with
+
+  // Filter by name if provided
+  if (name) {
+    getSubmissionsQuery += ` AND name LIKE '%${name}%'`; // Using LIKE for partial matching
+  }
+
+  // Filter by mobile_number if provided
+  if (mobile_number) {
+    getSubmissionsQuery += ` AND mobile_number LIKE '${mobile_number}'`;
+  }
+
+  // Filter by email if provided
+  if (email) {
+    getSubmissionsQuery += ` AND email LIKE '%${email}%'`; // Using LIKE for partial matching
+  }
+
+  // Filter by submission date range if provided
+  if (days) {
+    getSubmissionsQuery += ` AND submission_date >= CURDATE() - INTERVAL ${days} DAY`;
+  }
+
+  return new Promise((resolve, reject) => {
+    con.query(getSubmissionsQuery, (err, result, fields) => {
+      if (err) {
+        reject(err); // Reject promise on error
+      } else {
+        resolve(result); // Resolve promise with the result
+      }
+    });
   });
-
-  return res;
 };
 
 con.connect(function (err) {
@@ -78,7 +105,12 @@ app.listen(port, () => {
 
 // write an api to query data from db
 app.get("/submissions", async (req, res) => {
-  const result = await getSubmissions(con);
+  const filterOptions = {
+    name: "Doe",
+    mobile_number: '1234',
+  };
+
+  const result = await getSubmissions(con, filterOptions);
 
   res.status(200).json({
     data: result,
@@ -92,7 +124,7 @@ app.post("/submissions", async (req, res) => {
     submission_data: JSON.stringify({ answer: "Example Answer" }),
     name: "John D23asdoe",
     email: "jasdohn@exsdample.com",
-    mobile_number: "12345267890",
+    mobile_number: 1234,
   };
 
   postASubmission(con, data);
