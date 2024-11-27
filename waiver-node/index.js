@@ -63,7 +63,7 @@ const getSubmissions = async (
 
   // Filter by mobile_number if provided
   if (mobile_number) {
-    getSubmissionsQuery += ` AND mobile_number LIKE '${mobile_number}'`;
+    getSubmissionsQuery += ` AND mobile_number LIKE '%${mobile_number}%'`;
   }
 
   // Filter by email if provided
@@ -107,7 +107,7 @@ app.listen(port, () => {
 app.get("/submissions", async (req, res) => {
   const filterOptions = {
     name: "Doe",
-    mobile_number: '1234',
+    mobile_number: '78910',
   };
 
   const result = await getSubmissions(con, filterOptions);
