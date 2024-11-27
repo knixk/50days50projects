@@ -105,9 +105,12 @@ app.listen(port, () => {
 
 // write an api to query data from db
 app.get("/submissions", async (req, res) => {
+
+  // get this from query params
   const filterOptions = {
     name: "Doe",
-    mobile_number: '78910',
+    mobile_number: '789',
+    days: 2
   };
 
   const result = await getSubmissions(con, filterOptions);
