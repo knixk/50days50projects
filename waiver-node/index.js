@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 const port = 5050;
+const template_config = require("./template_config.json");
 
 const con = mysql.createConnection({
   host: "localhost",
@@ -33,22 +34,26 @@ const postASubmission = (con, data) => {
   console.log("insertion finished..");
 };
 
-// const getSubmissions = async (con, id = null) => {
-//   const getSubmissionsQuery = "select * from submissions;";
+const postATemplate = (con, data) => {
+  const query = `
+    INSERT INTO submissions (template_name, template_config)
+    VALUES (?, ?)
+  `;
 
-//   let res;
+  //   INSERT INTO templates (template_name, template_config)
+  // VALUES ('Sample Template', '{"key1": "value1", "key2": "value2"}');
 
-//   await con.query(getSubmissionsQuery, async function (err, result, fields) {
-//     if (err) throw err;
-//     console.log("=========>");
-//     console.log("result: ", result);
-//     console.log("=========>");
+  con.query(
+    query,
+    [data.template_name, data.template_config],
+    (err, result) => {
+      if (err) throw err;
+      console.log("Inserted ID:", result.insertId);
+    }
+  );
 
-//     res = await result;
-//   });
-
-//   return res;
-// };
+  console.log("insertion finished..");
+};
 
 const getSubmissions = async (
   con,
@@ -89,7 +94,7 @@ const getSubmissions = async (
 
 con.connect(function (err) {
   if (err) throw err;
-  console.log("Connected!");
+  console.log("mysql db connected!");
 
   const selectDB = "use waiver_form;";
 
@@ -105,12 +110,11 @@ app.listen(port, () => {
 
 // write an api to query data from db
 app.get("/submissions", async (req, res) => {
-
   // get this from query params
   const filterOptions = {
     name: "Doe",
-    mobile_number: '789',
-    days: 2
+    mobile_number: "789",
+    days: 2,
   };
 
   const result = await getSubmissions(con, filterOptions);
@@ -134,5 +138,18 @@ app.post("/submissions", async (req, res) => {
 
   res.status(200).json({
     msg: "form was submitted",
+  });
+});
+
+app.post("/templates", async (req, res) => {
+  const data = {
+    template_name: "party template",
+    template_config: template_config,
+  };
+
+  postATemplate(con, data)
+
+  res.status(200).json({
+    msg: "template was saved",
   });
 });
