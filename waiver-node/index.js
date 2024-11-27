@@ -34,27 +34,6 @@ const postASubmission = (con, data) => {
   console.log("insertion finished..");
 };
 
-// const postATemplate = (con, data) => {
-//   const query = `
-//     INSERT INTO templates (template_name, template_config)
-//     VALUES (?, ?)
-//   `;
-
-//   //   INSERT INTO templates (template_name, template_config)
-//   // VALUES ('Sample Template', '{"key1": "value1", "key2": "value2"}');
-
-//   con.query(
-//     query,
-//     [data.template_name, data.template_config],
-//     (err, result) => {
-//       if (err) throw err;
-//       console.log("Inserted ID:", result.insertId);
-//     }
-//   );
-
-//   console.log("insertion finished..");
-// };
-
 const postATemplate = (con, data) => {
   const query = `
     INSERT INTO templates (template_name, template_config)
@@ -136,6 +115,7 @@ const getTemplates = async (
   });
 };
 
+// connect db
 con.connect(function (err) {
   if (err) throw err;
   console.log("mysql db connected!");
@@ -152,7 +132,7 @@ app.listen(port, () => {
   console.log(`app running on port: ${port}..`);
 });
 
-// write an api to query data from db
+// get all the submissions and add filters
 app.get("/submissions", async (req, res) => {
   // get this from query params
   const filterOptions = {
@@ -168,6 +148,7 @@ app.get("/submissions", async (req, res) => {
   });
 });
 
+// get all the templates
 app.get("/templates", async (req, res) => {
   // get this from query params
   const filterOptions = {
@@ -182,7 +163,7 @@ app.get("/templates", async (req, res) => {
   });
 });
 
-// write an api to put data in db
+// create submissions
 app.post("/submissions", async (req, res) => {
   const data = {
     template_id: 2,
@@ -199,6 +180,7 @@ app.post("/submissions", async (req, res) => {
   });
 });
 
+// create templates
 app.post("/templates", async (req, res) => {
   const data = {
     template_name: "party template",

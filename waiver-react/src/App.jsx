@@ -24,7 +24,6 @@ const dummyParticipants = [
 ];
 
 const renderInput = (data, idx) => {
-
   <div key={nanoid()} className="question__container">
     <div className="question">{question.label}</div>
 
@@ -73,27 +72,26 @@ function App() {
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState(dummyParticipants);
   const [signImg, setSignImg] = useState();
+  const [participantData, setParticipantData] = useState([]);
 
-  const [participantData, setParticipantData] = useState(data3);
-
-    // Handle dynamic input changes
-    const handleInputChange2 = (name, value) => {
-      setParticipantData((prev) => ({ ...prev, [name]: value }));
-    };
+  // Handle dynamic input changes
+  const handleInputChange2 = (name, value) => {
+    setParticipantData((prev) => ({ ...prev, [name]: value }));
+  };
 
   // Handler to update the state based on index
-  const handleInputChange = (index, event) => {
-    const { name, value } = event.target;
+  // const handleInputChange = (index, event) => {
+  //   const { name, value } = event.target;
 
-    // Create a new copy of the state array
-    const updatedData = [...participantData];
+  //   // Create a new copy of the state array
+  //   const updatedData = [...participantData];
 
-    // Update the correct object in the array
-    updatedData[index] = { ...updatedData[index], [name]: value };
+  //   // Update the correct object in the array
+  //   updatedData[index] = { ...updatedData[index], [name]: value };
 
-    // Set the new state
-    setParticipantData(updatedData);
-  };
+  //   // Set the new state
+  //   setParticipantData(updatedData);
+  // };
 
   // console.log(initialParticipantData);
 
@@ -215,25 +213,9 @@ function App() {
             <div className="participants__container">
               {participants &&
                 participants.map((participant, idx) => {
-                  // const n = Object.keys(participant).length;
-                  // const renderArr = [];
-
-                  // for (let i = 0; i < n; i++) {
-                  //   const element = document.createElement("li");
-
-                  //   renderArr.push();
-                  // }
-                  // const renderList = participant.map((field) => {
-                  //   return (
-                  //     <li key={nanoid()}>
-                  //       {field}: {participant[field]}
-                  //     </li>
-                  //   );
-                  // });
-                  // console.log(fieldKey.length)
                   return (
                     <div className="participant" key={nanoid()}>
-                      <ul className="participant__list">asdasd</ul>
+                      <ul className="participant__list">{participant.name}</ul>
                       <button
                         onClick={() => handleDeleteParticipant(participant.id)}
                         className="btn delete"

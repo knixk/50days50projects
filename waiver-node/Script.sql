@@ -6,6 +6,10 @@ show tables;
 
 describe templates;
 
+drop table templates;
+
+select * from templates;
+
 CREATE TABLE templates (
     id INT AUTO_INCREMENT PRIMARY KEY,
     template_name VARCHAR(255) NOT NULL,
