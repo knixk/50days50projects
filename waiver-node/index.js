@@ -117,26 +117,16 @@ const getTemplates = async (
 
   // Filter by name if provided
   if (template_name) {
-    getSubmissionsQuery += ` AND name LIKE '%${name}%'`; // Using LIKE for partial matching
-  }
-
-  // Filter by mobile_number if provided
-  if (mobile_number) {
-    getSubmissionsQuery += ` AND mobile_number LIKE '%${mobile_number}%'`;
-  }
-
-  // Filter by email if provided
-  if (email) {
-    getSubmissionsQuery += ` AND email LIKE '%${email}%'`; // Using LIKE for partial matching
+    getTemplatesQuery += ` AND template_name LIKE '%${template_name}%'`; // Using LIKE for partial matching
   }
 
   // Filter by submission date range if provided
   if (days) {
-    getSubmissionsQuery += ` AND submission_date >= CURDATE() - INTERVAL ${days} DAY`;
+    getTemplatesQuery += ` AND updated_at >= CURDATE() - INTERVAL ${days} DAY`;
   }
 
   return new Promise((resolve, reject) => {
-    con.query(getSubmissionsQuery, (err, result, fields) => {
+    con.query(getTemplatesQuery, (err, result, fields) => {
       if (err) {
         reject(err); // Reject promise on error
       } else {
@@ -145,7 +135,6 @@ const getTemplates = async (
     });
   });
 };
-
 
 con.connect(function (err) {
   if (err) throw err;
@@ -173,6 +162,20 @@ app.get("/submissions", async (req, res) => {
   };
 
   const result = await getSubmissions(con, filterOptions);
+
+  res.status(200).json({
+    data: result,
+  });
+});
+
+app.get("/templates", async (req, res) => {
+  // get this from query params
+  const filterOptions = {
+    template_name: "party",
+    days: 2,
+  };
+
+  const result = await getTemplates(con, filterOptions);
 
   res.status(200).json({
     data: result,
