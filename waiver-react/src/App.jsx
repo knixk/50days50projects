@@ -1,6 +1,5 @@
 import { useState } from "react";
 import data from "../template_config.json";
-import unicef from "./assets/unicef.png";
 import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
 
@@ -8,17 +7,17 @@ const dummyParticipants = [
   {
     name: "kanishk",
     age: 23,
-    id: nanoid(),
+    id: "213123123",
   },
   {
-    name: "Raj",
-    age: 21,
-    id: nanoid(),
+    name: "rajeev",
+    age: 40,
+    id: "213124123123",
   },
   {
-    name: "Tushar",
+    name: "tanmay",
     age: 22,
-    id: nanoid(),
+    id: "2123123123",
   },
 ];
 
@@ -28,27 +27,32 @@ function App() {
   const extraFields = data.extra_participants_form_fields;
 
   const [sign, setSign] = useState();
-  const [participants, setParticipants] = useState(dummyParticipants);
-  const [signImg, setSignImg] = useState();
-  const [participantData, setParticipantData] = useState([]);
+  const [participants, setParticipants] = useState([]);
+  const [formData, setFormData] = useState({});
 
-  // main state
-  const [mainState, setMainState] = useState();
+  const handleInputChange = (id, value) => {
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const addParticipant = () => {
+    setParticipants((prev) => [...prev, { id: nanoid(), name: "", age: "" }]);
+  };
+
+  const updateParticipant = (index, field, value) => {
+    const updatedParticipants = [...participants];
+    updatedParticipants[index][field] = value;
+    setParticipants(updatedParticipants);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const signatureImg = sign.getTrimmedCanvas().toDataURL("image/png");
-    setSignImg(signatureImg);
-    console.log(signatureImg);
-    // console.log("form was submitted");
-  };
-
-  const handleClearCanvas = () => {
-    sign && sign.clear();
-  };
-
-  const handleForm = (e) => {
-    console.log(e.target.value);
+    const payload = {
+      ...formData,
+      participants,
+      signature: signatureImg,
+    };
+    console.log("Payload:", payload);
   };
 
   return (
@@ -60,111 +64,107 @@ function App() {
 
       <form onSubmit={handleSubmit} className="form__wrapper">
         <div className="form__container">
-          {questions.map((question, idx) => {
-            const required = question.required ? true : false;
-            return (
-              <div key={nanoid()} className="question__container">
-                <div className="question">{question.label}</div>
+          {questions.map((question) => (
+            <div key={question.question_id} className="question__container">
+              <div className="question">{question.label}</div>
+              {question.input_type === "text" && (
+                <input
+                  type="text"
+                  id={question.question_id}
+                  placeholder={question.input_placeholder || ""}
+                  required={question.required}
+                  onChange={(e) =>
+                    handleInputChange(question.question_id, e.target.value)
+                  }
+                />
+              )}
+              {question.input_type === "dropdown" && (
+                <select
+                  id={question.question_id}
+                  required={question.required}
+                  onChange={(e) =>
+                    handleInputChange(question.question_id, e.target.value)
+                  }
+                >
+                  {question.values.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              )}
+              {question.input_type === "file" && (
+                <input
+                  type="file"
+                  id={question.question_id}
+                  required={question.required}
+                  onChange={(e) =>
+                    handleInputChange(question.question_id, e.target.files[0])
+                  }
+                />
+              )}
+              {question.input_type === "textarea" && (
+                <textarea
+                  id={question.question_id}
+                  placeholder="Your text here..."
+                  required={question.required}
+                  onChange={(e) =>
+                    handleInputChange(question.question_id, e.target.value)
+                  }
+                />
+              )}
+            </div>
+          ))}
 
-                {question.image && (
-                  <img
-                    className="question__image"
-                    src={unicef}
-                    alt={question.label}
-                  />
-                )}
-
-                {question.input_type == "dropdown" && (
-                  <select name="cars" id="cars" required={required} onChange={handleForm}>
-                    {question.values.map((elem, idx) => (
-                      <option key={nanoid()} value={elem}>
-                        {elem}
-                      </option>
-                    ))}
-                  </select>
-                )}
-
-                {question.input_type == "file" && (
-                  <input
-                    onChange={handleForm}
-                    className="file"
-                    type="file"
-                    required={required}
-                  />
-                )}
-
-                {question.input_type == "text" && (
-                  <input
-                    onChange={handleForm}
-                    placeholder={
-                      question.input_placeholder && question.input_placeholder
-                    }
-                    required={required}
-                    type="text"
-                  />
-                )}
-                {question.input_type == "textarea" && (
-                  <textarea
-                    onChange={handleForm}
-                    placeholder="your text here.."
-                    required={required}
-                  ></textarea>
-                )}
+          <div className="participants__container">
+            {participants.map((participant, index) => (
+              <div key={participant.id} className="participant">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={participant.name}
+                  onChange={(e) =>
+                    updateParticipant(index, "name", e.target.value)
+                  }
+                />
+                <input
+                  type="number"
+                  placeholder="Age"
+                  value={participant.age}
+                  onChange={(e) =>
+                    updateParticipant(index, "age", e.target.value)
+                  }
+                />
               </div>
-            );
-          })}
-
-          <div className="participants__wrapper">
-            <div className="participant__info">
-              {participantData.map((item, index) => {
-                const fieldKey = Object.keys(item)[0];
-                return (
-                  <input
-                    type="text"
-                    name={fieldKey} // The name attribute will be "name" or "age"
-                    placeholder={`Enter ${fieldKey}`}
-                    value={item[fieldKey]} // Value from the state
-                    onChange={(event) => handleInputChange(index, event)}
-                  />
-                );
-              })}
-
-              <button className="add__participant btn">Add participant</button>
-            </div>
-            <div className="participants__container">
-              {participants &&
-                participants.map((participant, idx) => {
-                  return (
-                    <div className="participant" key={idx}>
-                      <ul className="participant__list">{participant.name}</ul>
-                      <button
-                        onClick={() => handleDeleteParticipant(participant.id)}
-                        className="btn delete"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  );
-                })}
-            </div>
+            ))}
+            <button
+              type="button"
+              onClick={addParticipant}
+              className="add__participant btn"
+            >
+              Add Participant
+            </button>
           </div>
 
           <div className="signature__container">
             <SignatureCanvas
-              ref={(data) => {
-                setSign(data);
-              }}
+              ref={(data) => setSign(data)}
               penColor="black"
               canvasProps={{ width: 350, height: 300, className: "sigCanvas" }}
             />
-
-            <button className="btn clear" onClick={handleClearCanvas}>
+            <button
+              type="button"
+              className="btn clear"
+              onClick={() => sign && sign.clear()}
+            >
               Clear
             </button>
           </div>
         </div>
 
-        <button className="submit btn">Submit</button>
+        <button type="submit" className="submit btn">
+          Submit
+        </button>
       </form>
 
       <footer className="footer">
