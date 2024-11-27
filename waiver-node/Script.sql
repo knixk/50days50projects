@@ -24,6 +24,22 @@ CREATE TABLE templates (
 
 select * from submissions;	
 
+-- name contains
+SELECT * 
+FROM submissions
+WHERE name LIKE '%John%';
+
+-- mobile numbers contains
+SELECT * 
+FROM submissions
+WHERE mobile_number LIKE '%123%';
+
+-- last 7 days
+SELECT * 
+FROM submissions
+WHERE submission_date >= CURDATE() - INTERVAL 7 DAY;
+
+
 drop table submissions;
 
 CREATE TABLE submissions (
