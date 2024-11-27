@@ -34,25 +34,42 @@ const postASubmission = (con, data) => {
   console.log("insertion finished..");
 };
 
+// const postATemplate = (con, data) => {
+//   const query = `
+//     INSERT INTO templates (template_name, template_config)
+//     VALUES (?, ?)
+//   `;
+
+//   //   INSERT INTO templates (template_name, template_config)
+//   // VALUES ('Sample Template', '{"key1": "value1", "key2": "value2"}');
+
+//   con.query(
+//     query,
+//     [data.template_name, data.template_config],
+//     (err, result) => {
+//       if (err) throw err;
+//       console.log("Inserted ID:", result.insertId);
+//     }
+//   );
+
+//   console.log("insertion finished..");
+// };
+
 const postATemplate = (con, data) => {
   const query = `
-    INSERT INTO submissions (template_name, template_config)
+    INSERT INTO templates (template_name, template_config)
     VALUES (?, ?)
   `;
 
-  //   INSERT INTO templates (template_name, template_config)
-  // VALUES ('Sample Template', '{"key1": "value1", "key2": "value2"}');
-
   con.query(
     query,
-    [data.template_name, data.template_config],
+    [data.template_name, JSON.stringify(data.template_config)], // Ensure JSON is stringified
     (err, result) => {
       if (err) throw err;
       console.log("Inserted ID:", result.insertId);
+      console.log("Insertion finished.");
     }
   );
-
-  console.log("insertion finished..");
 };
 
 const getSubmissions = async (
@@ -91,6 +108,44 @@ const getSubmissions = async (
     });
   });
 };
+
+const getTemplates = async (
+  con,
+  { template_name = null, days = null } = {}
+) => {
+  let getTemplatesQuery = "SELECT * FROM templates WHERE 1=1"; // Base query to start with
+
+  // Filter by name if provided
+  if (template_name) {
+    getSubmissionsQuery += ` AND name LIKE '%${name}%'`; // Using LIKE for partial matching
+  }
+
+  // Filter by mobile_number if provided
+  if (mobile_number) {
+    getSubmissionsQuery += ` AND mobile_number LIKE '%${mobile_number}%'`;
+  }
+
+  // Filter by email if provided
+  if (email) {
+    getSubmissionsQuery += ` AND email LIKE '%${email}%'`; // Using LIKE for partial matching
+  }
+
+  // Filter by submission date range if provided
+  if (days) {
+    getSubmissionsQuery += ` AND submission_date >= CURDATE() - INTERVAL ${days} DAY`;
+  }
+
+  return new Promise((resolve, reject) => {
+    con.query(getSubmissionsQuery, (err, result, fields) => {
+      if (err) {
+        reject(err); // Reject promise on error
+      } else {
+        resolve(result); // Resolve promise with the result
+      }
+    });
+  });
+};
+
 
 con.connect(function (err) {
   if (err) throw err;
@@ -147,7 +202,7 @@ app.post("/templates", async (req, res) => {
     template_config: template_config,
   };
 
-  postATemplate(con, data)
+  postATemplate(con, data);
 
   res.status(200).json({
     msg: "template was saved",
