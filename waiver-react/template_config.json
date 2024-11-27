@@ -8,7 +8,7 @@
       "required": false
     },
     {
-      "label": "legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message",
+      "label": "We at unicef believe that every children should have the right for education",
       "image": "./assets/unicef.png",
       "input_type": "text",
       "input_placeholder": "Enter your text..",
@@ -24,21 +24,6 @@
       "label": "Any message you would like to leave us?",
       "input_type": "textarea",
       "question_id": "some_id6"
-    },
-    {
-      "label": "Any message you would like to leave us?",
-      "input_type": "textarea",
-      "question_id": "some_id26"
-    },
-    {
-      "label": "Any message you would like to leave us?",
-      "input_type": "textarea",
-      "question_id": "some_id36"
-    },
-    {
-      "label": "Any message you would like to leave us?",
-      "input_type": "textarea",
-      "question_id": "some_1id6"
     },
     {
       "label": "Example radio",

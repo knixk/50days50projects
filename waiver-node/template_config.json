@@ -3,7 +3,7 @@
     {
       "label": "I am above 18 years of age.",
       "input_type": "dropdown",
-      "values": ["yes", "no"],
+      "values": ["no", "yes"],
       "question_id": "some_id32",
       "required": false
     },
@@ -21,17 +21,14 @@
       "question_id": "some_id5"
     },
     {
-      "label": "Any message you would like to leave us?",
-      "input_type": "textarea",
-      "question_id": "some_id6"
-    },
-    {
       "label": "Example radio",
       "input_type": "radio",
       "values": ["india", "germany", "italy"],
-      "question_id": "some_id6"
+      "question_id": "some_id7"
     }
   ],
+
+  "template_id": "12312312",
 
   "extra_participants_form_fields": ["name", "age", "phone"],
 
