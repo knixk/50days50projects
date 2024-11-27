@@ -9,14 +9,23 @@ const con = mysql.createConnection({
   password: "Gamer12345!",
 });
 
+const selectDB = "use waiver_form;";
+const getSubmissions = "select * from submissions;";
 con.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
 
-  let res = con.query(sql, function (err, result) {
+  let res = con.query(selectDB, function (err, result) {
     if (err) throw err;
-    console.log("Result: " + result);
+    // console.log("Result: " + result);
   });
+
+  let submissions = con.query(getSubmissions);
+  if (!submissions) {
+    console.error("err");
+  }
+
+  console.log(submissions);
 });
 
 app.listen(port, () => {
@@ -35,5 +44,3 @@ app.post("/submit", (req, res) => {
     msg: "form was submitted",
   });
 });
-
-const getQuery = "show databases;";

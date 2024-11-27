@@ -23,7 +23,41 @@ const dummyParticipants = [
   },
 ];
 
+const renderInput = (data, idx) => {
 
+  <div key={nanoid()} className="question__container">
+    <div className="question">{question.label}</div>
+
+    {question.image && (
+      <img className="question__image" src={unicef} alt={question.label} />
+    )}
+
+    {question.input_type == "dropdown" && (
+      <select name="cars" id="cars" required={required}>
+        {question.values.map((elem, idx) => (
+          <option key={nanoid()} value={elem}>
+            {elem}
+          </option>
+        ))}
+      </select>
+    )}
+
+    {question.input_type == "file" && (
+      <input className="file" type="file" required={required} />
+    )}
+
+    {question.input_type == "text" && (
+      <input
+        placeholder={question.input_placeholder && question.input_placeholder}
+        required={required}
+        type="text"
+      />
+    )}
+    {question.input_type == "textarea" && (
+      <textarea placeholder="your text here.." required={required}></textarea>
+    )}
+  </div>;
+};
 
 function App() {
   const questions = data.questions;
@@ -41,6 +75,11 @@ function App() {
   const [signImg, setSignImg] = useState();
 
   const [participantData, setParticipantData] = useState(data3);
+
+    // Handle dynamic input changes
+    const handleInputChange2 = (name, value) => {
+      setParticipantData((prev) => ({ ...prev, [name]: value }));
+    };
 
   // Handler to update the state based on index
   const handleInputChange = (index, event) => {
@@ -194,9 +233,7 @@ function App() {
                   // console.log(fieldKey.length)
                   return (
                     <div className="participant" key={nanoid()}>
-                      <ul className="participant__list">
-                        asdasd
-                      </ul>
+                      <ul className="participant__list">asdasd</ul>
                       <button
                         onClick={() => handleDeleteParticipant(participant.id)}
                         className="btn delete"
