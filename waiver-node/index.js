@@ -3,6 +3,7 @@ const mysql = require("mysql");
 const app = express();
 const port = 5050;
 const template_config = require("./template_config.json");
+const cors = require("cors");
 
 const con = mysql.createConnection({
   host: "localhost",
@@ -128,6 +129,8 @@ con.connect(function (err) {
   });
 });
 
+app.use(cors());
+
 app.listen(port, () => {
   console.log(`app running on port: ${port}..`);
 });
@@ -165,15 +168,27 @@ app.get("/templates", async (req, res) => {
 
 // create submissions
 app.post("/submissions", async (req, res) => {
-  const data = {
-    template_id: 2,
-    submission_data: JSON.stringify({ answer: "Example Answer" }),
-    name: "John D23asdoe",
-    email: "jasdohn@exsdample.com",
-    mobile_number: 1234,
-  };
 
-  postASubmission(con, data);
+  console.log(req.body)
+
+  // const data = {
+  //   template_id: ,
+  //   submission_data: JSON.stringify({ answer: "Example Answer" }),
+  //   name: "John D23asdoe",
+  //   email: "jasdohn@exsdample.com",
+  //   mobile_number: 1234,
+  // };
+
+
+  // const data = {
+  //   template_id: 2,
+  //   submission_data: JSON.stringify({ answer: "Example Answer" }),
+  //   name: "John D23asdoe",
+  //   email: "jasdohn@exsdample.com",
+  //   mobile_number: 1234,
+  // };
+
+  // postASubmission(con, data);
 
   res.status(200).json({
     msg: "form was submitted",

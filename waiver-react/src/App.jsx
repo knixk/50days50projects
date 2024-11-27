@@ -2,6 +2,7 @@ import { useState } from "react";
 import data from "../template_config.json";
 import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
+import axios from "axios";
 
 const dummyParticipants = [
   {
@@ -20,6 +21,20 @@ const dummyParticipants = [
     id: "2123123123",
   },
 ];
+
+const postSubmission = async (data) => {
+  const submissions = "http://localhost:5050/submissions";
+
+  try {
+    const response = await axios.post(submissions, data);
+    console.log("Response:", response.data);
+  } catch (error) {
+    console.error(
+      "Error:",
+      error.response ? error.response.data : error.message
+    );
+  }
+};
 
 function App() {
   const questions = data.questions;
@@ -52,7 +67,17 @@ function App() {
       participants,
       signature: signatureImg,
     };
-    console.log("Payload:", payload);
+    // console.log("Payload:", payload);
+
+    const submission = {
+      template_id: data.template_id,
+      submission_data: payload,
+      name: "kanishk",
+      email: "shrivastavakanishk3@gmail.com",
+      mobile_number: 9820042672,
+    };
+
+    postSubmission(submission);
   };
 
   return (
