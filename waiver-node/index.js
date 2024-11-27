@@ -11,15 +11,14 @@ const con = mysql.createConnection({
 
 const postASubmission = (con, data) => {
   const query = `
-    INSERT INTO submissions (template_id, event_id, submission_data, name, email, mobile_number)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO submissions (template_id, submission_data, name, email, mobile_number)
+    VALUES (?, ?, ?, ?, ?)
   `;
 
   con.query(
     query,
     [
       data.template_id,
-      data.event_id,
       data.submission_data,
       data.name,
       data.email,
@@ -34,7 +33,7 @@ const postASubmission = (con, data) => {
   console.log("insertion finished..");
 };
 
-const getSubmissions = (con, id = null) => {
+const getSubmissions = async (con, id = null) => {
   // const getSubmissionsQuery =
   //   id != NULL
   //     ? `select * from submissions where id = ${id};`
@@ -42,10 +41,23 @@ const getSubmissions = (con, id = null) => {
 
   const getSubmissionsQuery = "select * from submissions;";
 
-  con.query(getSubmissionsQuery, (err, result) => {
+  // con.query(getSubmissionsQuery, (err, result) => {
+  //   if (err) throw err;
+  //   console.log("Inserted ID:", result);
+  // });
+
+  let res;
+
+  await con.query(getSubmissionsQuery, async function (err, result, fields) {
     if (err) throw err;
-    console.log("Inserted ID:", result);
+    console.log("=========>");
+    console.log("result: ", result);
+    console.log("=========>");
+
+    res = await result;
   });
+
+  return res;
 };
 
 con.connect(function (err) {
@@ -64,29 +76,28 @@ app.listen(port, () => {
   console.log(`app running on port: ${port}..`);
 });
 
-app.get("/submissions", (req, res) => {
-  getSubmissions(con);
-  res.send("hello word").status(200);
+// write an api to query data from db
+app.get("/submissions", async (req, res) => {
+  const result = await getSubmissions(con);
+
+  res.status(200).json({
+    data: result,
+  });
 });
 
 // write an api to put data in db
-
-// write an api to query data from db
-app.post("/submissions", (req, res) => {
+app.post("/submissions", async (req, res) => {
   const data = {
-    template_id: 1,
-    event_id: 2,
+    template_id: 2,
     submission_data: JSON.stringify({ answer: "Example Answer" }),
-    name: "John Doe",
-    email: "john@example.com",
-    mobile_number: "1234567890",
+    name: "John D23asdoe",
+    email: "jasdohn@exsdample.com",
+    mobile_number: "12345267890",
   };
 
   postASubmission(con, data);
 
-  /*
   res.status(200).json({
     msg: "form was submitted",
   });
-  */
 });

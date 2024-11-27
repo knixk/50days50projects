@@ -22,18 +22,20 @@ CREATE TABLE templates (
 --     FOREIGN KEY (template_id) REFERENCES templates(id)
 -- );
 
+select * from submissions;	
+
+drop table submissions;
+
 CREATE TABLE submissions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    template_id INT NOT NULL,
-    event_id INT NOT NULL,
+    template_id INT DEFAULT NULL,
+    event_id INT DEFAULT NULL,
     submission_data JSON NOT NULL,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255),
+    email VARCHAR(255) DEFAULT NULL,
     mobile_number VARCHAR(20) NOT NULL,
     submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (template_id) REFERENCES templates(id),
-    FOREIGN KEY (event_id) REFERENCES events(id)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE devices (
@@ -60,3 +62,5 @@ CREATE TABLE events (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+CREATE INDEX idx_name_email_mobile ON submissions (name, email, mobile_number);
