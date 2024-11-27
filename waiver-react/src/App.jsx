@@ -23,6 +23,8 @@ const dummyParticipants = [
   },
 ];
 
+
+
 function App() {
   const questions = data.questions;
   const companyLogo = data.company_logo;
