@@ -77,6 +77,8 @@ function App() {
       mobile_number: 9820042672,
     };
 
+    console.log(submission);
+
     postSubmission(submission);
   };
 
@@ -92,9 +94,15 @@ function App() {
           {questions.map((question) => (
             <div key={question.question_id} className="question__container">
               <div className="question">{question.label}</div>
+
+              {question.image && (
+                <img className="question__image" src={question.image} />
+              )}
+
               {question.input_type === "text" && (
                 <input
                   type="text"
+                  className="text__input"
                   id={question.question_id}
                   placeholder={question.input_placeholder || ""}
                   required={question.required}
@@ -121,6 +129,7 @@ function App() {
               {question.input_type === "file" && (
                 <input
                   type="file"
+                  className="file"
                   id={question.question_id}
                   required={question.required}
                   onChange={(e) =>
@@ -148,12 +157,14 @@ function App() {
                   type="text"
                   placeholder="Name"
                   value={participant.name}
+                  className="participant__input"
                   onChange={(e) =>
                     updateParticipant(index, "name", e.target.value)
                   }
                 />
                 <input
                   type="number"
+                  className="participant__input"
                   placeholder="Age"
                   value={participant.age}
                   onChange={(e) =>

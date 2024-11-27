@@ -8,15 +8,15 @@
       "required": false
     },
     {
-      "label": "We at unicef believe that every children should have the right for education",
-      "image": "./assets/unicef.png",
+      "label": "We at unicef, believe that every children should have the right for education",
+      "image": "https://logowik.com/content/uploads/images/930_unicef.jpg",
       "input_type": "text",
       "input_placeholder": "Enter your text..",
       "question_id": "some_id4",
       "required": false
     },
     {
-      "label": "message legal message legal message legal message legal message legal message",
+      "label": "Please attach your file here..",
       "input_type": "file",
       "question_id": "some_id5"
     },
