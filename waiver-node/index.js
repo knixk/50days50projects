@@ -129,6 +129,9 @@ con.connect(function (err) {
   });
 });
 
+// Middleware to parse JSON body
+app.use(express.json());
+
 app.use(cors());
 
 app.listen(port, () => {
@@ -168,27 +171,15 @@ app.get("/templates", async (req, res) => {
 
 // create submissions
 app.post("/submissions", async (req, res) => {
+  const data = {
+    template_id: req.body.template_id,
+    submission_data: JSON.stringify(req.body.submission_data),
+    name: req.body.name,
+    email: req.body.email,
+    mobile_number: req.body.mobile_number,
+  };
 
-  console.log(req.body)
-
-  // const data = {
-  //   template_id: ,
-  //   submission_data: JSON.stringify({ answer: "Example Answer" }),
-  //   name: "John D23asdoe",
-  //   email: "jasdohn@exsdample.com",
-  //   mobile_number: 1234,
-  // };
-
-
-  // const data = {
-  //   template_id: 2,
-  //   submission_data: JSON.stringify({ answer: "Example Answer" }),
-  //   name: "John D23asdoe",
-  //   email: "jasdohn@exsdample.com",
-  //   mobile_number: 1234,
-  // };
-
-  // postASubmission(con, data);
+  postASubmission(con, data);
 
   res.status(200).json({
     msg: "form was submitted",

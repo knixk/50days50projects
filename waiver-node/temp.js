@@ -15,3 +15,15 @@
 
 //   console.log(submissions);
 // });
+
+
+
+
+  // sample data
+  // const data = {
+  //   template_id: 2,
+  //   submission_data: JSON.stringify({ answer: "Example Answer" }),
+  //   name: "John D23asdoe",
+  //   email: "jasdohn@exsdample.com",
+  //   mobile_number: 1234,
+  // };
