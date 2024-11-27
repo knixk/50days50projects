@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./App.css";
 import data from "../template_config.json";
 import unicef from "./assets/unicef.png";
 import SignatureCanvas from "react-signature-canvas";
@@ -23,77 +22,18 @@ const dummyParticipants = [
   },
 ];
 
-const renderInput = (data, idx) => {
-  <div key={nanoid()} className="question__container">
-    <div className="question">{question.label}</div>
-
-    {question.image && (
-      <img className="question__image" src={unicef} alt={question.label} />
-    )}
-
-    {question.input_type == "dropdown" && (
-      <select name="cars" id="cars" required={required}>
-        {question.values.map((elem, idx) => (
-          <option key={nanoid()} value={elem}>
-            {elem}
-          </option>
-        ))}
-      </select>
-    )}
-
-    {question.input_type == "file" && (
-      <input className="file" type="file" required={required} />
-    )}
-
-    {question.input_type == "text" && (
-      <input
-        placeholder={question.input_placeholder && question.input_placeholder}
-        required={required}
-        type="text"
-      />
-    )}
-    {question.input_type == "textarea" && (
-      <textarea placeholder="your text here.." required={required}></textarea>
-    )}
-  </div>;
-};
-
 function App() {
   const questions = data.questions;
   const companyLogo = data.company_logo;
   const extraFields = data.extra_participants_form_fields;
-
-  const data3 = extraFields.map((field) => {
-    return {
-      [field]: "",
-    };
-  });
 
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState(dummyParticipants);
   const [signImg, setSignImg] = useState();
   const [participantData, setParticipantData] = useState([]);
 
-  // Handle dynamic input changes
-  const handleInputChange2 = (name, value) => {
-    setParticipantData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Handler to update the state based on index
-  // const handleInputChange = (index, event) => {
-  //   const { name, value } = event.target;
-
-  //   // Create a new copy of the state array
-  //   const updatedData = [...participantData];
-
-  //   // Update the correct object in the array
-  //   updatedData[index] = { ...updatedData[index], [name]: value };
-
-  //   // Set the new state
-  //   setParticipantData(updatedData);
-  // };
-
-  // console.log(initialParticipantData);
+  // main state
+  const [mainState, setMainState] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -103,32 +43,12 @@ function App() {
     // console.log("form was submitted");
   };
 
-  const handleDeleteParticipant = (id) => {
-    const oldData = participants;
-
-    // return all the ones where the id is not eq to the currId
-    const newData = oldData.filter((p) => {
-      return p.id !== id;
-    });
-    setParticipants(newData);
-  };
-
-  const handleAddParticipant = () => {
-    const oldData = participants;
-
-    const newData = participantData.reduce(
-      (acc, field) => ({ ...acc, ...field }),
-      {}
-    );
-
-    const finalData = [...oldData, newData];
-
-    setParticipants(finalData);
-    console.log(finalData);
-  };
-
   const handleClearCanvas = () => {
     sign && sign.clear();
+  };
+
+  const handleForm = (e) => {
+    console.log(e.target.value);
   };
 
   return (
@@ -155,7 +75,7 @@ function App() {
                 )}
 
                 {question.input_type == "dropdown" && (
-                  <select name="cars" id="cars" required={required}>
+                  <select name="cars" id="cars" required={required} onChange={handleForm}>
                     {question.values.map((elem, idx) => (
                       <option key={nanoid()} value={elem}>
                         {elem}
@@ -165,11 +85,17 @@ function App() {
                 )}
 
                 {question.input_type == "file" && (
-                  <input className="file" type="file" required={required} />
+                  <input
+                    onChange={handleForm}
+                    className="file"
+                    type="file"
+                    required={required}
+                  />
                 )}
 
                 {question.input_type == "text" && (
                   <input
+                    onChange={handleForm}
                     placeholder={
                       question.input_placeholder && question.input_placeholder
                     }
@@ -179,6 +105,7 @@ function App() {
                 )}
                 {question.input_type == "textarea" && (
                   <textarea
+                    onChange={handleForm}
                     placeholder="your text here.."
                     required={required}
                   ></textarea>
@@ -190,7 +117,6 @@ function App() {
           <div className="participants__wrapper">
             <div className="participant__info">
               {participantData.map((item, index) => {
-                // Get the key (like "name" or "age") from the object
                 const fieldKey = Object.keys(item)[0];
                 return (
                   <input
@@ -203,18 +129,13 @@ function App() {
                 );
               })}
 
-              <button
-                className="add__participant btn"
-                onClick={handleAddParticipant}
-              >
-                Add participant
-              </button>
+              <button className="add__participant btn">Add participant</button>
             </div>
             <div className="participants__container">
               {participants &&
                 participants.map((participant, idx) => {
                   return (
-                    <div className="participant" key={nanoid()}>
+                    <div className="participant" key={idx}>
                       <ul className="participant__list">{participant.name}</ul>
                       <button
                         onClick={() => handleDeleteParticipant(participant.id)}
@@ -242,8 +163,6 @@ function App() {
             </button>
           </div>
         </div>
-
-        {/* {signImg && <img src={signImg} className="signature" />} */}
 
         <button className="submit btn">Submit</button>
       </form>
