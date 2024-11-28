@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import data from "../template_config.json";
 import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
@@ -35,6 +35,9 @@ const postSubmission = async (data) => {
     );
   }
 };
+
+
+
 
 function App() {
   const questions = data.questions;
@@ -81,6 +84,13 @@ function App() {
 
     postSubmission(submission);
   };
+
+  const fetchTemplate = () => {
+
+  }
+
+  useEffect(() => {
+  }, [])
 
   return (
     <div className="app__container">

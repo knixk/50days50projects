@@ -65,11 +65,16 @@ CREATE TABLE devices (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+
 CREATE TABLE centers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     center_name VARCHAR(255) NOT NULL,
     address VARCHAR(255),
-    contact_info JSON
+    contact_info JSON,
+    template_id INT NOT NULL,
+    FOREIGN KEY (template_id) REFERENCES templates(id)
+
 );
 
 CREATE TABLE events (
