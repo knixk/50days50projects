@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import data from "../template_config.json";
 import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
 import axios from "axios";
@@ -49,13 +48,9 @@ function Form() {
   const [extraFields, setExtraFields] = useState();
   const [center, setCenter] = useState(false);
 
-  //   const { centerId } = useParams();
-  //   console.log(centerId);
 
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
-
-  //   console.log(centreId);
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
