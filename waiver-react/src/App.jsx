@@ -23,18 +23,19 @@ const dummyParticipants = [
 ];
 
 function App() {
-  const questions = data.questions;
-  const companyLogo = data.company_logo;
-  const extraFields = data.extra_participants_form_fields;
+  // const questions = data.questions;
+  // const companyLogo = data.company_logo;
+  // const extraFields = data.extra_participants_form_fields;
 
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState(dummyParticipants);
   const [formData, setFormData] = useState({});
   const [templateId, setTemplateId] = useState(null);
+  const [tempData, setTempData] = useState();
   // const [data, setData] = useState();
-  // const [questions, setQuestions] = useState();
-  // const [companyLogo, setCompanyLogo] = useState();
-  // const [extraFields, setExtraFields] = useState();
+  const [questions, setQuestions] = useState();
+  const [companyLogo, setCompanyLogo] = useState();
+  const [extraFields, setExtraFields] = useState();
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -111,16 +112,22 @@ function App() {
 
       try {
         const response = await axios.get(templates);
-        console.log(response);
+        const myData = response.data.data[0].template_config;
+
+        console.log(myData);
+
+        if (myData) {
+          setTempData(myData);
+          setQuestions(myData.questions);
+          setCompanyLogo(myData.company_logo);
+          setExtraFields(myData.extra_participants_form_fields);
+        }
         // console.log("Response:", response.data.data[0].template_config);
         // const template = response.data.data[0].template_config;
         // console.log(template);
         // setData(template);
         // console.log(template);
 
-        // template && setQuestions(template.questions);
-        // template && setCompanyLogo(template.company_logo);
-        // template && setExtraFields(template.extra_participants_form_fields);
         // return response.data;
       } catch (error) {
         console.error(
@@ -129,11 +136,13 @@ function App() {
         );
       }
     };
+
+    fetchTemplate();
   }, []);
 
   return (
     <div className="app__container">
-      {true ? (
+      {tempData ? (
         <div>
           <nav className="nav">
             <img className="company__logo" src={companyLogo} alt="" />
