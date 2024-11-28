@@ -179,7 +179,7 @@ app.post("/submissions", async (req, res) => {
     mobile_number: req.body.mobile_number,
   };
   
-  // postASubmission(con, data);
+  postASubmission(con, data);
 
   res.status(200).json({
     msg: "form was submitted",

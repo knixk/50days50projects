@@ -42,7 +42,7 @@ function App() {
   const extraFields = data.extra_participants_form_fields;
 
   const [sign, setSign] = useState();
-  const [participants, setParticipants] = useState([]);
+  const [participants, setParticipants] = useState(dummyParticipants);
   const [formData, setFormData] = useState({});
 
   const handleInputChange = (id, value) => {
