@@ -240,6 +240,8 @@ app.get("/centers", async (req, res) => {
 
 // get all the templates
 app.get("/template-id-from-center", async (req, res) => {
+
+  console.log(req.body)
   // get this from query params
   const filterOptions = {
     center_name: "game",
