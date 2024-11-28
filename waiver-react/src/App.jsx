@@ -120,6 +120,7 @@ function App() {
           setExtraFields(myData.extra_participants_form_fields);
         }
       } catch (error) {
+        alert("template doesn't exist");
         console.error(
           "Error:",
           error.response ? error.response.data : error.message
