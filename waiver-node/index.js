@@ -116,21 +116,21 @@ const getTemplates = async (
   con,
   { template_name = null, days = null, id = null } = {}
 ) => {
-  let getTemplatesQuery = "SELECT * FROM templates WHERE 1=1"; // Base query to start with
+  let getTemplatesQuery = `SELECT * FROM templates WHERE id=${id};`; // Base query to start with
 
   // Filter by name if provided
-  if (template_name) {
-    getTemplatesQuery += ` AND template_name LIKE '%${template_name}%'`; // Using LIKE for partial matching
-  }
+  // if (template_name) {
+  //   getTemplatesQuery += ` AND template_name LIKE '%${template_name}%'`; // Using LIKE for partial matching
+  // }
 
   // Filter by submission date range if provided
-  if (days) {
-    getTemplatesQuery += ` AND updated_at >= CURDATE() - INTERVAL ${days} DAY`;
-  }
+  // if (days) {
+  //   getTemplatesQuery += ` AND updated_at >= CURDATE() - INTERVAL ${days} DAY`;
+  // }
 
-  if (id) {
-    getTemplatesQuery += `AND id LIKE '%${id}%`;
-  }
+  // if (id) {
+  //   getTemplatesQuery += `AND id LIKE '%${id}%`;
+  // }
 
   return new Promise((resolve, reject) => {
     con.query(getTemplatesQuery, (err, result, fields) => {
@@ -209,11 +209,10 @@ app.get("/submissions", async (req, res) => {
 
 // get all the templates
 app.get("/templates", async (req, res) => {
+  console.log(req.body);
   // get this from query params
   const filterOptions = {
-    // template_name: "party",
-    // days: 2,
-    // template_id: 0,
+    id: 1,
   };
 
   const result = await getTemplates(con, filterOptions);
@@ -240,8 +239,7 @@ app.get("/centers", async (req, res) => {
 
 // get all the templates
 app.get("/template-id-from-center", async (req, res) => {
-
-  console.log(req.body)
+  console.log(req.body);
   // get this from query params
   const filterOptions = {
     center_name: "game",

@@ -32,14 +32,14 @@ function App() {
   const [questions, setQuestions] = useState();
   const [companyLogo, setCompanyLogo] = useState();
   const [extraFields, setExtraFields] = useState();
-  const [center, setCenter] = useState(null);
+  const [center, setCenter] = useState(false);
 
   //   const { centerId } = useParams();
   //   console.log(centerId);
 
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
-  setCenter(centerParams);
+  !center && setCenter(centerParams);
 
   //   console.log(centreId);
 
@@ -103,18 +103,15 @@ function App() {
     };
 
     const fetchTemplate = async () => {
-      const templates = "http://localhost:5050/template-id-from-center";
+      const templates = "http://localhost:5050/templates";
 
       const options = {
-        center: 1,
+        id: 1,
       };
 
       try {
-        const response = await axios.get(templates, options);
-        
+        const response = await axios.post(templates, options);
         const myData = JSON.parse(response.data.data[0].template_config);
-
-        console.log(myData)
 
         if (myData) {
           setTempData(myData);
