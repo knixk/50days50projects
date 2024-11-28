@@ -12,21 +12,20 @@
       "input_type": "file",
       "question_id": "some_id5"
     },
+
     {
-      "label": "Example radio",
-      "input_type": "radio",
-      "values": ["india", "germany", "italy"],
-      "question_id": "some_id7"
+      "label": "Just a label",
+      "question_id": "some_id25"
     },
     {
       "label": "Example radio",
       "input_type": "radio",
-      "values": ["india", "germany", "italy"],
-      "question_id": "some_id7"
+      "values": ["eu", "aisa", "america"],
+      "question_id": "some_id7a"
     }
   ],
 
-  "template_id": "2",
+  "template_id": "1230903",
 
   "extra_participants_form_fields": ["name", "age", "phone"],
 
@@ -35,15 +34,15 @@
   "user_data": {
     "name": {
       "label": "Enter your name.",
-      "question_id": "some_id"
+      "question_id": "some_12id"
     },
     "age": {
       "label": "Enter your age.",
-      "question_id": "some_id1"
+      "question_id": "somed_id1"
     },
     "email": {
       "label": "Enter your email.",
-      "question_id": "some_id2"
+      "question_id": "some_isdd2"
     }
   }
 }

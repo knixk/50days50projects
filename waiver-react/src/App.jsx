@@ -25,7 +25,7 @@ const dummyParticipants = [
 
 function App() {
   const [sign, setSign] = useState();
-  const [participants, setParticipants] = useState(dummyParticipants);
+  const [participants, setParticipants] = useState([]);
   const [formData, setFormData] = useState({});
   const [templateId, setTemplateId] = useState(null);
   const [tempData, setTempData] = useState();
