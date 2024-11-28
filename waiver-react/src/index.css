@@ -3,6 +3,7 @@
   --label-color: rgb(72, 108, 167);
   --theme-color: rgb(160, 26, 93);
   --header-color: rgb(30, 126, 190);
+  --hover-bg: rgb(228, 228, 228);
 }
 
 * {
@@ -54,6 +55,7 @@ footer {
   flex-direction: column;
   background-color: var(--theme-color);
   border-radius: 5px;
+  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
 }
 
 img {
@@ -74,6 +76,7 @@ input {
   padding: 10px 10px;
   margin: 0;
   border-radius: 0 0 2px 2px;
+  /* width: 653px; */
 }
 
 select {
@@ -85,8 +88,19 @@ select {
 }
 
 select:hover {
-  /* background-color: rgb(231, 231, 231); */
+  /* background-color: var(--hover-bg); */
 }
+
+.dropdown__option {
+  border: 2px solid white;
+}
+
+input:hover {
+  /* background-color: var(--hover-bg); */
+  /* transition: 0.3s; */
+}
+
+
 
 .question__image {
   width: 180px;
@@ -201,4 +215,22 @@ textarea {
 
 .radio__container {
   padding: 10px 10px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  /* color: white; */
+  /* letter-spacing: 2px; */
+  background-color: white;
+  transition: 0.3s;
+}
+
+.custom-file-upload:hover {
+  background-color: var(--hover-bg);
 }

@@ -184,25 +184,33 @@ function App() {
                         }
                       >
                         {question.values.map((option) => (
-                          <option key={option} value={option}>
+                          <option className="dropdown__option" key={option} value={option}>
                             {option}
                           </option>
                         ))}
                       </select>
                     )}
                     {question.input_type === "file" && (
-                      <input
-                        type="file"
-                        className="file"
-                        id={question.question_id}
-                        required={question.required}
-                        onChange={(e) =>
-                          handleInputChange(
-                            question.question_id,
-                            e.target.files[0]
-                          )
-                        }
-                      />
+                      <>
+                        <label
+                          for={question.question_id}
+                          class="custom-file-upload"
+                        >
+                          Custom Upload
+                        </label>
+                        <input
+                          type="file"
+                          className="file"
+                          id={question.question_id}
+                          required={question.required}
+                          onChange={(e) =>
+                            handleInputChange(
+                              question.question_id,
+                              e.target.files[0]
+                            )
+                          }
+                        />
+                      </>
                     )}
                     {question.input_type === "textarea" && (
                       <textarea
@@ -220,7 +228,10 @@ function App() {
 
                     {question.input_type === "radio" &&
                       question.values.map((option) => (
-                        <div className="label__container radio__container">
+                        <div
+                          key={option}
+                          className="label__container radio__container"
+                        >
                           <label key={option} className="radio-label">
                             <input
                               type="radio"
