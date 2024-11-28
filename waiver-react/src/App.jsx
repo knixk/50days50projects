@@ -31,51 +31,10 @@ function App() {
   const [participants, setParticipants] = useState(dummyParticipants);
   const [formData, setFormData] = useState({});
   const [templateId, setTemplateId] = useState(null);
-
-  const postSubmission = async (data) => {
-    const submissions = "http://localhost:5050/submissions";
-
-    try {
-      const response = await axios.post(submissions, data);
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
-
-  const getTemplateIdFromCenter = async (data) => {
-    const templateIdFromCenter =
-      "http://localhost:5050/template-id-from-center";
-
-    try {
-      const response = await axios.get(templateIdFromCenter);
-      console.log("Response:", response.data.template_id);
-      setTemplateId(response.data.template_id);
-    } catch (error) {
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
-
-  const fetchTemplate = async () => {
-    const templates = "http://localhost:5050/templates";
-
-    try {
-      const response = await axios.get(templates);
-      console.log("Response:", response.data);
-      return response.data;
-    } catch (error) {
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
+  // const [data, setData] = useState();
+  // const [questions, setQuestions] = useState();
+  // const [companyLogo, setCompanyLogo] = useState();
+  // const [extraFields, setExtraFields] = useState();
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -115,143 +74,199 @@ function App() {
   };
 
   useEffect(() => {
-    // getTemplateIdFromCenter();
-    // templateId && console.log(templateId);
-    const asyncFn = () => {
-      const template = fetchTemplate();
-      console.log(template);
+    const postSubmission = async (data) => {
+      const submissions = "http://localhost:5050/submissions";
+
+      try {
+        const response = await axios.post(submissions, data);
+        console.log("Response:", response.data);
+        return response.data;
+      } catch (error) {
+        console.error(
+          "Error:",
+          error.response ? error.response.data : error.message
+        );
+      }
     };
 
-    asyncFn();
+    const getTemplateIdFromCenter = async (data) => {
+      const templateIdFromCenter =
+        "http://localhost:5050/template-id-from-center";
 
-    // fetchTemplate()
+      try {
+        const response = await axios.get(templateIdFromCenter);
+        console.log("Response:", response.data.template_id);
+        setTemplateId(response.data.template_id);
+        return response.data.template_id;
+      } catch (error) {
+        console.error(
+          "Error:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    };
+
+    const fetchTemplate = async () => {
+      const templates = "http://localhost:5050/templates";
+
+      try {
+        const response = await axios.get(templates);
+        console.log(response);
+        // console.log("Response:", response.data.data[0].template_config);
+        // const template = response.data.data[0].template_config;
+        // console.log(template);
+        // setData(template);
+        // console.log(template);
+
+        // template && setQuestions(template.questions);
+        // template && setCompanyLogo(template.company_logo);
+        // template && setExtraFields(template.extra_participants_form_fields);
+        // return response.data;
+      } catch (error) {
+        console.error(
+          "Error:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    };
   }, []);
 
   return (
     <div className="app__container">
-      <nav className="nav">
-        <img className="company__logo" src={companyLogo} alt="" />
-        <p className="waiver__logo">WaiverForm</p>
-      </nav>
+      {true ? (
+        <div>
+          <nav className="nav">
+            <img className="company__logo" src={companyLogo} alt="" />
+            <p className="waiver__logo">WaiverForm</p>
+          </nav>
+          <form onSubmit={handleSubmit} className="form__wrapper">
+            <div className="form__container">
+              {questions.map((question) => (
+                <div key={question.question_id} className="question__container">
+                  <div className="question">{question.label}</div>
 
-      <form onSubmit={handleSubmit} className="form__wrapper">
-        <div className="form__container">
-          {questions.map((question) => (
-            <div key={question.question_id} className="question__container">
-              <div className="question">{question.label}</div>
+                  {question.image && (
+                    <img className="question__image" src={question.image} />
+                  )}
 
-              {question.image && (
-                <img className="question__image" src={question.image} />
-              )}
+                  {question.input_type === "text" && (
+                    <input
+                      type="text"
+                      className="text__input"
+                      id={question.question_id}
+                      placeholder={question.input_placeholder || ""}
+                      required={question.required}
+                      onChange={(e) =>
+                        handleInputChange(question.question_id, e.target.value)
+                      }
+                    />
+                  )}
+                  {question.input_type === "dropdown" && (
+                    <select
+                      id={question.question_id}
+                      required={question.required}
+                      onChange={(e) =>
+                        handleInputChange(question.question_id, e.target.value)
+                      }
+                    >
+                      {question.values.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                  {question.input_type === "file" && (
+                    <input
+                      type="file"
+                      className="file"
+                      id={question.question_id}
+                      required={question.required}
+                      onChange={(e) =>
+                        handleInputChange(
+                          question.question_id,
+                          e.target.files[0]
+                        )
+                      }
+                    />
+                  )}
+                  {question.input_type === "textarea" && (
+                    <textarea
+                      id={question.question_id}
+                      placeholder="Your text here..."
+                      required={question.required}
+                      onChange={(e) =>
+                        handleInputChange(question.question_id, e.target.value)
+                      }
+                    />
+                  )}
+                </div>
+              ))}
 
-              {question.input_type === "text" && (
-                <input
-                  type="text"
-                  className="text__input"
-                  id={question.question_id}
-                  placeholder={question.input_placeholder || ""}
-                  required={question.required}
-                  onChange={(e) =>
-                    handleInputChange(question.question_id, e.target.value)
-                  }
-                />
-              )}
-              {question.input_type === "dropdown" && (
-                <select
-                  id={question.question_id}
-                  required={question.required}
-                  onChange={(e) =>
-                    handleInputChange(question.question_id, e.target.value)
-                  }
+              <div className="participants__container">
+                {participants.map((participant, index) => (
+                  <div key={participant.id} className="participant">
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={participant.name}
+                      className="participant__input"
+                      onChange={(e) =>
+                        updateParticipant(index, "name", e.target.value)
+                      }
+                    />
+                    <input
+                      type="number"
+                      className="participant__input"
+                      placeholder="Age"
+                      value={participant.age}
+                      onChange={(e) =>
+                        updateParticipant(index, "age", e.target.value)
+                      }
+                    />
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={addParticipant}
+                  className="add__participant btn"
                 >
-                  {question.values.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              )}
-              {question.input_type === "file" && (
-                <input
-                  type="file"
-                  className="file"
-                  id={question.question_id}
-                  required={question.required}
-                  onChange={(e) =>
-                    handleInputChange(question.question_id, e.target.files[0])
-                  }
-                />
-              )}
-              {question.input_type === "textarea" && (
-                <textarea
-                  id={question.question_id}
-                  placeholder="Your text here..."
-                  required={question.required}
-                  onChange={(e) =>
-                    handleInputChange(question.question_id, e.target.value)
-                  }
-                />
-              )}
-            </div>
-          ))}
-
-          <div className="participants__container">
-            {participants.map((participant, index) => (
-              <div key={participant.id} className="participant">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={participant.name}
-                  className="participant__input"
-                  onChange={(e) =>
-                    updateParticipant(index, "name", e.target.value)
-                  }
-                />
-                <input
-                  type="number"
-                  className="participant__input"
-                  placeholder="Age"
-                  value={participant.age}
-                  onChange={(e) =>
-                    updateParticipant(index, "age", e.target.value)
-                  }
-                />
+                  Add Participant
+                </button>
               </div>
-            ))}
-            <button
-              type="button"
-              onClick={addParticipant}
-              className="add__participant btn"
-            >
-              Add Participant
-            </button>
-          </div>
 
-          <div className="signature__container">
-            <SignatureCanvas
-              ref={(data) => setSign(data)}
-              penColor="black"
-              canvasProps={{ width: 350, height: 300, className: "sigCanvas" }}
-            />
-            <button
-              type="button"
-              className="btn clear"
-              onClick={() => sign && sign.clear()}
-            >
-              Clear
+              <div className="signature__container">
+                <SignatureCanvas
+                  ref={(data) => setSign(data)}
+                  penColor="black"
+                  canvasProps={{
+                    width: 350,
+                    height: 300,
+                    className: "sigCanvas",
+                  }}
+                />
+                <button
+                  type="button"
+                  className="btn clear"
+                  onClick={() => sign && sign.clear()}
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" className="submit btn">
+              Submit
             </button>
-          </div>
+          </form>
+          <footer className="footer">
+            <img className="company__logo" src={companyLogo} alt="" />
+            <p className="waiver__logo">CompanyName &copy;</p>
+          </footer>
         </div>
-
-        <button type="submit" className="submit btn">
-          Submit
-        </button>
-      </form>
-
-      <footer className="footer">
-        <img className="company__logo" src={companyLogo} alt="" />
-        <p className="waiver__logo">CompanyName &copy;</p>
-      </footer>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }
