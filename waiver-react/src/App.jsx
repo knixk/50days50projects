@@ -145,72 +145,89 @@ function App() {
       {tempData ? (
         <div>
           <nav className="nav">
-            <img className="company__logo" src={companyLogo} alt="" />
+            <img
+              className="company__logo"
+              src={companyLogo && companyLogo}
+              alt=""
+            />
             <p className="waiver__logo">WaiverForm</p>
           </nav>
           <form onSubmit={handleSubmit} className="form__wrapper">
             <div className="form__container">
-              {questions.map((question) => (
-                <div key={question.question_id} className="question__container">
-                  <div className="question">{question.label}</div>
+              {questions &&
+                questions.map((question) => (
+                  <div
+                    key={question.question_id}
+                    className="question__container"
+                  >
+                    <div className="question">{question.label}</div>
 
-                  {question.image && (
-                    <img className="question__image" src={question.image} />
-                  )}
+                    {question.image && (
+                      <img className="question__image" src={question.image} />
+                    )}
 
-                  {question.input_type === "text" && (
-                    <input
-                      type="text"
-                      className="text__input"
-                      id={question.question_id}
-                      placeholder={question.input_placeholder || ""}
-                      required={question.required}
-                      onChange={(e) =>
-                        handleInputChange(question.question_id, e.target.value)
-                      }
-                    />
-                  )}
-                  {question.input_type === "dropdown" && (
-                    <select
-                      id={question.question_id}
-                      required={question.required}
-                      onChange={(e) =>
-                        handleInputChange(question.question_id, e.target.value)
-                      }
-                    >
-                      {question.values.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                  {question.input_type === "file" && (
-                    <input
-                      type="file"
-                      className="file"
-                      id={question.question_id}
-                      required={question.required}
-                      onChange={(e) =>
-                        handleInputChange(
-                          question.question_id,
-                          e.target.files[0]
-                        )
-                      }
-                    />
-                  )}
-                  {question.input_type === "textarea" && (
-                    <textarea
-                      id={question.question_id}
-                      placeholder="Your text here..."
-                      required={question.required}
-                      onChange={(e) =>
-                        handleInputChange(question.question_id, e.target.value)
-                      }
-                    />
-                  )}
-                </div>
-              ))}
+                    {question.input_type === "text" && (
+                      <input
+                        type="text"
+                        className="text__input"
+                        id={question.question_id}
+                        placeholder={question.input_placeholder || ""}
+                        required={question.required}
+                        onChange={(e) =>
+                          handleInputChange(
+                            question.question_id,
+                            e.target.value
+                          )
+                        }
+                      />
+                    )}
+                    {question.input_type === "dropdown" && (
+                      <select
+                        id={question.question_id}
+                        required={question.required}
+                        onChange={(e) =>
+                          handleInputChange(
+                            question.question_id,
+                            e.target.value
+                          )
+                        }
+                      >
+                        {question.values.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                    {question.input_type === "file" && (
+                      <input
+                        type="file"
+                        className="file"
+                        id={question.question_id}
+                        required={question.required}
+                        onChange={(e) =>
+                          handleInputChange(
+                            question.question_id,
+                            e.target.files[0]
+                          )
+                        }
+                      />
+                    )}
+                    {question.input_type === "textarea" && (
+                      <textarea
+                        id={question.question_id}
+                        placeholder="Your text here..."
+                        required={question.required}
+                        onChange={(e) =>
+                          handleInputChange(
+                            question.question_id,
+                            e.target.value
+                          )
+                        }
+                      />
+                    )}
+                  </div>
+                ))}
 
               <div className="participants__container">
                 {participants.map((participant, index) => (
