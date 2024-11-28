@@ -23,16 +23,12 @@ const dummyParticipants = [
 ];
 
 function App() {
-  // const questions = data.questions;
-  // const companyLogo = data.company_logo;
-  // const extraFields = data.extra_participants_form_fields;
 
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState(dummyParticipants);
   const [formData, setFormData] = useState({});
   const [templateId, setTemplateId] = useState(null);
   const [tempData, setTempData] = useState();
-  // const [data, setData] = useState();
   const [questions, setQuestions] = useState();
   const [companyLogo, setCompanyLogo] = useState();
   const [extraFields, setExtraFields] = useState();
@@ -59,7 +55,6 @@ function App() {
       participants,
       signature: signatureImg,
     };
-    // console.log("Payload:", payload);
 
     const submission = {
       template_id: data.template_id,
@@ -112,9 +107,7 @@ function App() {
 
       try {
         const response = await axios.get(templates);
-        const myData = response.data.data[0].template_config;
-
-        console.log(myData);
+        const myData = JSON.parse(response.data.data[0].template_config);
 
         if (myData) {
           setTempData(myData);
@@ -122,13 +115,7 @@ function App() {
           setCompanyLogo(myData.company_logo);
           setExtraFields(myData.extra_participants_form_fields);
         }
-        // console.log("Response:", response.data.data[0].template_config);
-        // const template = response.data.data[0].template_config;
-        // console.log(template);
-        // setData(template);
-        // console.log(template);
 
-        // return response.data;
       } catch (error) {
         console.error(
           "Error:",
