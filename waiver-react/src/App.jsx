@@ -3,6 +3,7 @@ import data from "../template_config.json";
 import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const dummyParticipants = [
   {
@@ -31,6 +32,15 @@ function App() {
   const [questions, setQuestions] = useState();
   const [companyLogo, setCompanyLogo] = useState();
   const [extraFields, setExtraFields] = useState();
+
+  //   const { centerId } = useParams();
+  //   console.log(centerId);
+
+  const queryParameters = new URLSearchParams(window.location.search);
+  const center = queryParameters.get("center");
+
+  console.log(center);
+  //   console.log(centreId);
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -211,7 +221,10 @@ function App() {
                             value={option}
                             checked={formData[question.question_id] === option}
                             onChange={(e) =>
-                              handleRadioChange(question.question_id, e.target.value)
+                              handleRadioChange(
+                                question.question_id,
+                                e.target.value
+                              )
                             }
                           />
                           {option}
