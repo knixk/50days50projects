@@ -11,6 +11,7 @@ const con = mysql.createConnection({
   password: "Gamer12345!",
 });
 
+// controllers
 const postASubmission = (con, data) => {
   const query = `
     INSERT INTO submissions (template_id, submission_data, name, email, mobile_number)
@@ -44,6 +45,28 @@ const postATemplate = (con, data) => {
   con.query(
     query,
     [data.template_name, JSON.stringify(data.template_config)], // Ensure JSON is stringified
+    (err, result) => {
+      if (err) throw err;
+      console.log("Inserted ID:", result.insertId);
+      console.log("Insertion finished.");
+    }
+  );
+};
+
+const postACenter = (con, data) => {
+  const query = `
+    INSERT INTO centers (center_name, address, contact_info, template_id)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  con.query(
+    query,
+    [
+      data.center_name,
+      data.address,
+      JSON.stringify(data.contact_info),
+      data.template_id,
+    ], // Ensure JSON is stringified
     (err, result) => {
       if (err) throw err;
       console.log("Inserted ID:", result.insertId);
@@ -91,7 +114,7 @@ const getSubmissions = async (
 
 const getTemplates = async (
   con,
-  { template_name = null, days = null } = {}
+  { template_name = null, days = null, id = null } = {}
 ) => {
   let getTemplatesQuery = "SELECT * FROM templates WHERE 1=1"; // Base query to start with
 
@@ -105,11 +128,40 @@ const getTemplates = async (
     getTemplatesQuery += ` AND updated_at >= CURDATE() - INTERVAL ${days} DAY`;
   }
 
+  if (id) {
+    getTemplatesQuery += `AND id LIKE '%${id}%`;
+  }
+
   return new Promise((resolve, reject) => {
     con.query(getTemplatesQuery, (err, result, fields) => {
       if (err) {
         reject(err); // Reject promise on error
       } else {
+        resolve(result); // Resolve promise with the result
+      }
+    });
+  });
+};
+
+const getCenters = async (con, { center_name = null, days = null } = {}) => {
+  let getCentersQuery = "SELECT * FROM centers WHERE 1=1"; // Base query to start with
+
+  // Filter by name if provided
+  if (center_name) {
+    getCentersQuery += ` AND center_name LIKE '%${center_name}%'`; // Using LIKE for partial matching
+  }
+
+  // Filter by submission date range if provided
+  // if (days) {
+  //   getCentersQuery += ` AND updated_at >= CURDATE() - INTERVAL ${days} DAY`;
+  // }
+
+  return new Promise((resolve, reject) => {
+    con.query(getCentersQuery, (err, result, fields) => {
+      if (err) {
+        reject(err); // Reject promise on error
+      } else {
+        console.log(result[0].template_id);
         resolve(result); // Resolve promise with the result
       }
     });
@@ -138,6 +190,7 @@ app.listen(port, () => {
   console.log(`app running on port: ${port}..`);
 });
 
+// routes
 // get all the submissions and add filters
 app.get("/submissions", async (req, res) => {
   // get this from query params
@@ -158,14 +211,45 @@ app.get("/submissions", async (req, res) => {
 app.get("/templates", async (req, res) => {
   // get this from query params
   const filterOptions = {
-    template_name: "party",
-    days: 2,
+    // template_name: "party",
+    // days: 2,
+    // template_id: 0,
   };
 
   const result = await getTemplates(con, filterOptions);
 
   res.status(200).json({
     data: result,
+  });
+});
+
+// get all the templates
+app.get("/centers", async (req, res) => {
+  // get this from query params
+  const filterOptions = {
+    center_name: "game",
+    days: 2,
+  };
+
+  const result = await getCenters(con, filterOptions);
+
+  res.status(200).json({
+    data: result,
+  });
+});
+
+// get all the templates
+app.get("/template-id-from-center", async (req, res) => {
+  // get this from query params
+  const filterOptions = {
+    center_name: "game",
+    days: 2,
+  };
+
+  const result = await getCenters(con, filterOptions);
+
+  res.status(200).json({
+    template_id: result[0].template_id,
   });
 });
 
@@ -178,7 +262,7 @@ app.post("/submissions", async (req, res) => {
     email: req.body.email,
     mobile_number: req.body.mobile_number,
   };
-  
+
   postASubmission(con, data);
 
   res.status(200).json({
@@ -197,5 +281,23 @@ app.post("/templates", async (req, res) => {
 
   res.status(200).json({
     msg: "template was saved",
+  });
+});
+
+// create a center
+app.post("/centers", async (req, res) => {
+  console.log(req.body);
+
+  const data = {
+    center_name: req.body.center_name,
+    address: req.body.center_address,
+    contact_info: req.body.contact_info,
+    template_id: req.body.template_id,
+  };
+
+  postACenter(con, data);
+
+  res.status(200).json({
+    msg: "center was saved",
   });
 });

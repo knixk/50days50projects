@@ -65,7 +65,7 @@ CREATE TABLE devices (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
+select * from centers;
 
 CREATE TABLE centers (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -74,8 +74,11 @@ CREATE TABLE centers (
     contact_info JSON,
     template_id INT NOT NULL,
     FOREIGN KEY (template_id) REFERENCES templates(id)
-
 );
+
+
+
+drop table centers;
 
 CREATE TABLE events (
     id INT AUTO_INCREMENT PRIMARY KEY,

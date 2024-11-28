@@ -22,23 +22,6 @@ const dummyParticipants = [
   },
 ];
 
-const postSubmission = async (data) => {
-  const submissions = "http://localhost:5050/submissions";
-
-  try {
-    const response = await axios.post(submissions, data);
-    console.log("Response:", response.data);
-  } catch (error) {
-    console.error(
-      "Error:",
-      error.response ? error.response.data : error.message
-    );
-  }
-};
-
-
-
-
 function App() {
   const questions = data.questions;
   const companyLogo = data.company_logo;
@@ -47,6 +30,52 @@ function App() {
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState(dummyParticipants);
   const [formData, setFormData] = useState({});
+  const [templateId, setTemplateId] = useState(null);
+
+  const postSubmission = async (data) => {
+    const submissions = "http://localhost:5050/submissions";
+
+    try {
+      const response = await axios.post(submissions, data);
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
+  const getTemplateIdFromCenter = async (data) => {
+    const templateIdFromCenter =
+      "http://localhost:5050/template-id-from-center";
+
+    try {
+      const response = await axios.get(templateIdFromCenter);
+      console.log("Response:", response.data.template_id);
+      setTemplateId(response.data.template_id);
+    } catch (error) {
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
+  const fetchTemplate = async () => {
+    const templates = "http://localhost:5050/templates";
+
+    try {
+      const response = await axios.get(templates);
+      console.log("Response:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -85,12 +114,18 @@ function App() {
     postSubmission(submission);
   };
 
-  const fetchTemplate = () => {
-
-  }
-
   useEffect(() => {
-  }, [])
+    // getTemplateIdFromCenter();
+    // templateId && console.log(templateId);
+    const asyncFn = () => {
+      const template = fetchTemplate();
+      console.log(template);
+    };
+
+    asyncFn();
+
+    // fetchTemplate()
+  }, []);
 
   return (
     <div className="app__container">
