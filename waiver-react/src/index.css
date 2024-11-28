@@ -48,6 +48,7 @@ footer {
   color: white;
   font-weight: bold;
   letter-spacing: 2px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .question__container {
@@ -203,6 +204,7 @@ button {
 }
 
 .participant__input {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-radius: 5px;
 }
 
@@ -245,11 +247,10 @@ input[type="file"] {
   background-color: var(--hover-bg);
 }
 
-
 /* select */
 
- /* Style the wrapper */
- .custom__select {
+/* Style the wrapper */
+.custom__select {
   position: relative;
   display: inline-block;
   width: 200px;
@@ -260,7 +261,7 @@ input[type="file"] {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  border: 2px solid #007BFF;
+  border: 2px solid #007bff;
   border-radius: 8px;
   background-color: #f9f9f9;
   appearance: none; /* Remove default dropdown styling */
@@ -277,6 +278,6 @@ input[type="file"] {
   right: 15px;
   transform: translateY(-50%);
   pointer-events: none;
-  color: #007BFF;
+  color: #007bff;
   font-size: 14px;
 }
