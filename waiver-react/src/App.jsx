@@ -103,10 +103,10 @@ function App() {
     };
 
     const fetchTemplate = async () => {
-      const templates = "http://localhost:5050/templates";
+      const templates = "http://localhost:5050/post-center";
 
       const options = {
-        id: 1,
+        id: center,
       };
 
       try {

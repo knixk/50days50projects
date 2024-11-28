@@ -301,3 +301,19 @@ app.post("/centers", async (req, res) => {
     msg: "center was saved",
   });
 });
+
+// create a center
+app.post("/post-center", async (req, res) => {
+  // console.log(req.body.id);
+  // get this from query params
+  const filterOptions = {
+    id: req.body.id,
+  };
+
+  const result = await getTemplates(con, filterOptions);
+  console.log(result)
+
+  res.status(200).json({
+    data: "a",
+  });
+});
