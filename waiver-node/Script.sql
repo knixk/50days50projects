@@ -55,7 +55,8 @@ CREATE TABLE submissions (
     email VARCHAR(255) DEFAULT NULL,
     mobile_number VARCHAR(20) NOT NULL,
     submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (template_id) REFERENCES templates(id)
 );
 
 CREATE TABLE devices (
