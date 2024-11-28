@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import data from "../template_config.json";
+// import data from "../template_config.json";
 import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
 import axios from "axios";

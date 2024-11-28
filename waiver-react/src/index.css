@@ -281,3 +281,22 @@ input[type="file"] {
   color: #007bff;
   font-size: 14px;
 }
+
+
+.search__container {
+  display: flex;
+  flex-direction: column;
+  /* background-color: red; */
+  align-items: center;
+  height: 100vh;
+  margin-top: 10%;
+}
+
+.search__wrapper {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  width: 500px;
+  gap: 10px;
+}
+
