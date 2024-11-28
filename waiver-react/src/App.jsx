@@ -39,7 +39,6 @@ function App() {
 
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
-  !center && setCenter(centerParams);
 
   //   console.log(centreId);
 
@@ -128,6 +127,8 @@ function App() {
     };
 
     fetchTemplate();
+    setCenter(centerParams);
+    console.log(centerParams)
   }, []);
 
   return (
