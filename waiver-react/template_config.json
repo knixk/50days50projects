@@ -30,6 +30,12 @@
       "input_type": "radio",
       "values": ["india", "germany", "italy"],
       "question_id": "some_id7"
+    },
+    {
+      "label": "Example radio",
+      "input_type": "radio",
+      "values": ["india", "germany", "italy"],
+      "question_id": "some_id7"
     }
   ],
 

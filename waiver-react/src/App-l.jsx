@@ -3,6 +3,7 @@ import data from "../template_config.json";
 import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
 import axios from "axios";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 
 const dummyParticipants = [
   {
@@ -32,15 +33,14 @@ function App() {
   const [companyLogo, setCompanyLogo] = useState();
   const [extraFields, setExtraFields] = useState();
 
+  // Set a query parameter
+  // setSearchParams({ myParam: "myValue" });
+
+  // const { centreId } = useParams();
+  // console.log(centreId);
+
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const handleRadioChange = (questionId, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [questionId]: value,
-    }));
   };
 
   const addParticipant = () => {
@@ -83,6 +83,23 @@ function App() {
         const response = await axios.post(submissions, data);
         console.log("Response:", response.data);
         return response.data;
+      } catch (error) {
+        console.error(
+          "Error:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    };
+
+    const getTemplateIdFromCenter = async (data) => {
+      const templateIdFromCenter =
+        "http://localhost:5050/template-id-from-center";
+
+      try {
+        const response = await axios.get(templateIdFromCenter);
+        console.log("Response:", response.data.template_id);
+        setTemplateId(response.data.template_id);
+        return response.data.template_id;
       } catch (error) {
         console.error(
           "Error:",
@@ -207,12 +224,10 @@ function App() {
                         <label key={option} className="radio-label">
                           <input
                             type="radio"
-                            name={question.question_id}
+                            name={option}
                             value={option}
-                            checked={formData[question.question_id] === option}
-                            onChange={(e) =>
-                              handleRadioChange(question.question_id, e.target.value)
-                            }
+                            checked={"india" === option}
+                            // onChange={(e) => onChange(e.target.value)}
                           />
                           {option}
                         </label>
