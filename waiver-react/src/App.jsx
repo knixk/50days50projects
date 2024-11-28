@@ -196,7 +196,7 @@ function App() {
                           for={question.question_id}
                           class="custom-file-upload"
                         >
-                          Custom Upload
+                          Upload a file
                         </label>
                         <input
                           type="file"

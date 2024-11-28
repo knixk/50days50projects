@@ -3,7 +3,7 @@
   --label-color: rgb(72, 108, 167);
   --theme-color: rgb(160, 26, 93);
   --header-color: rgb(30, 126, 190);
-  --hover-bg: rgb(228, 228, 228);
+  --hover-bg: rgb(240, 240, 240);
 }
 
 * {
@@ -24,7 +24,7 @@ body {
 .form__container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   margin: 1rem 1rem;
   max-width: 650px;
 }
@@ -55,7 +55,7 @@ footer {
   flex-direction: column;
   background-color: var(--theme-color);
   border-radius: 5px;
-  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 img {
@@ -67,7 +67,7 @@ img {
 }
 
 input {
-  border: 2px solid gainsboro;
+  border: none;
   padding: 0.5rem 0.2rem;
   outline: none;
 }
@@ -99,8 +99,6 @@ input:hover {
   /* background-color: var(--hover-bg); */
   /* transition: 0.3s; */
 }
-
-
 
 .question__image {
   width: 180px;
@@ -164,10 +162,21 @@ textarea {
 }
 
 .clear {
+  margin: 1rem 0;
 }
 
 .footer {
   margin-top: 30px;
+}
+
+button {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.submit {
+  /* background-color: var(--header-color); */
+  /* color: white; */
+  width: 200px;
 }
 
 .participant__info {
@@ -233,4 +242,40 @@ input[type="file"] {
 
 .custom-file-upload:hover {
   background-color: var(--hover-bg);
+}
+
+
+/* select */
+
+ /* Style the wrapper */
+ .custom__select {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+}
+
+/* Style the select element */
+.custom__select select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #007BFF;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  appearance: none; /* Remove default dropdown styling */
+  -webkit-appearance: none; /* For Safari */
+  -moz-appearance: none; /* For Firefox */
+  cursor: pointer;
+}
+
+/* Add a custom arrow icon */
+.custom__select::after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #007BFF;
+  font-size: 14px;
 }
