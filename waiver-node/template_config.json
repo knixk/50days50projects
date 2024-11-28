@@ -1,24 +1,22 @@
 {
   "questions": [
     {
-      "label": "I am above 18 years of age.",
+      "label": "Have you played this before?",
       "input_type": "dropdown",
       "values": ["no", "yes"],
       "question_id": "some_id32",
       "required": false
     },
     {
-      "label": "legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message legal message",
-      "image": "./assets/unicef.png",
-      "input_type": "text",
-      "input_placeholder": "Enter your text..",
-      "question_id": "some_id4",
-      "required": false
-    },
-    {
-      "label": "message legal message legal message legal message legal message legal message",
+      "label": "Do you have any disablility?",
       "input_type": "file",
       "question_id": "some_id5"
+    },
+    {
+      "label": "Example radio",
+      "input_type": "radio",
+      "values": ["india", "germany", "italy"],
+      "question_id": "some_id7"
     },
     {
       "label": "Example radio",
@@ -28,7 +26,7 @@
     }
   ],
 
-  "template_id": "12312312",
+  "template_id": "2",
 
   "extra_participants_form_fields": ["name", "age", "phone"],
 

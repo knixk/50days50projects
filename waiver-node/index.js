@@ -116,7 +116,7 @@ const getTemplates = async (
   con,
   { template_name = null, days = null, id = null } = {}
 ) => {
-  let getTemplatesQuery = `SELECT * FROM templates WHERE id=${id};`; // Base query to start with
+  let getTemplatesQuery = `SELECT * FROM templates WHERE id = ?`; // Base query to start with
 
   // Filter by name if provided
   // if (template_name) {
@@ -131,9 +131,9 @@ const getTemplates = async (
   // if (id) {
   //   getTemplatesQuery += `AND id LIKE '%${id}%`;
   // }
-
+  console.log("template fetch was run")
   return new Promise((resolve, reject) => {
-    con.query(getTemplatesQuery, (err, result, fields) => {
+    con.query(getTemplatesQuery, [id], (err, result, fields) => {
       if (err) {
         reject(err); // Reject promise on error
       } else {
@@ -311,9 +311,9 @@ app.post("/post-center", async (req, res) => {
   };
 
   const result = await getTemplates(con, filterOptions);
-  console.log(result)
+  console.log(result);
 
   res.status(200).json({
-    data: "a",
+    data: result,
   });
 });

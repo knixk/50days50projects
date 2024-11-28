@@ -101,15 +101,16 @@ function App() {
       }
     };
 
-    const fetchTemplate = async () => {
-      const templates = "http://localhost:5050/templates";
+    const fetchTemplate = async (id) => {
+      const templates = "http://localhost:5050/post-center";
 
       const options = {
-        id: center,
+        id: id,
       };
 
       try {
-        const response = await axios.get(templates, options);
+        const response = await axios.post(templates, options);
+        console.log(response.data);
         const myData = JSON.parse(response.data.data[0].template_config);
 
         if (myData) {
@@ -125,10 +126,8 @@ function App() {
         );
       }
     };
-
-    fetchTemplate();
     setCenter(centerParams);
-    console.log(centerParams);
+    fetchTemplate(centerParams);
   }, []);
 
   return (
