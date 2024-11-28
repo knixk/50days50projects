@@ -131,7 +131,7 @@ const getTemplates = async (
   // if (id) {
   //   getTemplatesQuery += `AND id LIKE '%${id}%`;
   // }
-  console.log("template fetch was run")
+  console.log("template fetch was run");
   return new Promise((resolve, reject) => {
     con.query(getTemplatesQuery, [id], (err, result, fields) => {
       if (err) {
@@ -193,11 +193,13 @@ app.listen(port, () => {
 // routes
 // get all the submissions and add filters
 app.get("/submissions", async (req, res) => {
+  const { name = null, mobile_number = null, days = null } = req.body;
+
   // get this from query params
   const filterOptions = {
-    name: "Doe",
-    mobile_number: "789",
-    days: 2,
+    name: name,
+    mobile_number: mobile_number,
+    days: days,
   };
 
   const result = await getSubmissions(con, filterOptions);

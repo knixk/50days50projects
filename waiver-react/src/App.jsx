@@ -23,6 +23,21 @@ const dummyParticipants = [
   },
 ];
 
+const postSubmission = async (data) => {
+  const submissions = "http://localhost:5050/submissions";
+
+  try {
+    const response = await axios.post(submissions, data);
+    console.log("Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error:",
+      error.response ? error.response.data : error.message
+    );
+  }
+};
+
 function App() {
   const [sign, setSign] = useState();
   const [participants, setParticipants] = useState([]);
@@ -86,21 +101,6 @@ function App() {
   };
 
   useEffect(() => {
-    const postSubmission = async (data) => {
-      const submissions = "http://localhost:5050/submissions";
-
-      try {
-        const response = await axios.post(submissions, data);
-        console.log("Response:", response.data);
-        return response.data;
-      } catch (error) {
-        console.error(
-          "Error:",
-          error.response ? error.response.data : error.message
-        );
-      }
-    };
-
     const fetchTemplate = async (id) => {
       const templates = "http://localhost:5050/post-center";
 
