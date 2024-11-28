@@ -103,14 +103,14 @@ function App() {
     };
 
     const fetchTemplate = async () => {
-      const templates = "http://localhost:5050/post-center";
+      const templates = "http://localhost:5050/templates";
 
       const options = {
         id: center,
       };
 
       try {
-        const response = await axios.post(templates, options);
+        const response = await axios.get(templates, options);
         const myData = JSON.parse(response.data.data[0].template_config);
 
         if (myData) {
