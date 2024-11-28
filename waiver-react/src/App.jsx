@@ -128,7 +128,7 @@ function App() {
 
     fetchTemplate();
     setCenter(centerParams);
-    console.log(centerParams)
+    console.log(centerParams);
   }, []);
 
   return (
@@ -220,21 +220,25 @@ function App() {
 
                     {question.input_type === "radio" &&
                       question.values.map((option) => (
-                        <label key={option} className="radio-label">
-                          <input
-                            type="radio"
-                            name={question.question_id}
-                            value={option}
-                            checked={formData[question.question_id] === option}
-                            onChange={(e) =>
-                              handleRadioChange(
-                                question.question_id,
-                                e.target.value
-                              )
-                            }
-                          />
-                          {option}
-                        </label>
+                        <div className="label__container radio__container">
+                          <label key={option} className="radio-label">
+                            <input
+                              type="radio"
+                              name={question.question_id}
+                              value={option}
+                              checked={
+                                formData[question.question_id] === option
+                              }
+                              onChange={(e) =>
+                                handleRadioChange(
+                                  question.question_id,
+                                  e.target.value
+                                )
+                              }
+                            />
+                            {option}
+                          </label>
+                        </div>
                       ))}
                   </div>
                 ))}

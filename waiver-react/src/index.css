@@ -72,6 +72,8 @@ input {
 
 .text__input {
   padding: 10px 10px;
+  margin: 0;
+  border-radius: 0 0 2px 2px;
 }
 
 select {
@@ -79,10 +81,11 @@ select {
   border: none;
   background-color: white;
   transition: 0.3s;
+  /* border-radius: 0 0 5px 5px; */
 }
 
 select:hover {
-  background-color: rgb(231, 231, 231);
+  /* background-color: rgb(231, 231, 231); */
 }
 
 .question__image {
@@ -117,6 +120,8 @@ textarea {
 
 .file {
   color: white;
+  width: 100%;
+  /* background: none; */
 }
 
 .company__logo {
@@ -175,4 +180,25 @@ textarea {
 
 .participant__input {
   border-radius: 5px;
+}
+
+.label__container {
+  display: flex;
+  flex-direction: column;
+  /* background-color: red; */
+  gap: 10px;
+  color: white;
+}
+
+.radio-label input {
+  margin-right: 10px;
+}
+
+.radio-label {
+  display: flex;
+  /* padding: 10px 10px; */
+}
+
+.radio__container {
+  padding: 10px 10px;
 }
