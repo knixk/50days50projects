@@ -136,11 +136,7 @@ function App() {
       {tempData ? (
         <div>
           <nav className="nav">
-            <img
-              className="company__logo"
-              src={companyLogo && companyLogo}
-              alt=""
-            />
+            <img className="company__logo" src={companyLogo} alt="" />
             <p className="waiver__logo">WaiverForm</p>
           </nav>
           <form onSubmit={handleSubmit} className="form__wrapper">
@@ -184,7 +180,11 @@ function App() {
                         }
                       >
                         {question.values.map((option) => (
-                          <option className="dropdown__option" key={option} value={option}>
+                          <option
+                            className="dropdown__option"
+                            key={option}
+                            value={option}
+                          >
                             {option}
                           </option>
                         ))}
