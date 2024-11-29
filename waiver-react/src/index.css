@@ -378,3 +378,8 @@ input[type="file"] {
   color: black;
   background-color: var(--hover-bg);
 }
+
+
+.question__container input {
+  padding: 10px 10px;
+}

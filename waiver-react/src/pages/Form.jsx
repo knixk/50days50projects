@@ -39,7 +39,7 @@ const postSubmission = async (data) => {
 };
 
 function Form() {
-  const [sign, setSign] = useState();
+  const [sign, setSign] = useState(null);
   const [participants, setParticipants] = useState([]);
   const [formData, setFormData] = useState({});
   const [templateId, setTemplateId] = useState(null);
@@ -77,6 +77,11 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!sign) {
+      console.log('no sign')
+    }
+
     const signatureImg = sign.getTrimmedCanvas().toDataURL("image/png");
     const payload = {
       ...formData,
@@ -146,6 +151,22 @@ function Form() {
         <div>
           <form onSubmit={handleSubmit} className="form__wrapper">
             <div className="form__container">
+              <div className="question__container">
+                <div className="question">Enter your name</div>
+                <input type="text" placeholder="Name.." required/>
+              </div>
+
+              <div className="question__container">
+                <div className="question">Enter your email</div>
+                <input type="text" placeholder="Email.." required/>
+              </div>
+
+              <div className="question__container">
+                <div className="question">Enter your mobile number</div>
+                <input type="text" placeholder="Mobile number.." required/>
+              </div>
+
+
               {questions &&
                 questions.map((question) => (
                   <div
@@ -257,6 +278,7 @@ function Form() {
                         </div>
                       ))}
                   </div>
+                  // here =======>
                 ))}
 
               <div className="participants__container">
