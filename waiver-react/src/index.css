@@ -86,6 +86,7 @@ select {
   border: none;
   background-color: white;
   transition: 0.3s;
+  border-radius: 0 0 5px 5px;
 }
 
 select:hover {
@@ -228,6 +229,7 @@ input[type="file"] {
   padding: 6px 12px;
   background-color: white;
   transition: 0.3s;
+  border-radius: 0 0 5px 5px;
 }
 
 .custom-file-upload:hover {
@@ -382,4 +384,5 @@ input[type="file"] {
 
 .question__container input {
   padding: 10px 10px;
+  border-radius: 0 0 5px 5px;
 }
