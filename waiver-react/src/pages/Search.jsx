@@ -74,7 +74,13 @@ function Search() {
 
         <div className="data__container">
           {data.map((i) => {
-            return <div className="item">{i.id}</div>;
+            return (
+              <div className="item">
+                <p className="name">{i.name}</p>
+                <p className="mobile_number">{i.mobile_number}</p>
+                <p className="email">{i.email}</p>
+              </div>
+            );
           })}
         </div>
       </div>
