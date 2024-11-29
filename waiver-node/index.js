@@ -1,15 +1,20 @@
 const express = require("express");
 const mysql = require("mysql");
 const app = express();
-const port = 5050;
+const port = process.env.PORT || 5050;
 const template_config = require("./template_config.json");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const env = require("dotenv");
+env.config();
 
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "Gamer12345!",
 });
+
+const secretKey = process.env.SECRET_KEY;
 
 // controllers
 const postASubmission = (con, data) => {
@@ -168,6 +173,25 @@ const getCenters = async (con, { center_name = null, days = null } = {}) => {
   });
 };
 
+// Middleware to Verify JWT
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) return res.sendStatus(401);
+
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+const generateJWT = async (req) => {
+  const { mobile_number } = req.body;
+  const token = jwt.sign({ mobile_number }, secretKey, { expiresIn: "1h" });
+  // res.json({ token });
+  return token;
+};
+
 // connect db
 con.connect(function (err) {
   if (err) throw err;
@@ -201,6 +225,19 @@ app.get("/submissions", async (req, res) => {
     mobile_number: mobile_number,
     days: days,
   };
+
+  const token = generateJWT(req);
+  console.log("token =====> ", token);
+
+  // invalid token - synchronous
+  try {
+    var decoded = jwt.verify(token, secretKey);
+    console.log(decoded);
+    console.log("verified token..");
+  } catch (err) {
+    // err
+    console.error("wrong");
+  }
 
   const result = await getSubmissions(con, filterOptions);
 

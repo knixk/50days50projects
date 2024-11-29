@@ -144,10 +144,6 @@ function Form() {
       <Toaster />
       {tempData ? (
         <div>
-          <nav className="nav">
-            <img className="company__logo" src={companyLogo} alt="" />
-            <p className="waiver__logo">WaiverForm</p>
-          </nav>
           <form onSubmit={handleSubmit} className="form__wrapper">
             <div className="form__container">
               {questions &&
@@ -319,10 +315,6 @@ function Form() {
               Submit
             </button>
           </form>
-          <footer className="footer">
-            <img className="company__logo" src={companyLogo} alt="" />
-            <p className="waiver__logo">CompanyName &copy;</p>
-          </footer>
         </div>
       ) : (
         <div></div>
