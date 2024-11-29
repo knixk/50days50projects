@@ -87,19 +87,19 @@ function Form() {
   };
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     // if (!canSubmit) {
     //   alert("u need to fill everything")
     //   return;
     // } 
 
-    if (sign == null) {
-      console.log("no sign");
-      alert("u need to sign");
-    }
+    // if (sign == null) {
+    //   console.log("no sign");
+    //   alert("u need to sign");
+    // }
 
-    return;
+    // return;
 
     const signatureImg = sign.getTrimmedCanvas().toDataURL("image/png");
     const payload = {
