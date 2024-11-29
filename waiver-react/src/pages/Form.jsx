@@ -5,6 +5,8 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
+const dummyImg = "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg";
+
 const dummyParticipants = [
   {
     name: "kanishk",
@@ -92,7 +94,7 @@ function Form() {
     // if (!canSubmit) {
     //   alert("u need to fill everything")
     //   return;
-    // } 
+    // }
 
     // if (sign == null) {
     //   console.log("no sign");
@@ -323,7 +325,7 @@ function Form() {
                   // here =======>
                 ))}
 
-              <form className="participants__container">
+              <div className="participants__container">
                 {participants.map((participant, index) => (
                   <div key={participant.id} className="participant">
                     <input
@@ -361,7 +363,7 @@ function Form() {
                 >
                   Add Participant
                 </button>
-              </form>
+              </div>
 
               <div className="signature__container">
                 <small>Sign here..</small>
