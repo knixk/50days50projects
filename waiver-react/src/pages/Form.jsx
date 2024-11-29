@@ -50,6 +50,7 @@ function Form() {
   const [center, setCenter] = useState(false);
   const navigate = useNavigate();
   const [disabled, setDisabled] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(false);
 
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
@@ -86,11 +87,19 @@ function Form() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
-    if (!sign) {
+    // if (!canSubmit) {
+    //   alert("u need to fill everything")
+    //   return;
+    // } 
+
+    if (sign == null) {
       console.log("no sign");
+      alert("u need to sign");
     }
+
+    return;
 
     const signatureImg = sign.getTrimmedCanvas().toDataURL("image/png");
     const payload = {
@@ -368,7 +377,10 @@ function Form() {
                 <button
                   type="button"
                   className="btn clear"
-                  onClick={() => sign && sign.clear()}
+                  onClick={() => {
+                    sign && sign.clear();
+                    setSign(null);
+                  }}
                 >
                   Clear
                 </button>
