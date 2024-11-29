@@ -353,6 +353,7 @@ input[type="file"] {
   text-align: center;
   /* width: 50vw; */
   border-radius: 5px;
+  gap: 10px;
   background-color: white;
   max-width: 600px;
   width: 70vw;
@@ -365,5 +366,15 @@ input[type="file"] {
 }
 
 .sub__heading {
-  margin: 10px 0;
+  /* margin: 10px 0; */
+}
+
+.btn__container {
+  margin-top: 15px;
+}
+
+.fill-btn {
+  text-decoration: none;
+  color: black;
+  background-color: var(--hover-bg);
 }
