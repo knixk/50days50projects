@@ -329,4 +329,16 @@ input[type="file"] {
   border-radius: 5px;
   background-color: var(--theme-color);
   color: white;
+  transition: 0.3s ease-in-out;
+  animation: fade-in 0.3s;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
