@@ -282,7 +282,6 @@ input[type="file"] {
   font-size: 14px;
 }
 
-
 .search__container {
   display: flex;
   /* flex-direction: column; */
@@ -303,15 +302,17 @@ input[type="file"] {
   gap: 10px;
 }
 
-
 .data__container {
-  background-color: red;
   width: 100%;
   display: flex;
   /* justify-content: center; */
   flex-direction: column;
   align-items: center;
+  gap: 10px;
   /* margin: 20px 20px; */
+  /* background-color: #007bff; */
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .container {
@@ -320,4 +321,12 @@ input[type="file"] {
   align-items: center;
   gap: 20px;
   width: 90vw;
+}
+
+.item {
+  background-color: red;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--theme-color);
+  color: white;
 }
