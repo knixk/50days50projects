@@ -98,7 +98,7 @@ function Form() {
       postSubmission(submission);
       setDisabled(true);
       toast("Your form was submitted! redirecting to home..");
-      const seconds = 10;
+      const seconds = 5;
 
       setTimeout(() => {
         navigate("/");
@@ -128,7 +128,7 @@ function Form() {
           setTemplateId(temp_id);
         }
       } catch (error) {
-        alert("template doesn't exist");
+        toast("template doesn't exist");
         console.error(
           "Error:",
           error.response ? error.response.data : error.message

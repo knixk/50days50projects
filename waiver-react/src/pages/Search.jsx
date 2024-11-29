@@ -42,7 +42,6 @@ function Search() {
     }
 
     if (res.data.length == 0) {
-      // alert("no data..");
       toast("No data found..");
     }
 
@@ -63,7 +62,7 @@ function Search() {
 
     setParams(url);
     console.log(url);
-    window.history.pushState({}, "", url);
+    // window.history.pushState({}, "", url);
   };
 
   useEffect(() => {}, []);

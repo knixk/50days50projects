@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import data from "../template_config.json";
 
+
 import Form from "./pages/Form";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
