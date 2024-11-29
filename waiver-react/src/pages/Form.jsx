@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
 import axios from "axios";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const dummyParticipants = [
   {
@@ -48,6 +48,8 @@ function Form() {
   const [companyLogo, setCompanyLogo] = useState();
   const [extraFields, setExtraFields] = useState();
   const [center, setCenter] = useState(false);
+  const navigate = useNavigate();
+  const [disabled, setDisabled] = useState(false);
 
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
@@ -94,7 +96,13 @@ function Form() {
       console.log(submission);
 
       postSubmission(submission);
-      toast("Your form was submitted!");
+      setDisabled(true);
+      toast("Your form was submitted! redirecting to home..");
+      const seconds = 10;
+
+      setTimeout(() => {
+        navigate("/");
+      }, seconds * 1000);
     }
   };
 
@@ -132,196 +140,194 @@ function Form() {
   }, []);
 
   return (
-    <Router>
-      <div className="app__container">
-        <Toaster />
-        {tempData ? (
-          <div>
-            <nav className="nav">
-              <img className="company__logo" src={companyLogo} alt="" />
-              <p className="waiver__logo">WaiverForm</p>
-            </nav>
-            <form onSubmit={handleSubmit} className="form__wrapper">
-              <div className="form__container">
-                {questions &&
-                  questions.map((question) => (
-                    <div
-                      key={question.question_id}
-                      className="question__container"
-                    >
-                      <div className="question">{question.label}</div>
+    <div className="app__container">
+      <Toaster />
+      {tempData ? (
+        <div>
+          <nav className="nav">
+            <img className="company__logo" src={companyLogo} alt="" />
+            <p className="waiver__logo">WaiverForm</p>
+          </nav>
+          <form onSubmit={handleSubmit} className="form__wrapper">
+            <div className="form__container">
+              {questions &&
+                questions.map((question) => (
+                  <div
+                    key={question.question_id}
+                    className="question__container"
+                  >
+                    <div className="question">{question.label}</div>
 
-                      {question.image && (
-                        <img className="question__image" src={question.image} />
-                      )}
+                    {question.image && (
+                      <img className="question__image" src={question.image} />
+                    )}
 
-                      {question.input_type === "text" && (
-                        <input
-                          type="text"
-                          className="text__input"
-                          id={question.question_id}
-                          placeholder={question.input_placeholder || ""}
-                          required={question.required}
-                          onChange={(e) =>
-                            handleInputChange(
-                              question.question_id,
-                              e.target.value
-                            )
-                          }
-                        />
-                      )}
-                      {question.input_type === "dropdown" && (
-                        <select
-                          id={question.question_id}
-                          required={question.required}
-                          onChange={(e) =>
-                            handleInputChange(
-                              question.question_id,
-                              e.target.value
-                            )
-                          }
-                        >
-                          {question.values.map((option) => (
-                            <option
-                              className="dropdown__option"
-                              key={option}
-                              value={option}
-                            >
-                              {option}
-                            </option>
-                          ))}
-                        </select>
-                      )}
-                      {question.input_type === "file" && (
-                        <>
-                          <label
-                            for={question.question_id}
-                            class="custom-file-upload"
-                          >
-                            Upload a file
-                          </label>
-                          <input
-                            type="file"
-                            className="file"
-                            id={question.question_id}
-                            required={question.required}
-                            onChange={(e) =>
-                              handleInputChange(
-                                question.question_id,
-                                e.target.files[0]
-                              )
-                            }
-                          />
-                        </>
-                      )}
-                      {question.input_type === "textarea" && (
-                        <textarea
-                          id={question.question_id}
-                          placeholder="Your text here..."
-                          required={question.required}
-                          onChange={(e) =>
-                            handleInputChange(
-                              question.question_id,
-                              e.target.value
-                            )
-                          }
-                        />
-                      )}
-
-                      {question.input_type === "radio" &&
-                        question.values.map((option) => (
-                          <div
-                            key={option}
-                            className="label__container radio__container"
-                          >
-                            <label key={option} className="radio-label">
-                              <input
-                                type="radio"
-                                name={question.question_id}
-                                value={option}
-                                checked={
-                                  formData[question.question_id] === option
-                                }
-                                onChange={(e) =>
-                                  handleRadioChange(
-                                    question.question_id,
-                                    e.target.value
-                                  )
-                                }
-                              />
-                              {option}
-                            </label>
-                          </div>
-                        ))}
-                    </div>
-                  ))}
-
-                <div className="participants__container">
-                  {participants.map((participant, index) => (
-                    <div key={participant.id} className="participant">
+                    {question.input_type === "text" && (
                       <input
                         type="text"
-                        placeholder="Name"
-                        value={participant.name}
-                        className="participant__input"
+                        className="text__input"
+                        id={question.question_id}
+                        placeholder={question.input_placeholder || ""}
+                        required={question.required}
                         onChange={(e) =>
-                          updateParticipant(index, "name", e.target.value)
+                          handleInputChange(
+                            question.question_id,
+                            e.target.value
+                          )
                         }
                       />
-                      <input
-                        type="number"
-                        className="participant__input"
-                        placeholder="Age"
-                        value={participant.age}
+                    )}
+                    {question.input_type === "dropdown" && (
+                      <select
+                        id={question.question_id}
+                        required={question.required}
                         onChange={(e) =>
-                          updateParticipant(index, "age", e.target.value)
+                          handleInputChange(
+                            question.question_id,
+                            e.target.value
+                          )
+                        }
+                      >
+                        {question.values.map((option) => (
+                          <option
+                            className="dropdown__option"
+                            key={option}
+                            value={option}
+                          >
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                    {question.input_type === "file" && (
+                      <>
+                        <label
+                          htmlFor={question.question_id}
+                          className="custom-file-upload"
+                        >
+                          Upload a file
+                        </label>
+                        <input
+                          type="file"
+                          className="file"
+                          id={question.question_id}
+                          required={question.required}
+                          onChange={(e) =>
+                            handleInputChange(
+                              question.question_id,
+                              e.target.files[0]
+                            )
+                          }
+                        />
+                      </>
+                    )}
+                    {question.input_type === "textarea" && (
+                      <textarea
+                        id={question.question_id}
+                        placeholder="Your text here..."
+                        required={question.required}
+                        onChange={(e) =>
+                          handleInputChange(
+                            question.question_id,
+                            e.target.value
+                          )
                         }
                       />
-                    </div>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={addParticipant}
-                    className="add__participant btn"
-                  >
-                    Add Participant
-                  </button>
-                </div>
+                    )}
 
-                <div className="signature__container">
-                  <SignatureCanvas
-                    ref={(data) => setSign(data)}
-                    penColor="black"
-                    canvasProps={{
-                      width: 350,
-                      height: 300,
-                      className: "sigCanvas",
-                    }}
-                  />
-                  <button
-                    type="button"
-                    className="btn clear"
-                    onClick={() => sign && sign.clear()}
-                  >
-                    Clear
-                  </button>
-                </div>
+                    {question.input_type === "radio" &&
+                      question.values.map((option) => (
+                        <div
+                          key={option}
+                          className="label__container radio__container"
+                        >
+                          <label key={option} className="radio-label">
+                            <input
+                              type="radio"
+                              name={question.question_id}
+                              value={option}
+                              checked={
+                                formData[question.question_id] === option
+                              }
+                              onChange={(e) =>
+                                handleRadioChange(
+                                  question.question_id,
+                                  e.target.value
+                                )
+                              }
+                            />
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                  </div>
+                ))}
+
+              <div className="participants__container">
+                {participants.map((participant, index) => (
+                  <div key={participant.id} className="participant">
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={participant.name}
+                      className="participant__input"
+                      onChange={(e) =>
+                        updateParticipant(index, "name", e.target.value)
+                      }
+                    />
+                    <input
+                      type="number"
+                      className="participant__input"
+                      placeholder="Age"
+                      value={participant.age}
+                      onChange={(e) =>
+                        updateParticipant(index, "age", e.target.value)
+                      }
+                    />
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={addParticipant}
+                  className="add__participant btn"
+                >
+                  Add Participant
+                </button>
               </div>
 
-              <button type="submit" className="submit btn">
-                Submit
-              </button>
-            </form>
-            <footer className="footer">
-              <img className="company__logo" src={companyLogo} alt="" />
-              <p className="waiver__logo">CompanyName &copy;</p>
-            </footer>
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </div>
-    </Router>
+              <div className="signature__container">
+                <SignatureCanvas
+                  ref={(data) => setSign(data)}
+                  penColor="black"
+                  canvasProps={{
+                    width: 350,
+                    height: 300,
+                    className: "sigCanvas",
+                  }}
+                />
+                <button
+                  type="button"
+                  className="btn clear"
+                  onClick={() => sign && sign.clear()}
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" className="submit btn" disabled={disabled}>
+              Submit
+            </button>
+          </form>
+          <footer className="footer">
+            <img className="company__logo" src={companyLogo} alt="" />
+            <p className="waiver__logo">CompanyName &copy;</p>
+          </footer>
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </div>
   );
 }
 
