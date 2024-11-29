@@ -75,6 +75,16 @@ function Form() {
     setParticipants(updatedParticipants);
   };
 
+  const deleteParticipant = (id) => {
+    // const updatedParticipants = [...participants];
+    // updatedParticipants[index][field] = value;
+    // setParticipants(updatedParticipants);
+    const old = participants;
+    const newData = old.filter((p) => id != p.id);
+    console.log(newData);
+    setParticipants(newData);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -149,7 +159,7 @@ function Form() {
       <Toaster />
       {tempData ? (
         <div>
-          <form onSubmit={handleSubmit} className="form__wrapper">
+          <form className="form__wrapper">
             <div className="form__container">
               <div className="question__container">
                 <div className="question">Enter your name</div>
@@ -304,10 +314,11 @@ function Form() {
                   // here =======>
                 ))}
 
-              <div className="participants__container">
+              <form className="participants__container">
                 {participants.map((participant, index) => (
                   <div key={participant.id} className="participant">
                     <input
+                      required
                       type="text"
                       placeholder="Name"
                       value={participant.name}
@@ -317,6 +328,7 @@ function Form() {
                       }
                     />
                     <input
+                      required
                       type="number"
                       className="participant__input"
                       placeholder="Age"
@@ -325,6 +337,12 @@ function Form() {
                         updateParticipant(index, "age", e.target.value)
                       }
                     />
+                    <button
+                      onClick={() => deleteParticipant(participant.id)}
+                      className="btn"
+                    >
+                      delete
+                    </button>
                   </div>
                 ))}
                 <button
@@ -334,9 +352,10 @@ function Form() {
                 >
                   Add Participant
                 </button>
-              </div>
+              </form>
 
               <div className="signature__container">
+                <small>Sign here..</small>
                 <SignatureCanvas
                   ref={(data) => setSign(data)}
                   penColor="black"
@@ -356,7 +375,12 @@ function Form() {
               </div>
             </div>
 
-            <button type="submit" className="submit btn" disabled={disabled}>
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              className="submit btn"
+              disabled={disabled}
+            >
               Submit
             </button>
           </form>
