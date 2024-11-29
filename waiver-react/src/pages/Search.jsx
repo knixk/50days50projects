@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 function Search() {
   const [input, setInput] = useState();
@@ -24,6 +25,12 @@ function Search() {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!input) {
+      return;
+    }
+
     const data = {
       mobile_number: input,
     };
@@ -32,6 +39,11 @@ function Search() {
 
     if (!res) {
       console.error("err");
+    }
+
+    if (res.data.length == 0) {
+      // alert("no data..");
+      toast("No data found..");
     }
 
     setData(res.data);
@@ -58,36 +70,46 @@ function Search() {
 
   return (
     <div className="search__container">
+      <Toaster />
       <div className="container">
-        <div className="search__wrapper">
+        <form onSubmit={handleSubmit} className="search__wrapper">
           <input
             value={input}
             onChange={handleChange}
             type="text"
             className="search__input"
-            placeholder="search.."
+            placeholder="enter mobile number.."
+            required
           />
-          <button onClick={handleSubmit} className="btn search__btn">
-            Submit
-          </button>
-        </div>
+          <button className="btn search__btn">Submit</button>
+        </form>
 
         <div className="data__container">
           {data.map((i) => {
             return (
               <div className="item">
-                <p className="name">
-                  Name: <span className="name__span">{i.name}</span>
-                </p>
-                <p className="mobile_number">
-                  Mobile Number:{" "}
-                  <span className="mobile-number__span">
-                    {i.mobile_number}
-                  </span>
-                </p>
-                <p className="email">
-                  Email: <span className="email__span">{i.email}</span>
-                </p>
+                <div className="left">
+                  <p className="name">
+                    Name: <span className="name__span">{i.name}</span>
+                  </p>
+                  <p className="mobile_number">
+                    Mobile Number:{" "}
+                    <span className="mobile-number__span">
+                      {i.mobile_number}
+                    </span>
+                  </p>
+                  <p className="email">
+                    Email: <span className="email__span">{i.email}</span>
+                  </p>
+
+                  <p className="submission_id">
+                    Submission ID:{" "}
+                    <span className="submission-id__span">{i.id}</span>
+                  </p>
+                </div>
+                <div className="right">
+                  <button className="download btn">Download</button>
+                </div>
               </div>
             );
           })}

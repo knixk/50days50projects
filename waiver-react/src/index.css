@@ -15,11 +15,9 @@
 }
 
 body {
-  /* font-family: "Courier New", Courier, monospace; */
   letter-spacing: 0.7px;
   background-color: var(--bg-color);
   font-size: 14px;
-  /* display: none; */
 }
 
 .form__container {
@@ -86,11 +84,9 @@ select {
   border: none;
   background-color: white;
   transition: 0.3s;
-  /* border-radius: 0 0 5px 5px; */
 }
 
 select:hover {
-  /* background-color: var(--hover-bg); */
 }
 
 .dropdown__option {
@@ -98,8 +94,6 @@ select:hover {
 }
 
 input:hover {
-  /* background-color: var(--hover-bg); */
-  /* transition: 0.3s; */
 }
 
 .question__image {
@@ -127,7 +121,6 @@ textarea {
   padding: 0.5rem 0.8rem;
   outline: none;
   border: none;
-  /* background-color: var(--bg-color); */
   height: 70px;
   resize: none;
 }
@@ -135,7 +128,6 @@ textarea {
 .file {
   color: white;
   width: 100%;
-  /* background: none; */
 }
 
 .company__logo {
@@ -149,7 +141,6 @@ textarea {
 }
 
 .sigCanvas {
-  /* border: 2px solid rgb(179, 179, 179); */
   border-radius: 5px;
   margin-top: 10px;
   background-color: white;
@@ -177,8 +168,6 @@ button {
 }
 
 .submit {
-  /* background-color: var(--header-color); */
-  /* color: white; */
   width: 200px;
 }
 
@@ -193,7 +182,6 @@ button {
   flex-direction: column;
   margin: 20px 0;
   align-items: center;
-  /* align-items: space-between; */
   gap: 20px;
 }
 
@@ -212,7 +200,6 @@ button {
 .label__container {
   display: flex;
   flex-direction: column;
-  /* background-color: red; */
   gap: 10px;
   color: white;
 }
@@ -223,7 +210,6 @@ button {
 
 .radio-label {
   display: flex;
-  /* padding: 10px 10px; */
 }
 
 .radio__container {
@@ -238,8 +224,6 @@ input[type="file"] {
   border: 1px solid #ccc;
   display: inline-block;
   padding: 6px 12px;
-  /* color: white; */
-  /* letter-spacing: 2px; */
   background-color: white;
   transition: 0.3s;
 }
@@ -247,8 +231,6 @@ input[type="file"] {
 .custom-file-upload:hover {
   background-color: var(--hover-bg);
 }
-
-/* select */
 
 /* Style the wrapper */
 .custom__select {
@@ -285,34 +267,24 @@ input[type="file"] {
 
 .search__container {
   display: flex;
-  /* flex-direction: column; */
-  /* background-color: red; */
-  /* align-items: center; */
   justify-content: center;
-
   height: 100vh;
   margin-top: 5%;
-  /* width: 90vw; */
 }
 
 .search__wrapper {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   width: 500px;
   gap: 10px;
 }
 
 .data__container {
   width: 100%;
-  /* display: flex; */
   display: grid;
-  /* justify-content: center; */
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  /* margin: 20px 20px; */
-  /* background-color: #007bff; */
   padding: 10px;
   border-radius: 5px;
 }
@@ -326,10 +298,13 @@ input[type="file"] {
 }
 
 .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: red;
+  gap: 10px;
   padding: 15px 20px;
   border-radius: 5px;
-  /* background-color: var(--card-bg); */
   background-color: white;
   color: #333;
   transition: 0.3s ease-in-out;
@@ -352,7 +327,7 @@ input[type="file"] {
   }
 }
 
-/* .search__wrapper input, .search__container button {
-  background-color: red;
-  width: 100%;
-} */
+.search__input {
+  padding: 10px;
+  border-radius: 5px;
+}
