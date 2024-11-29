@@ -12,29 +12,6 @@ const con = mysql.createConnection({
 });
 
 // controllers
-// const postASubmission = (con, data) => {
-//   const query = `
-//     INSERT INTO submissions (template_id, submission_data, name, email, mobile_number)
-//     VALUES (?, ?, ?, ?)
-//   `;
-
-//   con.query(
-//     query,
-//     [
-//       data.submission_data,
-//       data.name,
-//       data.email,
-//       data.mobile_number,
-//     ],
-//     (err, result) => {
-//       if (err) throw err;
-//       console.log("Inserted ID:", result.insertId);
-//     }
-//   );
-
-//   console.log("insertion finished..");
-// };
-
 const postASubmission = (con, data) => {
   return new Promise((resolve, reject) => {
     const query = `

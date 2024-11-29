@@ -3,6 +3,7 @@ import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 const dummyParticipants = [
   {
@@ -48,7 +49,6 @@ function Form() {
   const [extraFields, setExtraFields] = useState();
   const [center, setCenter] = useState(false);
 
-
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
 
@@ -82,17 +82,20 @@ function Form() {
       signature: signatureImg,
     };
 
-    const submission = {
-      template_id: data.template_id,
-      submission_data: payload,
-      name: "kanishk",
-      email: "shrivastavakanishk3@gmail.com",
-      mobile_number: 9820042672,
-    };
+    if (templateId) {
+      const submission = {
+        template_id: templateId,
+        submission_data: payload,
+        name: "kanishk",
+        email: "shrivastavakanishk3@gmail.com",
+        mobile_number: 9820042672,
+      };
 
-    console.log(submission);
+      console.log(submission);
 
-    postSubmission(submission);
+      postSubmission(submission);
+      toast("Your form was submitted!");
+    }
   };
 
   useEffect(() => {
@@ -107,12 +110,14 @@ function Form() {
         const response = await axios.post(templates, options);
         console.log(response.data);
         const myData = JSON.parse(response.data.data[0].template_config);
+        const temp_id = response.data.data[0].id;
 
         if (myData) {
           setTempData(myData);
           setQuestions(myData.questions);
           setCompanyLogo(myData.company_logo);
           setExtraFields(myData.extra_participants_form_fields);
+          setTemplateId(temp_id);
         }
       } catch (error) {
         alert("template doesn't exist");
@@ -128,7 +133,8 @@ function Form() {
 
   return (
     <Router>
-      <div className="form__container">
+      <div className="app__container">
+        <Toaster />
         {tempData ? (
           <div>
             <nav className="nav">

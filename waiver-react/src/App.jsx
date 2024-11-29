@@ -3,6 +3,7 @@ import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 const dummyParticipants = [
   {
@@ -93,6 +94,7 @@ function App() {
       console.log(submission);
 
       postSubmission(submission);
+      toast("Your form was submitted!");
     }
   };
 
@@ -132,6 +134,7 @@ function App() {
   return (
     <Router>
       <div className="app__container">
+        <Toaster />
         {tempData ? (
           <div>
             <nav className="nav">
