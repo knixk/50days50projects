@@ -28,15 +28,15 @@ function Search() {
       mobile_number: input,
     };
 
-    const res = getSubmissions(data);
+    const res = await getSubmissions(data);
 
     if (!res) {
       console.error("err");
     }
 
-    setData(res);
+    setData(res.data);
 
-    console.log(res);
+    console.log(res.data);
   };
 
   const handleChange = async (e) => {
@@ -50,7 +50,7 @@ function Search() {
     const url = `?${params.toString()}`;
 
     setParams(url);
-    console.log(url); 
+    console.log(url);
     window.history.pushState({}, "", url);
   };
 
@@ -58,20 +58,26 @@ function Search() {
 
   return (
     <div className="search__container">
-      <div className="search__wrapper">
-        <input
-          value={input}
-          onChange={handleChange}
-          type="text"
-          className="search__input"
-          placeholder="search.."
-        />
-        <button onClick={handleSubmit} className="btn search__btn">
-          Submit
-        </button>
-      </div>
+      <div className="container">
+        <div className="search__wrapper">
+          <input
+            value={input}
+            onChange={handleChange}
+            type="text"
+            className="search__input"
+            placeholder="search.."
+          />
+          <button onClick={handleSubmit} className="btn search__btn">
+            Submit
+          </button>
+        </div>
 
-      <div className="data__container"></div>
+        <div className="data__container">
+          {data.map((i) => {
+            return <div className="item">{i.id}</div>;
+          })}
+        </div>
+      </div>
     </div>
   );
 }

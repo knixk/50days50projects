@@ -285,11 +285,14 @@ input[type="file"] {
 
 .search__container {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   /* background-color: red; */
-  align-items: center;
+  /* align-items: center; */
+  justify-content: center;
+
   height: 100vh;
   margin-top: 10%;
+  /* width: 90vw; */
 }
 
 .search__wrapper {
@@ -300,3 +303,21 @@ input[type="file"] {
   gap: 10px;
 }
 
+
+.data__container {
+  background-color: red;
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: column;
+  align-items: center;
+  /* margin: 20px 20px; */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 90vw;
+}
