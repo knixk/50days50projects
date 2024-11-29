@@ -79,7 +79,7 @@ function Form() {
     e.preventDefault();
 
     if (!sign) {
-      console.log('no sign')
+      console.log("no sign");
     }
 
     const signatureImg = sign.getTrimmedCanvas().toDataURL("image/png");
@@ -93,9 +93,9 @@ function Form() {
       const submission = {
         template_id: templateId,
         submission_data: payload,
-        name: "kanishk",
-        email: "shrivastavakanishk3@gmail.com",
-        mobile_number: 9820042672,
+        // name: "kanishk",
+        // email: "shrivastavakanishk3@gmail.com",
+        // mobile_number: 9820042672,
       };
 
       console.log(submission);
@@ -153,19 +153,42 @@ function Form() {
             <div className="form__container">
               <div className="question__container">
                 <div className="question">Enter your name</div>
-                <input type="text" placeholder="Name.." required/>
+                <input
+                  onChange={(e) =>
+                    handleInputChange("fixed__name", e.target.value)
+                  }
+                  name="fixed__name"
+                  type="text"
+                  placeholder="Name.."
+                  required
+                />
               </div>
 
               <div className="question__container">
                 <div className="question">Enter your email</div>
-                <input type="text" placeholder="Email.." required/>
+                <input
+                  onChange={(e) =>
+                    handleInputChange("fixed__email", e.target.value)
+                  }
+                  name="fixed__email"
+                  type="text"
+                  placeholder="Email.."
+                  required
+                />
               </div>
 
               <div className="question__container">
                 <div className="question">Enter your mobile number</div>
-                <input type="text" placeholder="Mobile number.." required/>
+                <input
+                  onChange={(e) =>
+                    handleInputChange("fixed__number", e.target.value)
+                  }
+                  name="fixed__number"
+                  type="text"
+                  placeholder="Mobile number.."
+                  required
+                />
               </div>
-
 
               {questions &&
                 questions.map((question) => (

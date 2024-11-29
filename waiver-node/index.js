@@ -297,12 +297,15 @@ app.get("/template-id-from-center", async (req, res) => {
 
 // create submissions
 app.post("/submissions", async (req, res) => {
+  const { fixed__email, fixed__name, fixed__number } = req.body.submission_data;
+  console.log(fixed__email)
+
   const data = {
     template_id: req.body.template_id,
     submission_data: JSON.stringify(req.body.submission_data),
-    name: req.body.name,
-    email: req.body.email,
-    mobile_number: req.body.mobile_number,
+    name: fixed__name,
+    email: fixed__email,
+    mobile_number: fixed__number,
   };
 
   postASubmission(con, data);
