@@ -105,6 +105,11 @@ function Search() {
                     Submission ID:{" "}
                     <span className="submission-id__span">{i.id}</span>
                   </p>
+
+                  <p className="template_id">
+                    Template ID:{" "}
+                    <span className="template-id__span">{i.template_id}</span>
+                  </p>
                 </div>
                 <div className="right">
                   <button className="download btn">Download</button>
