@@ -81,17 +81,19 @@ function App() {
       signature: signatureImg,
     };
 
-    const submission = {
-      template_id: data.template_id,
-      submission_data: payload,
-      name: "kanishk",
-      email: "shrivastavakanishk3@gmail.com",
-      mobile_number: 9820042672,
-    };
+    if (templateId) {
+      const submission = {
+        template_id: templateId,
+        submission_data: payload,
+        name: "kanishk",
+        email: "shrivastavakanishk3@gmail.com",
+        mobile_number: 9820042672,
+      };
 
-    console.log(submission);
+      console.log(submission);
 
-    postSubmission(submission);
+      postSubmission(submission);
+    }
   };
 
   useEffect(() => {
@@ -106,12 +108,14 @@ function App() {
         const response = await axios.post(templates, options);
         console.log(response.data);
         const myData = JSON.parse(response.data.data[0].template_config);
+        const temp_id = response.data.data[0].id;
 
         if (myData) {
           setTempData(myData);
           setQuestions(myData.questions);
           setCompanyLogo(myData.company_logo);
           setExtraFields(myData.extra_participants_form_fields);
+          setTemplateId(temp_id);
         }
       } catch (error) {
         alert("template doesn't exist");
