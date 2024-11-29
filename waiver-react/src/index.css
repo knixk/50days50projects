@@ -4,6 +4,7 @@
   --theme-color: rgb(160, 26, 93);
   --header-color: rgb(30, 126, 190);
   --hover-bg: rgb(240, 240, 240);
+  --card-bg: rgb(99, 99, 99);
 }
 
 * {
@@ -290,7 +291,7 @@ input[type="file"] {
   justify-content: center;
 
   height: 100vh;
-  margin-top: 10%;
+  margin-top: 5%;
   /* width: 90vw; */
 }
 
@@ -304,7 +305,8 @@ input[type="file"] {
 
 .data__container {
   width: 100%;
-  display: flex;
+  /* display: flex; */
+  display: grid;
   /* justify-content: center; */
   flex-direction: column;
   align-items: center;
@@ -325,12 +327,19 @@ input[type="file"] {
 
 .item {
   background-color: red;
-  padding: 10px;
+  padding: 15px 20px;
   border-radius: 5px;
-  background-color: var(--theme-color);
-  color: white;
+  /* background-color: var(--card-bg); */
+  background-color: white;
+  color: #333;
   transition: 0.3s ease-in-out;
+  font-weight: bold;
   animation: fade-in 0.3s;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.item span {
+  font-weight: normal;
 }
 
 @keyframes fade-in {
@@ -342,3 +351,8 @@ input[type="file"] {
     opacity: 1;
   }
 }
+
+/* .search__wrapper input, .search__container button {
+  background-color: red;
+  width: 100%;
+} */

@@ -80,8 +80,10 @@ function Search() {
                   Name: <span className="name__span">{i.name}</span>
                 </p>
                 <p className="mobile_number">
-                  Mobile Number: 
-                  <span className="mobile-number__span">{i.mobile_number}</span>
+                  Mobile Number:{" "}
+                  <span className="mobile-number__span">
+                    {i.mobile_number}
+                  </span>
                 </p>
                 <p className="email">
                   Email: <span className="email__span">{i.email}</span>

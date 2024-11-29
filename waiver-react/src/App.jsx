@@ -19,7 +19,7 @@ function App() {
         <Route path="/form" element={<Form />} />
         <Route path="/search" element={<Search />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }
