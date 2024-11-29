@@ -4,6 +4,7 @@ import axios from "axios";
 function Search() {
   const [input, setInput] = useState();
   const [params, setParams] = useState("search");
+  const [data, setData] = useState([]);
 
   const getSubmissions = async (data) => {
     const submissions = `http://localhost:5050/submissions${params}`;
@@ -28,9 +29,12 @@ function Search() {
     };
 
     const res = getSubmissions(data);
+
     if (!res) {
       console.error("err");
     }
+
+    setData(res);
 
     console.log(res);
   };
@@ -46,7 +50,7 @@ function Search() {
     const url = `?${params.toString()}`;
 
     setParams(url);
-    console.log(url); // Outputs: /submissions?name=John&email=john@example.com
+    console.log(url); 
     window.history.pushState({}, "", url);
   };
 
@@ -66,6 +70,8 @@ function Search() {
           Submit
         </button>
       </div>
+
+      <div className="data__container"></div>
     </div>
   );
 }

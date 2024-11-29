@@ -217,17 +217,16 @@ app.listen(port, () => {
 // routes
 // get all the submissions and add filters
 app.get("/submissions", async (req, res) => {
+  const { mobile_number } = req.query;
+  console.log(mobile_number);
 
-  // const { mobile_number } = req.query;
-  console.log(req.query)
+  // const { name = null, mobile_number, days = null } = req.body;
 
-  const { name = null, mobile_number = null, days = null } = req.body;
-    
   // get this from query params
   const filterOptions = {
-    name: name,
+    // name: name,
     mobile_number: mobile_number,
-    days: days,
+    // days: days,
   };
 
   const token = generateJWT(req);
