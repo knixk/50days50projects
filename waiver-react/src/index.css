@@ -19,6 +19,7 @@ body {
   background-color: var(--bg-color);
   font-size: 14px;
   font-family: Arial, Helvetica, sans-serif;
+  /* animation: fade-in 0.2s 1s; */
 }
 
 .form__container {
@@ -395,16 +396,53 @@ input[type="file"] {
   background-color: var(--hover-bg);
 }
 
-
 .question__container input {
   padding: 10px 10px;
   border-radius: 0 0 5px 5px;
 }
 
 .sigCanvas {
-  border: 1px solid gainsboro;
+  border: 1px solid rgb(136, 136, 136);
 }
 
 .form__logo {
   width: 100%;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: #ff3d00;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.homepage {
+  /* background-color: rgb(35, 88, 185) !important; */
+  animation: fade-in 0.5s;
+}
+
+.loader__container {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 70vh;
+  align-items: center;
+}
+
+.form__container__main {
+  animation: fade-in 3s !important;
+  transition: 1s all;
 }

@@ -14,7 +14,7 @@ function Home() {
   };
 
   return (
-    <Box
+    <Box className="homepage"
       sx={{
         width: "100vw",
         height: "90vh",
