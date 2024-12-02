@@ -28,6 +28,7 @@
     ],
     "extra_participants_form_fields": ["name", "age", "phone"],
     "company_logo": "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg",
+    "company_name": "Best Gaming",
     "user_data": {
       "name": {
         "label": "Enter your name.",

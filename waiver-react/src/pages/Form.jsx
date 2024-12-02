@@ -45,6 +45,7 @@ const Form = () => {
   const [center, setCenter] = useState(false);
   const [displayForm, setDisplayForm] = useState(false);
   const [token, setToken] = useState(tkn);
+  const [companyName, setCompanyName] = useState("");
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -133,6 +134,7 @@ const Form = () => {
           setCompanyLogo(myData.company_logo);
           setExtraFields(myData.extra_participants_form_fields);
           setDisplayForm(true);
+          setCompanyName(myData.company_name);
         }
       } catch (error) {
         toast("template doesn't exist");
@@ -160,7 +162,7 @@ const Form = () => {
       {displayForm ? (
         <Paper elevation={3} sx={{ p: 3 }}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Company name
+            {formData && companyName || "Company name"}
           </Typography>
           {formData && <img src={companyLogo} alt="" />}
 

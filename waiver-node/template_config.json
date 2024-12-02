@@ -1,48 +1,74 @@
 {
-  "questions": [
-    {
-      "label": "Have you played this before?",
-      "input_type": "dropdown",
-      "values": ["no", "yes"],
-      "question_id": "some_id32",
-      "required": false
-    },
-    {
-      "label": "Do you have any disablility?",
-      "input_type": "file",
-      "question_id": "some_id5"
-    },
+  "template_name": "art shop template",
+  "template_config": {
+      "questions": [
+          {
+              "label": "I am above 18 years of age.",
+              "input_type": "dropdown",
+              "values": [
+                  "no",
+                  "yes"
+              ],
+              "question_id": "some_id32",
+              "required": false
+          },
+          {
+              "label": "We at unicef, believe that every children should have the right for education",
+              "image": "https://logowik.com/content/uploads/images/930_unicef.jpg",
+              "input_type": "label",
+              "input_placeholder": "Enter your text..",
+              "question_id": "some_id4",
+              "required": false
+          },
+          {
+              "label": "Please attach your file here..",
+              "input_type": "file",
+              "question_id": "some_id5"
+          },
+          {
+              "label": "Any message you would like to leave us?",
+              "input_type": "textarea",
+              "question_id": "some_id6"
+          },
+          {
+              "label": "Any message you would like to leave us?",
+              "input_type": "date",
+              "question_id": "someasdasd_id6"
+          },
+          {
+              "label": "Any message you would like to leave us?",
+              "input_type": "label",
+              "question_id": "some_i23423d6",
+              "fontSize": "1.5rem",
+              "color": "blue",
+              "bold": true,
+              "customStyles": {
+                  "textAlign": "center",
+                  "marginBottom": "10px"
+              }
+          }
+      ],
+      "extra_participants_form_fields": [
+          "name",
+          "age",
+          "phone"
+      ],
+      "company_logo": "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg",
+      "company_name": "Best gaming",
 
-    {
-      "label": "Just a label",
-      "question_id": "some_id25"
-    },
-    {
-      "label": "Example radio",
-      "input_type": "radio",
-      "values": ["eu", "aisa", "america"],
-      "question_id": "some_id7a"
-    }
-  ],
-
-  "template_id": "1230903",
-
-  "extra_participants_form_fields": ["name", "age", "phone"],
-
-  "company_logo": "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg",
-
-  "user_data": {
-    "name": {
-      "label": "Enter your name.",
-      "question_id": "some_12id"
-    },
-    "age": {
-      "label": "Enter your age.",
-      "question_id": "somed_id1"
-    },
-    "email": {
-      "label": "Enter your email.",
-      "question_id": "some_isdd2"
-    }
+      "user_data": {
+          "name": {
+              "label": "Enter your name.",
+              "question_id": "some_id"
+          },
+          "age": {
+              "label": "Enter your age.",
+              "question_id": "some_id1"
+          },
+          "email": {
+              "label": "Enter your email.",
+              "question_id": "some_id2"
+          }
+      }
   }
 }
