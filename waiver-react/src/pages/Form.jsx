@@ -23,6 +23,7 @@ import {
   TextareaAutosize,
 } from "@mui/material";
 
+const logo = "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg";
 import deleteIcon from "../assets/delete.png";
 
 const Form = () => {
@@ -150,6 +151,8 @@ const Form = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           Waiver form
         </Typography>
+        {formData && <img src={companyLogo} alt="" />}
+
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
