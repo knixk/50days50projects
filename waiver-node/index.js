@@ -222,12 +222,12 @@ app.get("/submissions", async (req, res) => {
     console.error("wrong");
   }
 
-  if (!decoded) {
-    res.sendStatus(401).json({
-      msg: "not authorized..",
-    });
-    return;
-  }
+  // if (!decoded) {
+    // res.sendStatus(401).json({
+      // msg: "not authorized..",
+    // });
+    // return;
+  // }
 
   const result = await getSubmissions(con, filterOptions);
 
