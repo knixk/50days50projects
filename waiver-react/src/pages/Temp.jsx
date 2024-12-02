@@ -161,6 +161,36 @@ function Form() {
         );
       }
     };
+
+    const fetchTemplate = async (id) => {
+      const templates = "http://localhost:5050/post-center";
+
+      const options = {
+        id: id,
+      };
+
+      try {
+        const response = await axios.post(templates, options);
+        console.log(response.data);
+        const myData = JSON.parse(response.data.data[0].template_config);
+        const temp_id = response.data.data[0].id;
+
+        if (myData) {
+          setTempData(myData);
+          setQuestions(myData.questions);
+          setCompanyLogo(myData.company_logo);
+          setExtraFields(myData.extra_participants_form_fields);
+          setTemplateId(temp_id);
+        }
+      } catch (error) {
+        toast("template doesn't exist");
+        console.error(
+          "Error:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    };
+
     setCenter(centerParams);
     center && fetchTemplate(center);
   }, []);

@@ -92,7 +92,7 @@ function Search() {
             />
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               sx={{ mt: 2 }}
               onClick={(e) => handleSubmit(e)}
             >
@@ -113,7 +113,7 @@ function Search() {
                     <Typography>Submission ID: {i.id}</Typography>
                     <Button
                       variant="contained"
-                      color="secondary"
+                      color="primary"
                       sx={{ mt: 2 }}
                       onClick={() => handleDownload(i)}
                     >
