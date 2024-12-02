@@ -26,6 +26,9 @@ import {
 const logo = "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg";
 import deleteIcon from "../assets/delete.png";
 
+const tkn =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjo5ODIwMDQyNjcyLCJpYXQiOjE3MzMxNDA3NzF9.0iiNNdu7dsaxCgigkggverxQ6Pm1HsO4md-8tgIVEPA";
+
 const Form = () => {
   const [sign, setSign] = useState(null);
   const [participants, setParticipants] = useState([]);
@@ -41,6 +44,7 @@ const Form = () => {
   const centerParams = queryParameters.get("center");
   const [center, setCenter] = useState(false);
   const [displayForm, setDisplayForm] = useState(false);
+  const [token, setToken] = useState(tkn);
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -113,7 +117,11 @@ const Form = () => {
       };
 
       try {
-        const response = await axios.post(templates, options);
+        const response = await axios.post(templates, options, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach JWT in Authorization header
+          },
+        });
         // console.log(response.data.data[0].template_config);
         const myData = JSON.parse(response.data.data[0].template_config);
         // console.log(myData);
