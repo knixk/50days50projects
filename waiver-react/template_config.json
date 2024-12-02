@@ -10,7 +10,7 @@
     {
       "label": "We at unicef, believe that every children should have the right for education",
       "image": "https://logowik.com/content/uploads/images/930_unicef.jpg",
-      "input_type": "text",
+      "input_type": "label",
       "input_placeholder": "Enter your text..",
       "question_id": "some_id4",
       "required": false
@@ -26,20 +26,19 @@
       "question_id": "some_id6"
     },
     {
-      "label": "Example radio",
-      "input_type": "radio",
-      "values": ["india", "germany", "italy"],
-      "question_id": "some_id7"
-    },
-    {
-      "label": "Example radio",
-      "input_type": "radio",
-      "values": ["india", "germany", "italy"],
-      "question_id": "some_id7"
+      "label": "Any message you would like to leave us?",
+      "input_type": "label",
+      "question_id": "some_i23423d6",
+      "input_type": "label",
+      "fontSize": "1.5rem",
+      "color": "blue",
+      "bold": true,
+      "customStyles": {
+        "textAlign": "center",
+        "marginBottom": "10px"
+      }
     }
   ],
-
-  "template_id": "12312312",
 
   "extra_participants_form_fields": ["name", "age", "phone"],
 

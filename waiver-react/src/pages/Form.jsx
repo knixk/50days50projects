@@ -191,7 +191,16 @@ const Form = () => {
 
                 {question.input_type === "label" && question.label && (
                   <FormControl component="fieldset" sx={{ mb: 2 }}>
-                    <Typography>{question.label}</Typography>
+                    <Typography
+                      sx={{
+                        fontSize: question.fontSize || "1rem", // Default size if not provided
+                        color: question.color || "black", // Default color if not provided
+                        fontWeight: question.bold ? "bold" : "normal", // Bold if specified
+                        ...question.customStyles, // Any additional custom styles
+                      }}
+                    >
+                      {question.label}
+                    </Typography>
                   </FormControl>
                 )}
 
