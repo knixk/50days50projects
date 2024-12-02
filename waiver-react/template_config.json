@@ -27,6 +27,11 @@
     },
     {
       "label": "Any message you would like to leave us?",
+      "input_type": "date",
+      "question_id": "someasdasd_id6"
+    }, 
+    {
+      "label": "Any message you would like to leave us?",
       "input_type": "label",
       "question_id": "some_i23423d6",
       "input_type": "label",

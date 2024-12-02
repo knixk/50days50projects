@@ -248,6 +248,67 @@ const Form = () => {
                   </FormControl>
                 )}
 
+                {question.input_type === "textarea" && question.label && (
+                  <FormControl component="fieldset" sx={{ mb: 2 }}>
+                    <Typography
+                      sx={{
+                        fontSize: question.fontSize || "1rem",
+                        color: question.color || "black",
+                        fontWeight: question.bold ? "bold" : "normal",
+                        ...question.customStyles,
+                      }}
+                    >
+                      {question.label}
+                    </Typography>
+                    <TextField
+                      multiline
+                      rows={question.rows || 4}
+                      variant="outlined"
+                      fullWidth
+                      value={formData[question.question_id] || ""}
+                      onChange={(e) =>
+                        handleInputChange(question.question_id, e.target.value)
+                      }
+                      placeholder={
+                        question.placeholder || "Enter your response"
+                      }
+                      sx={{ mt: 2, ...question.customTextAreaStyles }}
+                    />
+                  </FormControl>
+                )}
+
+                {/* For Date */}
+                {question.input_type === "date" && question.label && (
+                  <FormControl component="fieldset" sx={{ mb: 2 }}>
+                    <Typography
+                      sx={{
+                        fontSize: question.fontSize || "1rem",
+                        color: question.color || "black",
+                        fontWeight: question.bold ? "bold" : "normal",
+                        ...question.customStyles,
+                      }}
+                    >
+                      {question.label}
+                    </Typography>
+                    <TextField
+                      type="date"
+                      variant="outlined"
+                      fullWidth
+                      value={formData[question.question_id] || ""}
+                      onChange={(e) =>
+                        handleInputChange(question.question_id, e.target.value)
+                      }
+                      sx={{
+                        mt: 2,
+                        ...question.customDateStyles,
+                      }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </FormControl>
+                )}
+
                 {question.input_type === "file" && (
                   <FormControl fullWidth margin="normal">
                     <Button
