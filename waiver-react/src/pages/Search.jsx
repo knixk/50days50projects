@@ -1,128 +1,136 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import {
+  TextField,
+  Button,
+  Container,
+  Box,
+  Typography,
+  Paper,
+  Grid,
+} from "@mui/material";
 
 function Search() {
-  const [input, setInput] = useState();
+  const [input, setInput] = useState("");
   const [params, setParams] = useState("search");
   const [data, setData] = useState([]);
 
   const getSubmissions = async (data) => {
     const submissions = `http://localhost:5050/submissions${params}`;
-
-    console.log("url =====> ", submissions);
-
     try {
       const response = await axios.get(submissions, data);
-      console.log("Response:", response.data);
       return response.data;
     } catch (error) {
       console.error(
         "Error:",
         error.response ? error.response.data : error.message
       );
-      toast("You're not authorized..");
-      
+      toast.error("You're not authorized.");
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!input) return;
 
-    if (!input) {
-      return;
-    }
-
-    const data = {
-      mobile_number: input,
-    };
-
+    const data = { mobile_number: input };
     const res = await getSubmissions(data);
 
     if (!res) {
-      console.error("err");
+      console.error("Error fetching data");
+      return;
     }
 
-    if (res.data.length == 0) {
-      toast("No data found..");
+    if (res.data.length === 0) {
+      toast("No data found.");
     }
 
     setData(res.data);
-
-    console.log(res.data);
   };
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     const { value } = e.target;
-    console.log(value);
     setInput(value);
 
-    const params = new URLSearchParams({
-      mobile_number: value,
-    });
-    const url = `?${params.toString()}`;
+    const params = new URLSearchParams({ mobile_number: value });
+    setParams(`?${params.toString()}`);
+  };
 
-    setParams(url);
-    console.log(url);
-    // window.history.pushState({}, "", url);
+  const handleDownload = (data) => {
+    console.log("clciked");
+
+    const text = `
+  Name: ${data.name}
+  Mobile Number: ${data.mobile_number}
+  Email: ${data.email}
+  Submission ID: ${data.id}
+  Template ID: ${data.template_id}
+    `;
+    const blob = new Blob([text], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${data.name}_details.txt`;
+    link.click();
   };
 
   useEffect(() => {}, []);
 
   return (
-    <div className="search__container">
+    <Container maxWidth="md" sx={{ mt: 4 }}>
       <Toaster />
-      <div className="container">
-        <form onSubmit={handleSubmit} className="search__wrapper">
-          <input
-            value={input}
-            onChange={handleChange}
-            type="text"
-            className="search__input"
-            placeholder="enter mobile number.."
-            required
-          />
-          <button className="btn search__btn">Submit</button>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <form onSubmit={handleSubmit}>
+          <Box display="flex" alignItems="center" gap={2} mb={3}>
+            <TextField
+              fullWidth
+              value={input}
+              onChange={handleChange}
+              label="Enter Mobile Number"
+              variant="outlined"
+              required
+            />
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ mt: 2 }}
+              onClick={(e) => handleSubmit(e)}
+            >
+              Search
+            </Button>
+          </Box>
         </form>
 
-        <div className="data__container">
-          {data &&
-            data.map((i) => {
-              return (
-                <div className="item">
-                  <div className="left">
-                    <p className="name">
-                      Name: <span className="name__span">{i.name}</span>
-                    </p>
-                    <p className="mobile_number">
-                      Mobile Number:{" "}
-                      <span className="mobile-number__span">
-                        {i.mobile_number}
-                      </span>
-                    </p>
-                    <p className="email">
-                      Email: <span className="email__span">{i.email}</span>
-                    </p>
-
-                    <p className="submission_id">
-                      Submission ID:{" "}
-                      <span className="submission-id__span">{i.id}</span>
-                    </p>
-
-                    <p className="template_id">
-                      Template ID:{" "}
-                      <span className="template-id__span">{i.template_id}</span>
-                    </p>
-                  </div>
-                  <div className="right">
-                    <button className="download btn">Download</button>
-                  </div>
-                </div>
-              );
-            })}
-        </div>
-      </div>
-    </div>
+        <Box mt={4}>
+          {data && data.length > 0 ? (
+            <Grid container spacing={3}>
+              {data.map((i) => (
+                <Grid item xs={12} key={i.id}>
+                  <Paper elevation={2} sx={{ p: 3 }}>
+                    <Typography variant="h6">Name: {i.name}</Typography>
+                    <Typography>Mobile Number: {i.mobile_number}</Typography>
+                    <Typography>Email: {i.email}</Typography>
+                    <Typography>Submission ID: {i.id}</Typography>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      sx={{ mt: 2 }}
+                      onClick={() => handleDownload(i)}
+                    >
+                      Download
+                    </Button>
+                  </Paper>
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            <Typography variant="body1" color="textSecondary">
+              No data to display.
+            </Typography>
+          )}
+        </Box>
+      </Paper>
+    </Container>
   );
 }
 

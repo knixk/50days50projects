@@ -117,10 +117,7 @@ const getSubmissions = async (
   });
 };
 
-const getTemplates = async (
-  con,
-  { template_name = null, days = null, id = null } = {}
-) => {
+const getTemplates = async (con, { id = null } = {}) => {
   let getTemplatesQuery = `SELECT * FROM templates WHERE id = ?`; // Base query to start with
 
   // Filter by name if provided
@@ -222,11 +219,6 @@ app.listen(port, () => {
 // get all the submissions and add filters
 app.get("/submissions", async (req, res) => {
   const { mobile_number } = req.query;
-  // const tkn = generateJWT(req);
-  // console.log(tkn)
-  // console.log(mobile_number);
-
-  // const { name = null, mobile_number, days = null } = req.body;
 
   // get this from query params
   const filterOptions = {
@@ -234,9 +226,6 @@ app.get("/submissions", async (req, res) => {
     mobile_number: mobile_number,
     // days: days,
   };
-
-  // const token = generateJWT(req);
-  // console.log("token =====> ", token);
 
   // invalid token - synchronous
   try {
@@ -248,11 +237,11 @@ app.get("/submissions", async (req, res) => {
     console.error("wrong");
   }
 
-
   if (!decoded) {
-    res.send(401)
-    return;
+    // res.sendStatus(401);
+    // return;
   }
+
   const result = await getSubmissions(con, filterOptions);
 
   res.status(200).json({
@@ -290,16 +279,30 @@ app.get("/centers", async (req, res) => {
   });
 });
 
-// get all the templates
-app.get("/template-id-from-center", async (req, res) => {
-  console.log(req.body);
-  // get this from query params
-  const filterOptions = {
-    center_name: "game",
-    days: 2,
-  };
+const getTemplateByCenter = async (con, centerId) => {
+  const query = `
+    SELECT * 
+    FROM templates INNER JOIN centers ON centers.template_id = templates.id
+    WHERE centers.id = ?`;
 
-  const result = await getCenters(con, filterOptions);
+  return new Promise((resolve, reject) => {
+    con.query(query, [centerId], (err, result) => {
+      if (err) {
+        reject(err); // Reject promise on error
+      } else {
+        resolve(result); // Resolve with the fetched template data
+      }
+    });
+  });
+};
+
+// get all the templates
+app.post("/template-id-from-center", async (req, res) => {
+  const { center_id } = req.body;
+
+  console.log(center_id);
+
+  const result = await getTemplateByCenter(con, center_id);
 
   res.status(200).json({
     template_id: result[0].template_id,
@@ -308,16 +311,19 @@ app.get("/template-id-from-center", async (req, res) => {
 
 // create submissions
 app.post("/submissions", async (req, res) => {
-  const { fixed__email, fixed__name, fixed__number } = req.body.submission_data;
-  console.log(fixed__email);
+  const { fixed__email, fixed__name, fixed__number } = req.body;
+
+  console.log(req.body);
 
   const data = {
     template_id: req.body.template_id,
-    submission_data: JSON.stringify(req.body.submission_data),
+    submission_data: JSON.stringify(req.body),
     name: fixed__name,
     email: fixed__email,
     mobile_number: fixed__number,
   };
+
+  console.log(data);
 
   postASubmission(con, data);
 

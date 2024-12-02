@@ -22,10 +22,8 @@ import {
   Radio,
   TextareaAutosize,
 } from "@mui/material";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import deleteIcon from '@mui/icons-material/Delete';
 
-// import AddIcon from "@mui/icons-material/Add";
+import deleteIcon from "../assets/delete.png";
 
 const Form = () => {
   const [sign, setSign] = useState(null);
@@ -40,7 +38,7 @@ const Form = () => {
   const navigate = useNavigate();
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
-
+  const [center, setCenter] = useState(false);
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -72,6 +70,8 @@ const Form = () => {
     const signatureImg = sign?.getTrimmedCanvas().toDataURL("image/png");
     const payload = { ...formData, participants, signature: signatureImg };
 
+    // console.log(payload);
+
     try {
       await axios.post("http://localhost:5050/submissions", payload);
       toast.success("Form submitted successfully!");
@@ -84,6 +84,35 @@ const Form = () => {
   };
 
   useEffect(() => {
+    const getTemplateIdFromCenterID = async () => {
+      const templates = "http://localhost:5050/template-id-from-center";
+
+      const options = {
+        center_id: 1,
+      };
+
+      try {
+        const response = await axios.post(templates, options);
+        console.log(response.data.template_id);
+        setTemplateId(response.data.template_id);
+
+        /*
+        const myData = JSON.parse(response.data.data[0].template_config);
+        const temp_id = response.data.data[0].id;
+
+        if (myData) {
+          setTempData(myData);
+          setQuestions(myData.questions);
+          setCompanyLogo(myData.company_logo);
+          setExtraFields(myData.extra_participants_form_fields);
+          setTemplateId(temp_id);
+        }
+          */
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     const fetchTemplate = async (id) => {
       const templates = "http://localhost:5050/post-center";
 
@@ -93,7 +122,7 @@ const Form = () => {
 
       try {
         const response = await axios.post(templates, options);
-        console.log(response.data);
+        // console.log(response.data);
         const myData = JSON.parse(response.data.data[0].template_config);
         const temp_id = response.data.data[0].id;
 
@@ -114,6 +143,7 @@ const Form = () => {
     };
     // setCenter(centerParams);
     fetchTemplate(centerParams);
+    getTemplateIdFromCenterID();
   }, []);
 
   return (
@@ -145,9 +175,7 @@ const Form = () => {
             margin="normal"
             required
             type="tel"
-            onChange={(e) =>
-              handleInputChange("fixed__number", e.target.value)
-            }
+            onChange={(e) => handleInputChange("fixed__number", e.target.value)}
           />
           {questions &&
             questions.map((question) => (
@@ -166,8 +194,13 @@ const Form = () => {
                 )}
                 {question.input_type === "dropdown" && (
                   <FormControl fullWidth margin="normal">
-                    <InputLabel>{question.label}</InputLabel>
+                    {/* <InputLabel>{question.label}</InputLabel> */}
                     <Select
+                      value={
+                        formData[question.question_id] !== null
+                          ? formData[question.question_id]
+                          : "choose"
+                      }
                       onChange={(e) =>
                         handleInputChange(question.question_id, e.target.value)
                       }
@@ -198,6 +231,25 @@ const Form = () => {
                     </RadioGroup>
                   </FormControl>
                 )}
+
+                {/* {question.input_type === "radio" && (
+                  <FormControl component="fieldset">
+                    <Button
+                      component="label"
+                      role={undefined}
+                      variant="contained"
+                      tabIndex={-1}
+                      startIcon={<CloudUploadIcon />}
+                    >
+                      Upload files
+                      <VisuallyHiddenInput
+                        type="file"
+                        onChange={(event) => console.log(event.target.files)}
+                        multiple
+                      />
+                    </Button>
+                  </FormControl>
+                )} */}
               </Box>
             ))}
 
@@ -207,6 +259,7 @@ const Form = () => {
               <Grid
                 container
                 spacing={2}
+                style={{ marginTop: 10 }}
                 alignItems="center"
                 key={participant.id}
               >
@@ -233,7 +286,9 @@ const Form = () => {
                 </Grid>
                 <Grid item xs={2}>
                   <IconButton onClick={() => deleteParticipant(participant.id)}>
-                    {/* <DeleteIcon /> */}  x
+                    {/* <HighlightOffIcon /> */}
+                    {/* <deleteIcon> */}
+                    <img style={{ width: 30 }} src={deleteIcon} />
                   </IconButton>
                 </Grid>
               </Grid>
