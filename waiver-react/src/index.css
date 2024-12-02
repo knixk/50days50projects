@@ -404,3 +404,7 @@ input[type="file"] {
 .sigCanvas {
   border: 1px solid gainsboro;
 }
+
+.form__logo {
+  width: 100%;
+}

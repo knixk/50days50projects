@@ -164,7 +164,7 @@ const Form = () => {
           <Typography variant="h4" component="h1" gutterBottom>
             {formData && companyName || "Company name"}
           </Typography>
-          {formData && <img src={companyLogo} alt="" />}
+          {formData && <img className="form__logo" src={companyLogo} alt="" />}
 
           <form onSubmit={handleSubmit}>
             <TextField
@@ -455,7 +455,7 @@ const Form = () => {
           </form>
         </Paper>
       ) : (
-        <div className="loader">Loading..</div>
+        <div className="loader"></div>
       )}
     </Box>
   );
