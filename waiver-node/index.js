@@ -6,6 +6,7 @@ const port = process.env.PORT || 5050;
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const env = require("dotenv");
+const { ZoomIn } = require("@mui/icons-material");
 env.config();
 
 const con = mysql.createConnection({
@@ -137,11 +138,10 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-const generateJWT = async (req) => {
-  const { mobile_number } = req.query;
+const generateJWT = async (mobile_number) => {
   // console.log(mobile_number, "log?");
   const user = {
-    user_id: mobile_number,
+    mobile_number: mobile_number,
   };
   const token = jwt.sign(user, secretKey);
   // res.json({ token });
@@ -193,8 +193,10 @@ app.get("/submissions", async (req, res) => {
   }
 
   if (!decoded) {
-    // res.sendStatus(401);
-    // return;
+    res.sendStatus(401).json({
+      msg: "not authorized..",
+    });
+    return;
   }
 
   const result = await getSubmissions(con, filterOptions);
@@ -288,28 +290,6 @@ app.post("/submissions", async (req, res) => {
   });
 });
 
-// const postATemplate = (con, data) => {
-//   let ans = null;
-//   const query = `
-//     INSERT INTO templates (template_name, template_config)
-//     VALUES (?, ?)
-//   `;
-
-//   con.query(
-//     query,
-//     [data.template_name, JSON.stringify(data.template_config)], // Ensure JSON is stringified
-
-//     (err, result) => {
-//       if (err) throw err;
-//       console.log("Inserted ID:", result.insertId);
-//       console.log("Insertion finished.");
-//       ans = result.insertId;
-//     }
-//   );
-
-//   return ans;
-// };
-
 const postATemplate = (con, data) => {
   const query = `
     INSERT INTO templates (template_name, template_config)
@@ -357,23 +337,6 @@ app.post("/templates", async (req, res) => {
   }
 });
 
-// // create templates
-// app.post("/templates", async (req, res) => {
-//   const { template_config, template_name } = req.body.template_config;
-//   const data = {
-//     template_name: template_name,
-//     template_config: template_config,
-//   };
-
-//   const ans = postATemplate(con, data);
-
-//   console.log(ans, "outside");
-
-//   res.status(200).json({
-//     msg: "template was saved",
-//   });
-// });
-
 // create a center
 app.post("/centers", async (req, res) => {
   console.log(req.body);
@@ -409,8 +372,6 @@ const getTemplates = async (con, { id = null } = {}) => {
 
 // create a center
 app.post("/post-center", async (req, res) => {
-  // console.log(req.body.id);
-  // get this from query params
   const filterOptions = {
     id: req.body.id,
   };
@@ -420,5 +381,19 @@ app.post("/post-center", async (req, res) => {
 
   res.status(200).json({
     data: result,
+  });
+});
+
+app.post("/get-token", (req, res) => {
+  const { mobile_number } = req.body; // Assuming username and email are provided in the request body
+
+  if (!mobile_number) {
+    return res.status(400).json({ message: "Mobile number required." });
+  }
+
+  const token = generateJWT(mobile_number);
+
+  res.sendStatus(200).json({
+    token,
   });
 });

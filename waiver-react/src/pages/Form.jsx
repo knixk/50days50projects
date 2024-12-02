@@ -152,7 +152,7 @@ const Form = () => {
       {displayForm ? (
         <Paper elevation={3} sx={{ p: 3 }}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Waiver form
+            Company name
           </Typography>
           {formData && <img src={companyLogo} alt="" />}
 
@@ -445,7 +445,7 @@ const Form = () => {
           </form>
         </Paper>
       ) : (
-        <h3>Loading..</h3>
+        <div className="loader">Loading..</div>
       )}
     </Box>
   );
