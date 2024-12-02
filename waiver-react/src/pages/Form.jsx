@@ -114,7 +114,7 @@ const Form = () => {
         const response = await axios.post(templates, options);
         // console.log(response.data.data[0].template_config);
         const myData = JSON.parse(response.data.data[0].template_config);
-        console.log(myData);
+        // console.log(myData);
         // const temp_id = response.data.data[0].id;
 
         if (myData) {
@@ -136,7 +136,7 @@ const Form = () => {
     const asyncFnStitch = async () => {
       const data =
         centerParams && (await getTemplateIdFromCenterID(centerParams));
-      console.log("templateId: ", data);
+      // console.log("templateId: ", data);
       data && (await fetchTemplate(data));
     };
 
@@ -177,8 +177,7 @@ const Form = () => {
           {questions &&
             questions.map((question) => (
               <Box key={question.question_id} sx={{ mt: 2 }}>
-                <Typography>{question.label}</Typography>
-                {question.input_type === "text" && (
+                {/* {question.input_type === "text" && (
                   <TextField
                     fullWidth
                     margin="normal"
@@ -188,9 +187,18 @@ const Form = () => {
                       handleInputChange(question.question_id, e.target.value)
                     }
                   />
+                )} */}
+
+                {question.input_type === "label" && question.label && (
+                  <FormControl component="fieldset" sx={{ mb: 2 }}>
+                    <Typography>{question.label}</Typography>
+                  </FormControl>
                 )}
+
                 {question.input_type === "dropdown" && (
                   <FormControl fullWidth margin="normal">
+                    <Typography>{question.label}</Typography>
+
                     <Select
                       value={formData[question.question_id] || ""}
                       onChange={(e) =>
@@ -212,6 +220,8 @@ const Form = () => {
 
                 {question.input_type === "radio" && (
                   <FormControl component="fieldset">
+                    <Typography>{question.label}</Typography>
+
                     <RadioGroup
                       onChange={(e) =>
                         handleRadioChange(question.question_id, e.target.value)
