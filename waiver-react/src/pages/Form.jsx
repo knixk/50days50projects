@@ -111,8 +111,9 @@ const Form = () => {
 
       try {
         const response = await axios.post(templates, options);
+        console.log(response);
         const myData = JSON.parse(response.data.data[0].template_config);
-        const temp_id = response.data.data[0].id;
+        // const temp_id = response.data.data[0].id;
 
         if (myData) {
           setTempData(myData);
@@ -131,9 +132,10 @@ const Form = () => {
     setCenter(centerParams);
 
     const asyncFnStitch = async () => {
-      const data = await getTemplateIdFromCenterID(centerParams);
+      const data =
+        centerParams && (await getTemplateIdFromCenterID(centerParams));
       console.log("templateId: ", data);
-      fetchTemplate(data);
+      data && (await fetchTemplate(data));
     };
 
     asyncFnStitch();
