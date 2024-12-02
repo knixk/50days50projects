@@ -21,6 +21,8 @@ function Search() {
         "Error:",
         error.response ? error.response.data : error.message
       );
+      toast("You're not authorized..");
+      
     }
   };
 
@@ -84,39 +86,40 @@ function Search() {
         </form>
 
         <div className="data__container">
-          {data.map((i) => {
-            return (
-              <div className="item">
-                <div className="left">
-                  <p className="name">
-                    Name: <span className="name__span">{i.name}</span>
-                  </p>
-                  <p className="mobile_number">
-                    Mobile Number:{" "}
-                    <span className="mobile-number__span">
-                      {i.mobile_number}
-                    </span>
-                  </p>
-                  <p className="email">
-                    Email: <span className="email__span">{i.email}</span>
-                  </p>
+          {data &&
+            data.map((i) => {
+              return (
+                <div className="item">
+                  <div className="left">
+                    <p className="name">
+                      Name: <span className="name__span">{i.name}</span>
+                    </p>
+                    <p className="mobile_number">
+                      Mobile Number:{" "}
+                      <span className="mobile-number__span">
+                        {i.mobile_number}
+                      </span>
+                    </p>
+                    <p className="email">
+                      Email: <span className="email__span">{i.email}</span>
+                    </p>
 
-                  <p className="submission_id">
-                    Submission ID:{" "}
-                    <span className="submission-id__span">{i.id}</span>
-                  </p>
+                    <p className="submission_id">
+                      Submission ID:{" "}
+                      <span className="submission-id__span">{i.id}</span>
+                    </p>
 
-                  <p className="template_id">
-                    Template ID:{" "}
-                    <span className="template-id__span">{i.template_id}</span>
-                  </p>
+                    <p className="template_id">
+                      Template ID:{" "}
+                      <span className="template-id__span">{i.template_id}</span>
+                    </p>
+                  </div>
+                  <div className="right">
+                    <button className="download btn">Download</button>
+                  </div>
                 </div>
-                <div className="right">
-                  <button className="download btn">Download</button>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     </div>

@@ -186,8 +186,12 @@ const authenticateToken = (req, res, next) => {
 };
 
 const generateJWT = async (req) => {
-  const { mobile_number } = req.body;
-  const token = jwt.sign({ mobile_number }, secretKey, { expiresIn: "1h" });
+  const { mobile_number } = req.query;
+  // console.log(mobile_number, "log?");
+  const user = {
+    user_id: mobile_number,
+  };
+  const token = jwt.sign(user, secretKey);
   // res.json({ token });
   return token;
 };
@@ -218,7 +222,9 @@ app.listen(port, () => {
 // get all the submissions and add filters
 app.get("/submissions", async (req, res) => {
   const { mobile_number } = req.query;
-  console.log(mobile_number);
+  // const tkn = generateJWT(req);
+  // console.log(tkn)
+  // console.log(mobile_number);
 
   // const { name = null, mobile_number, days = null } = req.body;
 
@@ -229,8 +235,8 @@ app.get("/submissions", async (req, res) => {
     // days: days,
   };
 
-  const token = generateJWT(req);
-  console.log("token =====> ", token);
+  // const token = generateJWT(req);
+  // console.log("token =====> ", token);
 
   // invalid token - synchronous
   try {
@@ -242,6 +248,11 @@ app.get("/submissions", async (req, res) => {
     console.error("wrong");
   }
 
+
+  if (!decoded) {
+    res.send(401)
+    return;
+  }
   const result = await getSubmissions(con, filterOptions);
 
   res.status(200).json({
@@ -298,7 +309,7 @@ app.get("/template-id-from-center", async (req, res) => {
 // create submissions
 app.post("/submissions", async (req, res) => {
   const { fixed__email, fixed__name, fixed__number } = req.body.submission_data;
-  console.log(fixed__email)
+  console.log(fixed__email);
 
   const data = {
     template_id: req.body.template_id,
