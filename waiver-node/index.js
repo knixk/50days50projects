@@ -117,34 +117,6 @@ const getSubmissions = async (
   });
 };
 
-const getTemplates = async (con, { id = null } = {}) => {
-  let getTemplatesQuery = `SELECT * FROM templates WHERE id = ?`; // Base query to start with
-
-  // Filter by name if provided
-  // if (template_name) {
-  //   getTemplatesQuery += ` AND template_name LIKE '%${template_name}%'`; // Using LIKE for partial matching
-  // }
-
-  // Filter by submission date range if provided
-  // if (days) {
-  //   getTemplatesQuery += ` AND updated_at >= CURDATE() - INTERVAL ${days} DAY`;
-  // }
-
-  // if (id) {
-  //   getTemplatesQuery += `AND id LIKE '%${id}%`;
-  // }
-  console.log("template fetch was run");
-  return new Promise((resolve, reject) => {
-    con.query(getTemplatesQuery, [id], (err, result, fields) => {
-      if (err) {
-        reject(err); // Reject promise on error
-      } else {
-        resolve(result); // Resolve promise with the result
-      }
-    });
-  });
-};
-
 const getCenters = async (con, { center_name = null, days = null } = {}) => {
   let getCentersQuery = "SELECT * FROM centers WHERE 1=1"; // Base query to start with
 
@@ -304,9 +276,17 @@ app.post("/template-id-from-center", async (req, res) => {
 
   const result = await getTemplateByCenter(con, center_id);
 
-  res.status(200).json({
-    template_id: result[0].template_id,
-  });
+  console.log(result);
+
+  if (result) {
+    res.status(200).json({
+      template_id: result[0].template_id,
+    });
+
+    return;
+  }
+
+  res.status(404);
 });
 
 // create submissions
@@ -363,6 +343,21 @@ app.post("/centers", async (req, res) => {
     msg: "center was saved",
   });
 });
+
+const getTemplates = async (con, { id = null } = {}) => {
+  let getTemplatesQuery = `SELECT * FROM templates WHERE id = ?`; // Base query to start with
+
+  console.log("template fetch was run");
+  return new Promise((resolve, reject) => {
+    con.query(getTemplatesQuery, [id], (err, result, fields) => {
+      if (err) {
+        reject(err); // Reject promise on error
+      } else {
+        resolve(result); // Resolve promise with the result
+      }
+    });
+  });
+};
 
 // create a center
 app.post("/post-center", async (req, res) => {

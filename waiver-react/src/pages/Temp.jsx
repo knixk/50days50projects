@@ -162,7 +162,7 @@ function Form() {
       }
     };
     setCenter(centerParams);
-    fetchTemplate(centerParams);
+    center && fetchTemplate(center);
   }, []);
 
   return (

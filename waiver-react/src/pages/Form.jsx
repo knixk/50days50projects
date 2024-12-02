@@ -84,45 +84,33 @@ const Form = () => {
   };
 
   useEffect(() => {
-    const getTemplateIdFromCenterID = async () => {
+    const getTemplateIdFromCenterID = async (id) => {
+      let ans = null;
       const templates = "http://localhost:5050/template-id-from-center";
 
       const options = {
-        center_id: 1,
+        center_id: id,
       };
 
       try {
         const response = await axios.post(templates, options);
-        console.log(response.data.template_id);
-        setTemplateId(response.data.template_id);
-
-        /*
-        const myData = JSON.parse(response.data.data[0].template_config);
-        const temp_id = response.data.data[0].id;
-
-        if (myData) {
-          setTempData(myData);
-          setQuestions(myData.questions);
-          setCompanyLogo(myData.company_logo);
-          setExtraFields(myData.extra_participants_form_fields);
-          setTemplateId(temp_id);
-        }
-          */
+        ans = response.data.template_id;
       } catch (error) {
         console.error(error);
       }
+
+      return ans;
     };
 
-    const fetchTemplate = async (id) => {
+    const fetchTemplate = async (t_id) => {
       const templates = "http://localhost:5050/post-center";
 
       const options = {
-        id: id,
+        id: t_id,
       };
 
       try {
         const response = await axios.post(templates, options);
-        // console.log(response.data);
         const myData = JSON.parse(response.data.data[0].template_config);
         const temp_id = response.data.data[0].id;
 
@@ -131,7 +119,6 @@ const Form = () => {
           setQuestions(myData.questions);
           setCompanyLogo(myData.company_logo);
           setExtraFields(myData.extra_participants_form_fields);
-          setTemplateId(temp_id);
         }
       } catch (error) {
         toast("template doesn't exist");
@@ -141,9 +128,15 @@ const Form = () => {
         );
       }
     };
-    // setCenter(centerParams);
-    fetchTemplate(centerParams);
-    getTemplateIdFromCenterID();
+    setCenter(centerParams);
+
+    const asyncFnStitch = async () => {
+      const data = await getTemplateIdFromCenterID(centerParams);
+      console.log("templateId: ", data);
+      fetchTemplate(data);
+    };
+
+    asyncFnStitch();
   }, []);
 
   return (
@@ -194,17 +187,16 @@ const Form = () => {
                 )}
                 {question.input_type === "dropdown" && (
                   <FormControl fullWidth margin="normal">
-                    {/* <InputLabel>{question.label}</InputLabel> */}
                     <Select
-                      value={
-                        formData[question.question_id] !== null
-                          ? formData[question.question_id]
-                          : "choose"
-                      }
+                      value={formData[question.question_id] || ""}
                       onChange={(e) =>
                         handleInputChange(question.question_id, e.target.value)
                       }
+                      displayEmpty
                     >
+                      <MenuItem value="" disabled>
+                        Choose
+                      </MenuItem>
                       {question.values.map((option) => (
                         <MenuItem key={option} value={option}>
                           {option}
@@ -213,6 +205,7 @@ const Form = () => {
                     </Select>
                   </FormControl>
                 )}
+
                 {question.input_type === "radio" && (
                   <FormControl component="fieldset">
                     <RadioGroup
@@ -229,6 +222,33 @@ const Form = () => {
                         />
                       ))}
                     </RadioGroup>
+                  </FormControl>
+                )}
+
+                {question.input_type === "file" && (
+                  <FormControl fullWidth margin="normal">
+                    <Button
+                      variant="contained"
+                      component="label"
+                      color="primary"
+                    >
+                      Upload File
+                      <input
+                        type="file"
+                        hidden
+                        onChange={(e) =>
+                          handleInputChange(
+                            question.question_id,
+                            e.target.files[0]
+                          )
+                        }
+                      />
+                    </Button>
+                    {formData[question.question_id] && (
+                      <Typography variant="body2" marginTop={1}>
+                        Selected: {formData[question.question_id].name}
+                      </Typography>
+                    )}
                   </FormControl>
                 )}
 
