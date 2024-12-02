@@ -227,6 +227,14 @@ const Form = () => {
                   </FormControl>
                 )}
 
+                {question.input_type === "label" && (
+                  <FormControl component="fieldset" sx={{ mb: 2 }}>
+                    <Typography variant="h6" sx={{ mb: 1 }}>
+                      {question.label}
+                    </Typography>
+                  </FormControl>
+                )}
+
                 {question.input_type === "file" && (
                   <FormControl fullWidth margin="normal">
                     <Button
