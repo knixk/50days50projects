@@ -97,7 +97,7 @@ const Form = () => {
         ans = response.data.template_id;
       } catch (error) {
         console.error(error);
-        toast("No form found...")
+        toast("No form found...");
       }
 
       return ans;
@@ -112,8 +112,9 @@ const Form = () => {
 
       try {
         const response = await axios.post(templates, options);
-        console.log(response);
+        // console.log(response.data.data[0].template_config);
         const myData = JSON.parse(response.data.data[0].template_config);
+        console.log(myData);
         // const temp_id = response.data.data[0].id;
 
         if (myData) {

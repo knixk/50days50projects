@@ -1,43 +1,46 @@
 {
-  "data": {
-    "data": [
+  "template_name": "art shop template",
+  "template_config": {
+    "questions": [
       {
-        "id": 14,
-        "template_name": "party template",
-        "template_config": "{\"questions\": [{\"label\": \"Have you played this before?\", \"values\": [\"no\", \"yes\"], \"required\": false, \"input_type\": \"dropdown\", \"question_id\": \"some_id32\"}, {\"label\": \"Do you have any disablility?\", \"input_type\": \"file\", \"question_id\": \"some_id5\"}, {\"label\": \"Just a label\", \"question_id\": \"some_id25\"}, {\"label\": \"Example radio\", \"values\": [\"eu\", \"aisa\", \"america\"], \"input_type\": \"radio\", \"question_id\": \"some_id7a\"}], \"user_data\": {\"age\": {\"label\": \"Enter your age.\", \"question_id\": \"somed_id1\"}, \"name\": {\"label\": \"Enter your name.\", \"question_id\": \"some_12id\"}, \"email\": {\"label\": \"Enter your email.\", \"question_id\": \"some_isdd2\"}}, \"template_id\": \"1230903\", \"company_logo\": \"https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg\", \"extra_participants_form_fields\": [\"name\", \"age\", \"phone\"]}",
-        "created_at": "2024-12-02T10:08:50.000Z",
-        "updated_at": "2024-12-02T10:08:50.000Z"
+        "label": "Have you played this before?",
+        "input_type": "dropdown",
+        "values": ["no", "yes"],
+        "question_id": "some_id32",
+        "required": false
+      },
+      {
+        "label": "Do you have any disablility?",
+        "input_type": "file",
+        "question_id": "some_id5"
+      },
+      {
+        "label": "Put a long and wide disclaimer here, as many words as you want but preferably under 300. Okay let's how does this look, Put a long and wide disclaimer here, as many words as you want but preferably under 300. Okay let's how does this look, Put a long and wide disclaimer here, as many words as you want but preferably under 300. Okay let's how does this look, Put a long and wide disclaimer here, as many words as you want but preferably under 300. Okay let's how does this look, Put a long and wide disclaimer here, as many words as you want but preferably under 300. Okay let's how does this look, Put a long and wide disclaimer here, as many words as you want but preferably under 300. Okay let's how does this look,",
+        "question_id": "some_id25",
+        "input_type": "label"
+      },
+      {
+        "label": "Example radio",
+        "input_type": "radio",
+        "values": ["eu", "aisa", "america"],
+        "question_id": "some_id7a"
       }
-    ]
-  },
-  "status": 200,
-  "statusText": "OK",
-  "headers": {
-    "content-length": "1065",
-    "content-type": "application/json; charset=utf-8"
-  },
-  "config": {
-    "transitional": {
-      "silentJSONParsing": true,
-      "forcedJSONParsing": true,
-      "clarifyTimeoutError": false
-    },
-    "adapter": ["xhr", "http", "fetch"],
-    "transformRequest": [null],
-    "transformResponse": [null],
-    "timeout": 0,
-    "xsrfCookieName": "XSRF-TOKEN",
-    "xsrfHeaderName": "X-XSRF-TOKEN",
-    "maxContentLength": -1,
-    "maxBodyLength": -1,
-    "env": {},
-    "headers": {
-      "Accept": "application/json, text/plain, */*",
-      "Content-Type": "application/json"
-    },
-    "method": "post",
-    "url": "http://localhost:5050/post-center",
-    "data": "{\"id\":14}"
-  },
-  "request": {}
+    ],
+    "extra_participants_form_fields": ["name", "age", "phone"],
+    "company_logo": "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg",
+    "user_data": {
+      "name": {
+        "label": "Enter your name.",
+        "question_id": "some_12id"
+      },
+      "age": {
+        "label": "Enter your age.",
+        "question_id": "somed_id1"
+      },
+      "email": {
+        "label": "Enter your email.",
+        "question_id": "some_isdd2"
+      }
+    }
+  }
 }

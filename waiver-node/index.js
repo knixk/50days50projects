@@ -2,7 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 const port = process.env.PORT || 5050;
-const template_config = require("./template_config.json");
+// const template_config = require("./template_config.json");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const env = require("dotenv");
@@ -42,6 +42,7 @@ const postASubmission = (con, data) => {
 };
 
 const postATemplate = (con, data) => {
+  let ans = null;
   const query = `
     INSERT INTO templates (template_name, template_config)
     VALUES (?, ?)
@@ -50,12 +51,16 @@ const postATemplate = (con, data) => {
   con.query(
     query,
     [data.template_name, JSON.stringify(data.template_config)], // Ensure JSON is stringified
+    
     (err, result) => {
       if (err) throw err;
       console.log("Inserted ID:", result.insertId);
       console.log("Insertion finished.");
+      ans = result.insertId;
     }
   );
+
+  return ans;
 };
 
 const postACenter = (con, data) => {
@@ -307,12 +312,15 @@ app.post("/submissions", async (req, res) => {
 
 // create templates
 app.post("/templates", async (req, res) => {
+  const { template_config, template_name } = req.body.template_config;
   const data = {
-    template_name: "party template",
+    template_name: template_name,
     template_config: template_config,
   };
 
-  postATemplate(con, data);
+  const ans = postATemplate(con, data);
+
+  console.log(ans, "outside");
 
   res.status(200).json({
     msg: "template was saved",
