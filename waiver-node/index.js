@@ -6,7 +6,6 @@ const port = process.env.PORT || 5050;
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const env = require("dotenv");
-const { ZoomIn } = require("@mui/icons-material");
 env.config();
 
 const con = mysql.createConnection({
@@ -189,6 +188,9 @@ app.get("/submissions", async (req, res) => {
     console.log("verified token..");
   } catch (err) {
     // err
+    if (!mobile_number) {
+      return res.status(404).json({ message: "wrong token." });
+    }
     console.error("wrong");
   }
 
@@ -384,16 +386,17 @@ app.post("/post-center", async (req, res) => {
   });
 });
 
-app.post("/get-token", (req, res) => {
+app.post("/get-token", async (req, res) => {
   const { mobile_number } = req.body; // Assuming username and email are provided in the request body
 
   if (!mobile_number) {
-    return res.status(400).json({ message: "Mobile number required." });
+    // return res.status(400).json({ message: "Mobile number required." });
   }
 
-  const token = generateJWT(mobile_number);
+  const token = await generateJWT(mobile_number);
+  console.log(token);
 
-  res.sendStatus(200).json({
+  res.json({
     token,
   });
 });
