@@ -49,7 +49,7 @@ function Home() {
           <Box>
             {/* <Typography variant="h4">company name</Typography> */}
 
-            <Typography variant="h4">Welcome</Typography>
+            <Typography variant="h4">Company name</Typography>
 
             <Typography color={"gainsboro"} sx={{ mt: 2 }}>
               Don't let queues eat up your time, use online forms instead!
