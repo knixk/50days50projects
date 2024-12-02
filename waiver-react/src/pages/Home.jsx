@@ -49,11 +49,11 @@ function Home() {
           <Box>
             {/* <Typography variant="h4">company name</Typography> */}
 
-            <Typography variant="h4">Company Name</Typography>
-{/* 
+            <Typography variant="h4">Welcome</Typography>
+
             <Typography color={"gainsboro"} sx={{ mt: 2 }}>
-              WaiverForm
-            </Typography> */}
+              Don't let queues eat up your time, use online forms instead!
+            </Typography> 
 
             <Button variant="contained" onClick={handleNext} sx={{ mt: 4 }}>
               Get Started

@@ -97,6 +97,7 @@ const Form = () => {
         ans = response.data.template_id;
       } catch (error) {
         console.error(error);
+        toast("No form found...")
       }
 
       return ans;

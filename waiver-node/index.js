@@ -268,23 +268,18 @@ const getTemplateByCenter = async (con, centerId) => {
   });
 };
 
-// get all the templates
 app.post("/template-id-from-center", async (req, res) => {
   const { center_id } = req.body;
 
-  console.log(center_id);
-
   const result = await getTemplateByCenter(con, center_id);
 
-  console.log(result);
-
-  if (result) {
-    res.status(200).json({
-      template_id: result[0].template_id,
-    });
+  if (!result || !result[0]) {
+    return res.sendStatus(404); // Handle undefined or empty result
   }
 
-  res.status(404);
+  res.status(200).json({
+    template_id: result[0].template_id,
+  });
 });
 
 // create submissions
