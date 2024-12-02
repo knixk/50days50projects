@@ -41,28 +41,6 @@ const postASubmission = (con, data) => {
   });
 };
 
-const postATemplate = (con, data) => {
-  let ans = null;
-  const query = `
-    INSERT INTO templates (template_name, template_config)
-    VALUES (?, ?)
-  `;
-
-  con.query(
-    query,
-    [data.template_name, JSON.stringify(data.template_config)], // Ensure JSON is stringified
-    
-    (err, result) => {
-      if (err) throw err;
-      console.log("Inserted ID:", result.insertId);
-      console.log("Insertion finished.");
-      ans = result.insertId;
-    }
-  );
-
-  return ans;
-};
-
 const postACenter = (con, data) => {
   const query = `
     INSERT INTO centers (center_name, address, contact_info, template_id)
@@ -310,22 +288,91 @@ app.post("/submissions", async (req, res) => {
   });
 });
 
-// create templates
+// const postATemplate = (con, data) => {
+//   let ans = null;
+//   const query = `
+//     INSERT INTO templates (template_name, template_config)
+//     VALUES (?, ?)
+//   `;
+
+//   con.query(
+//     query,
+//     [data.template_name, JSON.stringify(data.template_config)], // Ensure JSON is stringified
+
+//     (err, result) => {
+//       if (err) throw err;
+//       console.log("Inserted ID:", result.insertId);
+//       console.log("Insertion finished.");
+//       ans = result.insertId;
+//     }
+//   );
+
+//   return ans;
+// };
+
+const postATemplate = (con, data) => {
+  const query = `
+    INSERT INTO templates (template_name, template_config)
+    VALUES (?, ?)
+  `;
+
+  return new Promise((resolve, reject) => {
+    con.query(
+      query,
+      [data.template_name, JSON.stringify(data.template_config)],
+      (err, result) => {
+        if (err) {
+          return reject(err); // Reject if there's an error
+        }
+        console.log("Inserted ID:", result.insertId);
+        console.log("Insertion finished.");
+        resolve(result.insertId); // Resolve with the inserted ID
+      }
+    );
+  });
+};
+
 app.post("/templates", async (req, res) => {
-  const { template_config, template_name } = req.body.template_config;
+  const { template_name, template_config } = req.body;
+
   const data = {
     template_name: template_name,
     template_config: template_config,
   };
 
-  const ans = postATemplate(con, data);
+  try {
+    const ans = await postATemplate(con, data); // Await the result from the template insertion
+    console.log(ans, "outside");
 
-  console.log(ans, "outside");
-
-  res.status(200).json({
-    msg: "template was saved",
-  });
+    res.status(200).json({
+      msg: "Template was saved",
+      template_id: ans, // Send the inserted template ID in response
+    });
+  } catch (err) {
+    console.error("Error inserting template:", err);
+    res.status(500).json({
+      msg: "Error saving template",
+      error: err.message,
+    });
+  }
 });
+
+// // create templates
+// app.post("/templates", async (req, res) => {
+//   const { template_config, template_name } = req.body.template_config;
+//   const data = {
+//     template_name: template_name,
+//     template_config: template_config,
+//   };
+
+//   const ans = postATemplate(con, data);
+
+//   console.log(ans, "outside");
+
+//   res.status(200).json({
+//     msg: "template was saved",
+//   });
+// });
 
 // create a center
 app.post("/centers", async (req, res) => {

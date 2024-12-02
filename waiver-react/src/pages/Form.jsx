@@ -229,14 +229,6 @@ const Form = () => {
                   </FormControl>
                 )}
 
-                {question.input_type === "label" && (
-                  <FormControl component="fieldset" sx={{ mb: 2 }}>
-                    <Typography variant="h6" sx={{ mb: 1 }}>
-                      {question.label}
-                    </Typography>
-                  </FormControl>
-                )}
-
                 {question.input_type === "file" && (
                   <FormControl fullWidth margin="normal">
                     <Button
@@ -263,25 +255,6 @@ const Form = () => {
                     )}
                   </FormControl>
                 )}
-
-                {/* {question.input_type === "radio" && (
-                  <FormControl component="fieldset">
-                    <Button
-                      component="label"
-                      role={undefined}
-                      variant="contained"
-                      tabIndex={-1}
-                      startIcon={<CloudUploadIcon />}
-                    >
-                      Upload files
-                      <VisuallyHiddenInput
-                        type="file"
-                        onChange={(event) => console.log(event.target.files)}
-                        multiple
-                      />
-                    </Button>
-                  </FormControl>
-                )} */}
               </Box>
             ))}
 
