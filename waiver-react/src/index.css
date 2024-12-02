@@ -157,11 +157,17 @@ textarea {
 }
 
 .signature__container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* flex-direction: column; */
+  /* width: 100px; */
+  /* gap: 10px; */
+  background-color: red;
+}
+
+canvas {
+  width: 100%;
 }
 
 .clear {

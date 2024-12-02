@@ -282,8 +282,6 @@ app.post("/template-id-from-center", async (req, res) => {
     res.status(200).json({
       template_id: result[0].template_id,
     });
-
-    return;
   }
 
   res.status(404);
