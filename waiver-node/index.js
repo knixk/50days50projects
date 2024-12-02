@@ -126,16 +126,16 @@ const getCenters = async (con, { center_name = null, days = null } = {}) => {
 };
 
 // Middleware to Verify JWT
-const authenticateToken = (req, res, next) => {
-  const token = req.headers["authorization"]?.split(" ")[1];
-  if (!token) return res.sendStatus(401);
+// const authenticateToken = (req, res, next) => {
+//   const token = req.headers["authorization"]?.split(" ")[1];
+//   if (!token) return res.sendStatus(401);
 
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-};
+//   jwt.verify(token, secretKey, (err, user) => {
+//     if (err) return res.sendStatus(403);
+//     req.user = user;
+//     next();
+//   });
+// };
 
 const generateJWT = async (mobile_number) => {
   // console.log(mobile_number, "log?");
@@ -169,6 +169,24 @@ app.listen(port, () => {
   console.log(`app running on port: ${port}..`);
 });
 
+
+function authenticateToken(token, expectedMobileNumber) {
+  try {
+    // Verify the token
+    const decoded = jwt.verify(token, secretKey);
+
+    // Check if mobile_number matches
+    if (decoded.mobile_number === expectedMobileNumber) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Authentication failed:", error.message);
+    return false;
+  }
+}
+
 // routes
 // get all the submissions and add filters
 app.get("/submissions", async (req, res) => {
@@ -180,12 +198,22 @@ app.get("/submissions", async (req, res) => {
     mobile_number: mobile_number,
     // days: days,
   };
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (token) {
+    authenticateToken(token, )
+
+  }
+
+
 
   // invalid token - synchronous
   try {
-    var decoded = jwt.verify(token, secretKey);
-    console.log(decoded);
-    console.log("verified token..");
+    // var decoded = jwt.verify(token, secretKey);
+    // console.log(decoded);
+    // console.log("verified token..");
+
+    au
   } catch (err) {
     // err
     if (!mobile_number) {
@@ -385,6 +413,8 @@ app.post("/post-center", async (req, res) => {
     data: result,
   });
 });
+
+
 
 app.post("/get-token", async (req, res) => {
   const { mobile_number } = req.body; // Assuming username and email are provided in the request body
