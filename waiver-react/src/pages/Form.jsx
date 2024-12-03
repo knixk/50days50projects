@@ -44,6 +44,8 @@ const Form = () => {
   const [companyName, setCompanyName] = useState("");
   const [loading, setLoading] = useState(true);
   const [templateId, setTemplateId] = useState();
+  const [page, setPage] = useState("");
+  const [acknowledgement, setAcknowledgement] = useState("");
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -75,34 +77,110 @@ const Form = () => {
     setParticipants((prev) => prev.filter((p) => p.id !== id));
   };
 
+  // Helper function to convert base64 to Blob
+  const base64ToBlob = (base64) => {
+    const byteString = atob(base64.split(",")[1]); // Decode base64
+    const mimeString = base64.split(",")[0].split(":")[1].split(";")[0]; // Extract MIME type
+    const arrayBuffer = new Uint8Array(byteString.length);
+
+    for (let i = 0; i < byteString.length; i++) {
+      arrayBuffer[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([arrayBuffer], { type: mimeString });
+  };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Convert form HTML to a PDF
+  //   const formElement = document.getElementById("paper__container"); // Change to your form's ID
+
+  //   console.log(formElement);
+
+  //   // setPage(formElement);
+
+  //   const canvas = await html2canvas(formElement, {
+  //     useCORS: true, // Enable cross-origin images (for icons/fonts)
+  //     backgroundColor: null, // Prevent default background
+  //     logging: false, // Suppress console warnings
+  //     ignoreElements: (element) => element.tagName === "SCRIPT", // Ignore unwanted elements
+  //   });
+  //   const pdf = new jsPDF();
+
+  //   // Add the captured canvas as a PDF page
+  //   const imgData = canvas.toDataURL("image/png");
+  //   setAcknowledgement(imgData);
+
+  //   console.log(imgData);
+  //   // pdf.addImage(imgData, "PNG", 10, 10);
+
+  //   // Convert the PDF to a Blob (or base64 if preferred)
+  //   // const pdfBlob = pdf.output("blob");
+  //   // console.log(pdfBlob, "pdfblob")
+
+  //   const signatureImg = sign?.getTrimmedCanvas().toDataURL("image/png");
+  //   const payload = {
+  //     ...formData,
+  //     participants,
+  //     signature: signatureImg,
+  //     template_id: templateId,
+  //     acknowledgement: imgData,
+  //   };
+  //   console.log(payload);
+
+  //   try {
+  //     await axios.post("http://localhost:5050/submissions", payload);
+  //     toast.success("Form submitted successfully!");
+  //     setDisabled(true);
+  //     setTimeout(() => navigate("/"), 5000);
+  //   } catch (error) {
+  //     toast.error("Submission failed!");
+  //     console.error(error);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Convert form HTML to a PDF
-    const formElement = document.querySelector("body"); // Change to your form's ID
-    console.log(formElement)
-    const canvas = await html2canvas(formElement);
-    const pdf = new jsPDF();
+    const formElement = document.getElementById("paper__container");
 
-    // Add the captured canvas as a PDF page
+    const canvas = await html2canvas(formElement, {
+      useCORS: true, // Enable cross-origin images
+      backgroundColor: null, // Transparent background
+      logging: false, // Suppress console warnings
+      ignoreElements: (element) => element.tagName === "SCRIPT", // Ignore unwanted elements
+    });
+
+    // Convert canvas to base64 and then to Blob
     const imgData = canvas.toDataURL("image/png");
-    console.log(imgData)
-    pdf.addImage(imgData, "PNG", 10, 10);
+    const acknowledgementBlob = base64ToBlob(imgData);
 
-    // Convert the PDF to a Blob (or base64 if preferred)
-    // const pdfBlob = pdf.output("blob");
-
+    // Signature image as base64 converted to Blob
     const signatureImg = sign?.getTrimmedCanvas().toDataURL("image/png");
-    const payload = {
-      ...formData,
-      participants,
-      signature: signatureImg,
-      template_id: templateId,
-    };
-    console.log(payload);
+    const signatureBlob = base64ToBlob(signatureImg);
+
+    // Create FormData
+    const formDataToSend = new FormData();
+    formDataToSend.append("template_id", templateId);
+    formDataToSend.append("fixed__name", formData.fixed__name);
+    formDataToSend.append("fixed__email", formData.fixed__email);
+    formDataToSend.append("fixed__number", formData.fixed__number);
+    formDataToSend.append("submission_data", JSON.stringify(formData));
+    formDataToSend.append(
+      "acknowledgement",
+      acknowledgementBlob,
+      "acknowledgement.png"
+    );
+    formDataToSend.append("signature", signatureBlob, "signature.png");
 
     try {
-      await axios.post("http://localhost:5050/submissions", payload);
+      await axios.post("http://localhost:5050/submissions", formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Required for FormData
+        },
+      });
+
       toast.success("Form submitted successfully!");
       setDisabled(true);
       setTimeout(() => navigate("/"), 5000);
@@ -186,7 +264,7 @@ const Form = () => {
       <Box sx={{ maxWidth: 600, mx: "auto", mt: 4, p: 2 }}>
         <Toaster />
         {displayForm ? (
-          <Paper elevation={3} sx={{ p: 3 }}>
+          <Paper id="paper__container" elevation={3} sx={{ p: 3 }}>
             <Typography
               variant="h4"
               component="h1"
