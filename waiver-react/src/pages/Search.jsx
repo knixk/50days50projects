@@ -11,7 +11,6 @@ import {
   Grid,
 } from "@mui/material";
 
-
 function Search() {
   const [input, setInput] = useState("");
   const [params, setParams] = useState("search");
@@ -45,7 +44,7 @@ function Search() {
     const res = await getSubmissions(data);
 
     if (!res) {
-      console.error("Error fetching data");
+      // console.error("Error fetching data");
       return;
     }
 
@@ -65,7 +64,6 @@ function Search() {
   };
 
   const handleDownload = (data) => {
-    // console.log("clciked");
 
     const text = `
   Name: ${data.name}
@@ -81,7 +79,9 @@ function Search() {
     link.click();
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log('component rendered')
+  }, []);
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
