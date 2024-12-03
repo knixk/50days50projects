@@ -13,6 +13,8 @@ const con = mysql.createConnection({
   password: "Gamer12345!",
 });
 
+// console.log(info);
+
 const secretKey = process.env.SECRET_KEY;
 
 // controllers
@@ -150,7 +152,6 @@ app.use(cors());
 app.listen(port, () => {
   console.log(`app running on port: ${port}..`);
 });
-
 
 app.get("/submissions", async (req, res) => {
   const { mobile_number } = req.query;

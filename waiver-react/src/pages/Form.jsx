@@ -25,11 +25,8 @@ import {
   TextareaAutosize,
 } from "@mui/material";
 
-const logo = "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg";
 import deleteIcon from "../assets/delete.png";
 
-const tkn =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjo5ODIwMDQyNjcyLCJpYXQiOjE3MzMxOTUyMDB9.6PgI1VcByB5_2lQwe2TTL1X6WR-jJz0tpg55u-id-PI";
 const Form = () => {
   const [sign, setSign] = useState(null);
   const [participants, setParticipants] = useState([]);
@@ -45,7 +42,6 @@ const Form = () => {
   const centerParams = queryParameters.get("center");
   const [center, setCenter] = useState(false);
   const [displayForm, setDisplayForm] = useState(false);
-  const [token, setToken] = useState(tkn);
   const [companyName, setCompanyName] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -60,12 +56,7 @@ const Form = () => {
     }));
   };
 
-  // const addParticipant = () => {
-  //   setParticipants((prev) => [...prev, { id: nanoid(), name: "", age: "" }]);
-  // };
-
   const addParticipant = () => {
-    // console.log(extraFields);
     setParticipants((prev) => [
       ...prev,
       {
@@ -76,7 +67,6 @@ const Form = () => {
 
   const updateParticipant = (index, field, value) => {
     const updatedParticipants = [...participants];
-    // console.log(updatedParticipants, "81");
     updatedParticipants[index][field] = value;
     setParticipants(updatedParticipants);
   };
@@ -89,8 +79,6 @@ const Form = () => {
     e.preventDefault();
     const signatureImg = sign?.getTrimmedCanvas().toDataURL("image/png");
     const payload = { ...formData, participants, signature: signatureImg };
-
-    // console.log(payload);
 
     try {
       await axios.post("http://localhost:5050/submissions", payload);
@@ -132,11 +120,7 @@ const Form = () => {
       };
 
       try {
-        const response = await axios.post(templates, options, {
-          headers: {
-            Authorization: `Bearer ${token}`, // Attach JWT in Authorization header
-          },
-        });
+        const response = await axios.post(templates, options);
         // console.log(response.data.data[0].template_config);
         const myData = JSON.parse(response.data.data[0].template_config);
         // console.log(myData);
@@ -146,7 +130,6 @@ const Form = () => {
           setTempData(myData);
           // console.log(template_config.template_config);
 
-          // setTempData(template_config);
           setQuestions(myData.questions);
           setCompanyLogo(myData.company_logo);
           setExtraFields(myData.extra_participants_form_fields);
@@ -237,17 +220,6 @@ const Form = () => {
               {questions &&
                 questions.map((question) => (
                   <Box key={question.question_id} sx={{ mt: 2 }}>
-                    {/* {question.input_type === "text" && (
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    required={question.required}
-                    placeholder={question.input_placeholder || ""}
-                    onChange={(e) =>
-                      handleInputChange(question.question_id, e.target.value)
-                    }
-                  />
-                )} */}
 
                     {question.input_type === "label" && question.label && (
                       <FormControl component="fieldset" sx={{ mb: 2 }}>
