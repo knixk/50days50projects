@@ -60,8 +60,19 @@ const Form = () => {
     }));
   };
 
+  // const addParticipant = () => {
+  //   setParticipants((prev) => [...prev, { id: nanoid(), name: "", age: "" }]);
+  // };
+
   const addParticipant = () => {
-    setParticipants((prev) => [...prev, { id: nanoid(), name: "", age: "" }]);
+    console.log(extraFields);
+    setParticipants((prev) => [
+      ...prev,
+      {
+        id: nanoid(),
+        extraFields: extraFields.map((field) => ({ [field.name]: "" })),
+      },
+    ]);
   };
 
   const updateParticipant = (index, field, value) => {
@@ -69,6 +80,8 @@ const Form = () => {
     updatedParticipants[index][field] = value;
     setParticipants(updatedParticipants);
   };
+
+
 
   const deleteParticipant = (id) => {
     setParticipants((prev) => prev.filter((p) => p.id !== id));
@@ -183,7 +196,6 @@ const Form = () => {
               // fontWeight="bold"
               color="primary.secondary"
               marginTop={2}
-              textShadow="1px 1px 2px rgba(0,0,0,0.5)"
             >
               {(formData && companyName) || "Company name"}
             </Typography>
@@ -403,6 +415,7 @@ const Form = () => {
 
               <Box sx={{ mt: 3 }}>
                 <Typography variant="h6">Participants</Typography>
+
                 {participants.map((participant, index) => (
                   <Grid
                     container
@@ -411,33 +424,23 @@ const Form = () => {
                     alignItems="center"
                     key={participant.id}
                   >
-                    <Grid item xs={5}>
-                      <TextField
-                        fullWidth
-                        label="Name"
-                        value={participant.name}
-                        onChange={(e) =>
-                          updateParticipant(index, "name", e.target.value)
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={5}>
-                      <TextField
-                        fullWidth
-                        label="Age"
-                        type="number"
-                        value={participant.age}
-                        onChange={(e) =>
-                          updateParticipant(index, "age", e.target.value)
-                        }
-                      />
-                    </Grid>
+                    {extraFields.map((field, fieldIndex) => (
+                      <Grid item xs={5} key={fieldIndex}>
+                        <TextField
+                          fullWidth
+                          label={field.label}
+                          type={field.type}
+                          value={participant.extraFields[field.name] || ""}
+                          onChange={(e) =>
+                            updateParticipant(index, field.name, e.target.value)
+                          }
+                        />
+                      </Grid>
+                    ))}
                     <Grid item xs={2}>
                       <IconButton
                         onClick={() => deleteParticipant(participant.id)}
                       >
-                        {/* <HighlightOffIcon /> */}
-                        {/* <deleteIcon> */}
                         <img style={{ width: 30 }} src={deleteIcon} />
                       </IconButton>
                     </Grid>
