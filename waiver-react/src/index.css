@@ -108,9 +108,11 @@ input:hover {
 }
 
 .question__image {
-  width: 180px;
+  width: 100%;
+  max-width: 300px;
   border-radius: 10px;
-  margin: 0 15px 15px 15px;
+  /* margin: 0 15px 15px 15px; */
+  margin: 0 0 15px 0;
 }
 
 .btn {
@@ -445,4 +447,8 @@ input[type="file"] {
 .form__container__main {
   animation: fade-in 3s !important;
   transition: 1s all;
+}
+
+img {
+  border: red;
 }

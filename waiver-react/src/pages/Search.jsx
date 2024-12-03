@@ -11,8 +11,6 @@ import {
   Grid,
 } from "@mui/material";
 
-const tkn =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjo5ODIwMDQyNjcyLCJpYXQiOjE3MzMxOTUyMDB9.6PgI1VcByB5_2lQwe2TTL1X6WR-jJz0tpg55u-id-PI";
 
 function Search() {
   const [input, setInput] = useState("");

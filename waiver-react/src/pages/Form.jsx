@@ -4,6 +4,8 @@ import { nanoid } from "nanoid";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
+import template_config from "../../template_config.json";
+
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -130,11 +132,22 @@ const Form = () => {
 
         if (myData) {
           setTempData(myData);
-          setQuestions(myData.questions);
-          setCompanyLogo(myData.company_logo);
-          setExtraFields(myData.extra_participants_form_fields);
+          console.log(template_config.template_config);
+          // setTempData(template_config);
+          // setQuestions(myData.questions);
+          // setCompanyLogo(myData.company_logo);
+          // setExtraFields(myData.extra_participants_form_fields);
+          // setDisplayForm(true);
+          // setCompanyName(myData.company_name);
+
+          setQuestions(template_config.template_config.questions);
+          setCompanyLogo(template_config.template_config.company_logo);
+          setExtraFields(
+            template_config.template_config.extra_participants_form_fields
+          );
           setDisplayForm(true);
-          setCompanyName(myData.company_name);
+          setCompanyName(template_config.template_config.company_name);
+
           setLoading(false);
         }
       } catch (error) {
@@ -150,7 +163,6 @@ const Form = () => {
     const asyncFnStitch = async () => {
       const data =
         centerParams && (await getTemplateIdFromCenterID(centerParams));
-      // console.log("templateId: ", data);
       data && (await fetchTemplate(data));
     };
 
@@ -163,7 +175,16 @@ const Form = () => {
         <Toaster />
         {displayForm ? (
           <Paper elevation={3} sx={{ p: 3 }}>
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              align="center"
+              // fontWeight="bold"
+              color="primary.secondary"
+              marginTop={2}
+              textShadow="1px 1px 2px rgba(0,0,0,0.5)"
+            >
               {(formData && companyName) || "Company name"}
             </Typography>
             {formData && (
@@ -228,6 +249,10 @@ const Form = () => {
                           {question.label}
                         </Typography>
                       </FormControl>
+                    )}
+
+                    {question.image && (
+                      <img className="question__image" src={question.image} />
                     )}
 
                     {question.input_type === "dropdown" && (
