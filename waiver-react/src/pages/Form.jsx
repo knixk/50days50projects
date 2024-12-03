@@ -65,7 +65,7 @@ const Form = () => {
   // };
 
   const addParticipant = () => {
-    console.log(extraFields);
+    // console.log(extraFields);
     setParticipants((prev) => [
       ...prev,
       {
@@ -76,7 +76,7 @@ const Form = () => {
 
   const updateParticipant = (index, field, value) => {
     const updatedParticipants = [...participants];
-    console.log(updatedParticipants, "81");
+    // console.log(updatedParticipants, "81");
     updatedParticipants[index][field] = value;
     setParticipants(updatedParticipants);
   };
@@ -118,6 +118,7 @@ const Form = () => {
       } catch (error) {
         console.error(error);
         toast("No form found...");
+        setTimeout(() => navigate("/"), 5000);
       }
 
       return ans;
@@ -143,21 +144,22 @@ const Form = () => {
 
         if (myData) {
           setTempData(myData);
-          console.log(template_config.template_config);
-          // setTempData(template_config);
-          // setQuestions(myData.questions);
-          // setCompanyLogo(myData.company_logo);
-          // setExtraFields(myData.extra_participants_form_fields);
-          // setDisplayForm(true);
-          // setCompanyName(myData.company_name);
+          // console.log(template_config.template_config);
 
-          setQuestions(template_config.template_config.questions);
-          setCompanyLogo(template_config.template_config.company_logo);
-          setExtraFields(
-            template_config.template_config.extra_participants_form_fields
-          );
+          // setTempData(template_config);
+          setQuestions(myData.questions);
+          setCompanyLogo(myData.company_logo);
+          setExtraFields(myData.extra_participants_form_fields);
           setDisplayForm(true);
-          setCompanyName(template_config.template_config.company_name);
+          setCompanyName(myData.company_name);
+
+          // setQuestions(template_config.template_config.questions);
+          // setCompanyLogo(template_config.template_config.company_logo);
+          // setExtraFields(
+          //   template_config.template_config.extra_participants_form_fields
+          // );
+          // setDisplayForm(true);
+          // setCompanyName(template_config.template_config.company_name);
 
           setLoading(false);
         }
@@ -192,8 +194,9 @@ const Form = () => {
               gutterBottom
               align="center"
               // fontWeight="bold"
-              color="primary.secondary"
+              color="black"
               marginTop={2}
+              letterSpacing={1.5}
             >
               {(formData && companyName) || "Company name"}
             </Typography>

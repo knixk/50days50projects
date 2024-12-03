@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <nav className="nav">
       {/* <img className="company__logo" src={logo} alt="" /> */}
-      <p className="waiver__logo">Waiver form</p>
+      <p className="waiver__logo">📝 Waiver form</p>
     </nav>
   );
 }

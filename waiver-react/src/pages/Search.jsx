@@ -20,7 +20,7 @@ function Search() {
 
   const getSubmissions = async (data) => {
     const submissions = `http://localhost:5050/submissions${params}`;
-    console.log(jwt);
+    // console.log(jwt);
     try {
       const response = await axios.get(submissions, {
         headers: {
@@ -65,7 +65,7 @@ function Search() {
   };
 
   const handleDownload = (data) => {
-    console.log("clciked");
+    // console.log("clciked");
 
     const text = `
   Name: ${data.name}

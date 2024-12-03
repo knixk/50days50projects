@@ -2,14 +2,13 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 const port = process.env.PORT || 5050;
-// const template_config = require("./template_config.json");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const env = require("dotenv");
 env.config();
 
 const con = mysql.createConnection({
-  host: "localhost",
+  host: process.env.HOST,
   user: "root",
   password: "Gamer12345!",
 });
@@ -120,14 +119,13 @@ const getCenters = async (con, { center_name = null, days = null } = {}) => {
   });
 };
 
-
-const generateJWT = async (mobile_number) => {
-  // console.log(mobile_number, "log?");
+const generateJWT = async (key) => {
   const user = {
-    mobile_number: mobile_number,
+    secretKey: key,
   };
-  const token = jwt.sign(user, secretKey);
-  // res.json({ token });
+  const token = jwt.sign(user, secretKey, {
+    expiresIn: "1h", // expires in one hour
+  });
   return token;
 };
 
@@ -154,39 +152,21 @@ app.listen(port, () => {
 });
 
 
-function authenticateToken(token, expectedMobileNumber) {
-  try {
-    // Verify the token
-    const decoded = jwt.verify(token, secretKey);
-
-    // Check if mobile_number matches
-    if (decoded.mobile_number === expectedMobileNumber) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.error("Authentication failed:", error.message);
-    return false;
-  }
-}
-
-
-app.get('/submissions', async (req, res) => {
+app.get("/submissions", async (req, res) => {
   const { mobile_number } = req.query;
-  const token = req.headers.authorization?.split(' ')[1];
+  const token = req.headers.authorization?.split(" ")[1];
 
-  console.log("token", token)
+  console.log("token", token);
 
   if (!token) {
-    return res.status(401).json({ message: 'Token is required.' });
+    return res.status(401).json({ message: "Token is required." });
   }
 
   try {
     const decoded = jwt.verify(token, secretKey); // Verify token
 
     // Optional: You can add more checks based on `decoded` content if needed
-    console.log('Token Verified:', decoded);
+    console.log("Token Verified:", decoded);
 
     // Get submissions based on query params
     const filterOptions = { mobile_number }; // Adjust filterOptions as needed
@@ -194,8 +174,8 @@ app.get('/submissions', async (req, res) => {
 
     res.status(200).json({ data: result });
   } catch (err) {
-    console.error('Invalid Token:', err);
-    return res.status(403).json({ message: 'Invalid or expired token.' });
+    console.error("Invalid Token:", err);
+    return res.status(403).json({ message: "Invalid or expired token." });
   }
 });
 
@@ -213,7 +193,6 @@ app.post("/get-token", async (req, res) => {
     token,
   });
 });
-
 
 // get all the templates
 app.get("/templates", async (req, res) => {
@@ -392,6 +371,3 @@ app.post("/post-center", async (req, res) => {
     data: result,
   });
 });
-
-
-
