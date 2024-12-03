@@ -81,7 +81,7 @@ const Form = () => {
       participants,
       signature: signatureImg,
       template_id: templateId,
-    };
+    };  
     console.log(payload)
 
     try {

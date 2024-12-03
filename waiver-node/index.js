@@ -370,3 +370,29 @@ app.post("/post-center", async (req, res) => {
     data: result,
   });
 });
+
+const getSubmissionById = (dbConnection, submissionId) => {
+  return new Promise((resolve, reject) => {
+    const query = "SELECT * FROM submissions WHERE id = ?";
+
+    dbConnection.query(query, [submissionId], (err, result) => {
+      if (err) {
+        reject(err); // Reject promise on query error
+      } else if (result.length === 0) {
+        reject(new Error(`Submission with ID ${submissionId} not found.`)); // Handle no result
+      } else {
+        resolve(result[0]); // Resolve promise with the first result
+      }
+    });
+  });
+};
+
+app.post("/get-submission-as-file", async (req, res) => {
+  const sID = 31;
+  const response = getSubmissionById(con, sID);
+  console.log(response.data);
+  // res.json({
+  //   data:
+  // });
+  res.sendStatus(200);
+});
