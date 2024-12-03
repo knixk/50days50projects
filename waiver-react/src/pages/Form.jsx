@@ -3,6 +3,9 @@ import SignatureCanvas from "react-signature-canvas";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+
 
 import template_config from "../../template_config.json";
 
@@ -75,6 +78,19 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+
+
+  // Convert form HTML to a PDF
+  const formElement = document.getElementById("root");  // Change to your form's ID
+  const canvas = await html2canvas(formElement);
+  const pdf = new jsPDF();
+
+  // Add the captured canvas as a PDF page
+  const imgData = canvas.toDataURL("image/png");
+  pdf.addImage(imgData, 'PNG', 10, 10);
+
+
     const signatureImg = sign?.getTrimmedCanvas().toDataURL("image/png");
     const payload = {
       ...formData,
