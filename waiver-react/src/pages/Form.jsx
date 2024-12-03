@@ -41,6 +41,7 @@ const Form = () => {
   const [displayForm, setDisplayForm] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [templateId, setTemplateId] = useState();
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -75,9 +76,13 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const signatureImg = sign?.getTrimmedCanvas().toDataURL("image/png");
-    const payload = { ...formData, participants, signature: signatureImg };
-
-    // console.log(payload)
+    const payload = {
+      ...formData,
+      participants,
+      signature: signatureImg,
+      template_id: templateId,
+    };
+    console.log(payload)
 
     try {
       await axios.post("http://localhost:5050/submissions", payload);
@@ -102,6 +107,7 @@ const Form = () => {
       try {
         const response = await axios.post(templates, options);
         ans = response.data.template_id;
+        setTemplateId(ans);
       } catch (error) {
         console.error(error);
         toast("No form found...");
