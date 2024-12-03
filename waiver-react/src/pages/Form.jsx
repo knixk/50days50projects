@@ -6,7 +6,6 @@ import toast, { Toaster } from "react-hot-toast";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-
 import template_config from "../../template_config.json";
 
 import { useNavigate } from "react-router-dom";
@@ -79,17 +78,19 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Convert form HTML to a PDF
+    const formElement = document.querySelector("body"); // Change to your form's ID
+    console.log(formElement)
+    const canvas = await html2canvas(formElement);
+    const pdf = new jsPDF();
 
+    // Add the captured canvas as a PDF page
+    const imgData = canvas.toDataURL("image/png");
+    console.log(imgData)
+    pdf.addImage(imgData, "PNG", 10, 10);
 
-  // Convert form HTML to a PDF
-  const formElement = document.getElementById("root");  // Change to your form's ID
-  const canvas = await html2canvas(formElement);
-  const pdf = new jsPDF();
-
-  // Add the captured canvas as a PDF page
-  const imgData = canvas.toDataURL("image/png");
-  pdf.addImage(imgData, 'PNG', 10, 10);
-
+    // Convert the PDF to a Blob (or base64 if preferred)
+    // const pdfBlob = pdf.output("blob");
 
     const signatureImg = sign?.getTrimmedCanvas().toDataURL("image/png");
     const payload = {
@@ -97,8 +98,8 @@ const Form = () => {
       participants,
       signature: signatureImg,
       template_id: templateId,
-    };  
-    console.log(payload)
+    };
+    console.log(payload);
 
     try {
       await axios.post("http://localhost:5050/submissions", payload);
