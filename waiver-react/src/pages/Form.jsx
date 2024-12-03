@@ -70,18 +70,16 @@ const Form = () => {
       ...prev,
       {
         id: nanoid(),
-        extraFields: extraFields.map((field) => ({ [field.name]: "" })),
       },
     ]);
   };
 
   const updateParticipant = (index, field, value) => {
     const updatedParticipants = [...participants];
+    console.log(updatedParticipants, "81");
     updatedParticipants[index][field] = value;
     setParticipants(updatedParticipants);
   };
-
-
 
   const deleteParticipant = (id) => {
     setParticipants((prev) => prev.filter((p) => p.id !== id));
@@ -430,9 +428,13 @@ const Form = () => {
                           fullWidth
                           label={field.label}
                           type={field.type}
-                          value={participant.extraFields[field.name] || ""}
+                          value={participant[field.label] || ""}
                           onChange={(e) =>
-                            updateParticipant(index, field.name, e.target.value)
+                            updateParticipant(
+                              index,
+                              field.label,
+                              e.target.value
+                            )
                           }
                         />
                       </Grid>
