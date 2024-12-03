@@ -11,15 +11,24 @@ import {
   Grid,
 } from "@mui/material";
 
+const tkn =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjo5ODIwMDQyNjcyLCJpYXQiOjE3MzMxOTUyMDB9.6PgI1VcByB5_2lQwe2TTL1X6WR-jJz0tpg55u-id-PI";
+
 function Search() {
   const [input, setInput] = useState("");
   const [params, setParams] = useState("search");
   const [data, setData] = useState([]);
+  const [jwt, setJwt] = useState("");
 
   const getSubmissions = async (data) => {
     const submissions = `http://localhost:5050/submissions${params}`;
+    console.log(jwt);
     try {
-      const response = await axios.get(submissions, data);
+      const response = await axios.get(submissions, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
       return response.data;
     } catch (error) {
       console.error(
@@ -82,6 +91,13 @@ function Search() {
       <Paper elevation={3} sx={{ p: 4 }}>
         <form onSubmit={handleSubmit}>
           <Box display="flex" alignItems="center" gap={2} mb={3}>
+            <TextField
+              label="JWT Token"
+              variant="outlined"
+              value={jwt}
+              onChange={(e) => setJwt(e.target.value)}
+              fullWidth
+            />
             <TextField
               fullWidth
               value={input}

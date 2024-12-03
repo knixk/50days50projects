@@ -27,8 +27,7 @@ const logo = "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg";
 import deleteIcon from "../assets/delete.png";
 
 const tkn =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjo5ODIwMDQyNjcyLCJpYXQiOjE3MzMxNDA3NzF9.0iiNNdu7dsaxCgigkggverxQ6Pm1HsO4md-8tgIVEPA";
-
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjo5ODIwMDQyNjcyLCJpYXQiOjE3MzMxOTUyMDB9.6PgI1VcByB5_2lQwe2TTL1X6WR-jJz0tpg55u-id-PI";
 const Form = () => {
   const [sign, setSign] = useState(null);
   const [participants, setParticipants] = useState([]);
@@ -46,7 +45,7 @@ const Form = () => {
   const [displayForm, setDisplayForm] = useState(false);
   const [token, setToken] = useState(tkn);
   const [companyName, setCompanyName] = useState("");
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -136,7 +135,7 @@ const Form = () => {
           setExtraFields(myData.extra_participants_form_fields);
           setDisplayForm(true);
           setCompanyName(myData.company_name);
-          setLoading(false)
+          setLoading(false);
         }
       } catch (error) {
         toast("template doesn't exist");

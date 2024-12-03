@@ -108,11 +108,6 @@ const getCenters = async (con, { center_name = null, days = null } = {}) => {
     getCentersQuery += ` AND center_name LIKE '%${center_name}%'`; // Using LIKE for partial matching
   }
 
-  // Filter by submission date range if provided
-  // if (days) {
-  //   getCentersQuery += ` AND updated_at >= CURDATE() - INTERVAL ${days} DAY`;
-  // }
-
   return new Promise((resolve, reject) => {
     con.query(getCentersQuery, (err, result, fields) => {
       if (err) {
@@ -125,17 +120,6 @@ const getCenters = async (con, { center_name = null, days = null } = {}) => {
   });
 };
 
-// Middleware to Verify JWT
-// const authenticateToken = (req, res, next) => {
-//   const token = req.headers["authorization"]?.split(" ")[1];
-//   if (!token) return res.sendStatus(401);
-
-//   jwt.verify(token, secretKey, (err, user) => {
-//     if (err) return res.sendStatus(403);
-//     req.user = user;
-//     next();
-//   });
-// };
 
 const generateJWT = async (mobile_number) => {
   // console.log(mobile_number, "log?");
@@ -187,54 +171,49 @@ function authenticateToken(token, expectedMobileNumber) {
   }
 }
 
-// routes
-// get all the submissions and add filters
-app.get("/submissions", async (req, res) => {
+
+app.get('/submissions', async (req, res) => {
   const { mobile_number } = req.query;
+  const token = req.headers.authorization?.split(' ')[1];
 
-  // get this from query params
-  const filterOptions = {
-    // name: name,
-    mobile_number: mobile_number,
-    // days: days,
-  };
-  const token = req.headers.authorization?.split(" ")[1];
+  console.log("token", token)
 
-  if (token) {
-    authenticateToken(token, )
-
+  if (!token) {
+    return res.status(401).json({ message: 'Token is required.' });
   }
 
-
-
-  // invalid token - synchronous
   try {
-    // var decoded = jwt.verify(token, secretKey);
-    // console.log(decoded);
-    // console.log("verified token..");
+    const decoded = jwt.verify(token, secretKey); // Verify token
 
-    au
+    // Optional: You can add more checks based on `decoded` content if needed
+    console.log('Token Verified:', decoded);
+
+    // Get submissions based on query params
+    const filterOptions = { mobile_number }; // Adjust filterOptions as needed
+    const result = await getSubmissions(con, filterOptions);
+
+    res.status(200).json({ data: result });
   } catch (err) {
-    // err
-    if (!mobile_number) {
-      return res.status(404).json({ message: "wrong token." });
-    }
-    console.error("wrong");
+    console.error('Invalid Token:', err);
+    return res.status(403).json({ message: 'Invalid or expired token.' });
+  }
+});
+
+app.post("/get-token", async (req, res) => {
+  const { secret_key } = req.body; // Assuming username and email are provided in the request body
+
+  if (!secret_key) {
+    return res.status(400).json({ message: "Secret key required" });
   }
 
-  // if (!decoded) {
-    // res.sendStatus(401).json({
-      // msg: "not authorized..",
-    // });
-    // return;
-  // }
+  const token = await generateJWT(secret_key);
+  console.log(token);
 
-  const result = await getSubmissions(con, filterOptions);
-
-  res.status(200).json({
-    data: result,
+  res.json({
+    token,
   });
 });
+
 
 // get all the templates
 app.get("/templates", async (req, res) => {
@@ -416,17 +395,3 @@ app.post("/post-center", async (req, res) => {
 
 
 
-app.post("/get-token", async (req, res) => {
-  const { mobile_number } = req.body; // Assuming username and email are provided in the request body
-
-  if (!mobile_number) {
-    // return res.status(400).json({ message: "Mobile number required." });
-  }
-
-  const token = await generateJWT(mobile_number);
-  console.log(token);
-
-  res.json({
-    token,
-  });
-});
