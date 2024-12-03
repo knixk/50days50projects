@@ -149,8 +149,11 @@ textarea {
 }
 
 .waiver__logo {
-  margin: 0;
-  padding: 0;
+  display: flex;
+  /* margin: 0; */
+  align-items: center;
+  gap: 20px;
+  /* padding: 0; */
 }
 
 .sigCanvas {
@@ -451,4 +454,8 @@ input[type="file"] {
 
 img {
   border: red;
+}
+
+.form__icon {
+  width: 30px;
 }

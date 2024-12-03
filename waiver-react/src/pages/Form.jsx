@@ -31,8 +31,6 @@ const Form = () => {
   const [sign, setSign] = useState(null);
   const [participants, setParticipants] = useState([]);
   const [formData, setFormData] = useState({});
-  const [templateId, setTemplateId] = useState(null);
-  const [tempData, setTempData] = useState();
   const [companyLogo, setCompanyLogo] = useState();
   const [questions, setQuestions] = useState(null);
   const [extraFields, setExtraFields] = useState();
@@ -40,7 +38,6 @@ const Form = () => {
   const navigate = useNavigate();
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
-  const [center, setCenter] = useState(false);
   const [displayForm, setDisplayForm] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [loading, setLoading] = useState(true);
@@ -79,6 +76,8 @@ const Form = () => {
     e.preventDefault();
     const signatureImg = sign?.getTrimmedCanvas().toDataURL("image/png");
     const payload = { ...formData, participants, signature: signatureImg };
+
+    // console.log(payload)
 
     try {
       await axios.post("http://localhost:5050/submissions", payload);
@@ -121,21 +120,16 @@ const Form = () => {
 
       try {
         const response = await axios.post(templates, options);
-        // console.log(response.data.data[0].template_config);
         const myData = JSON.parse(response.data.data[0].template_config);
-        // console.log(myData);
-        // const temp_id = response.data.data[0].id;
 
         if (myData) {
-          setTempData(myData);
-          // console.log(template_config.template_config);
-
           setQuestions(myData.questions);
           setCompanyLogo(myData.company_logo);
           setExtraFields(myData.extra_participants_form_fields);
           setDisplayForm(true);
           setCompanyName(myData.company_name);
 
+          // use local template
           // setQuestions(template_config.template_config.questions);
           // setCompanyLogo(template_config.template_config.company_logo);
           // setExtraFields(
@@ -154,7 +148,6 @@ const Form = () => {
         );
       }
     };
-    setCenter(centerParams);
 
     const asyncFnStitch = async () => {
       const data =
@@ -220,7 +213,6 @@ const Form = () => {
               {questions &&
                 questions.map((question) => (
                   <Box key={question.question_id} sx={{ mt: 2 }}>
-
                     {question.input_type === "label" && question.label && (
                       <FormControl component="fieldset" sx={{ mb: 2 }}>
                         <Typography

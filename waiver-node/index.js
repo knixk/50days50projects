@@ -9,11 +9,9 @@ env.config();
 
 const con = mysql.createConnection({
   host: process.env.HOST,
-  user: "root",
-  password: "Gamer12345!",
+  user: process.env.MY_USER,
+  password: process.env.MY_PASSWORD,
 });
-
-// console.log(info);
 
 const secretKey = process.env.SECRET_KEY;
 
