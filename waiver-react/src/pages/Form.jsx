@@ -161,13 +161,15 @@ const Form = () => {
           "http://localhost:5050/upload-image",
           payload
         );
-        const driveLink = response.data.link; // Get the Google Drive link
+        const driveLink = response.data.link || ""; // Get the Google Drive link
         const submissionPayload = {
           ...formData,
           participants,
           template_id: templateId,
           imgLink: driveLink,
         };
+
+        console.log(submissionPayload);
 
         await axios.post(
           "http://localhost:5050/submissions",

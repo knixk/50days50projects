@@ -7,6 +7,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 import template_config from "../../template_config.json";
+import config from "./config.json";
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -81,7 +82,6 @@ const ViewForm = () => {
     });
     return response.data.link; // Backend returns the Google Drive link
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -251,7 +251,6 @@ const ViewForm = () => {
                 required
                 disabled={true}
                 type="email"
-    
               />
               <TextField
                 disabled={true}
@@ -260,7 +259,6 @@ const ViewForm = () => {
                 margin="normal"
                 required
                 type="tel"
-  
               />
               {questions &&
                 questions.map((question) => (
@@ -309,8 +307,7 @@ const ViewForm = () => {
                       <FormControl component="fieldset">
                         <Typography>{question.label}</Typography>
 
-                        <RadioGroup
-                        >
+                        <RadioGroup>
                           {question.values.map((option) => (
                             <FormControlLabel
                               key={option}
@@ -387,10 +384,7 @@ const ViewForm = () => {
                           disabled={true}
                         >
                           Upload File
-                          <input
-                            type="file"
-                              hidden
-                          />
+                          <input type="file" hidden />
                         </Button>
                         {formData[question.question_id] && (
                           <Typography variant="body2" marginTop={1}>
@@ -453,11 +447,7 @@ const ViewForm = () => {
                     className: "sigCanvas",
                   }}
                 />
-                <Button
-                  variant="outlined"
-                  color="error"
-                  sx={{ mt: 1 }}
-                >
+                <Button variant="outlined" color="error" sx={{ mt: 1 }}>
                   Clear
                 </Button>
               </Box>
