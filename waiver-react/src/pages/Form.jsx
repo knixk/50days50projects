@@ -167,7 +167,7 @@ const Form = () => {
           participants,
           template_id: templateId,
           // imgLink: driveLink,
-          signature_data: sign,
+          signature_data: sign.current.toData(),
         };
 
         console.log(submissionPayload);
