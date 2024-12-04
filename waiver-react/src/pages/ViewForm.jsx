@@ -94,63 +94,6 @@ const ViewForm = () => {
     return response.data.link; // Backend returns the Google Drive link
   };
 
-  const handleDownload = async () => {
-    const formElement = document.querySelector("body");
-    const canvas = await html2canvas(formElement, {
-      useCORS: true,
-      allowTaint: false,
-      backgroundColor: null,
-      scale: 1.5,
-      logging: true,
-      ignoreElements: (element) => element.tagName === "SCRIPT",
-    });
-
-    // Get the dimensions of the canvas
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-
-    const pdf = new jsPDF({
-      unit: "px", // Use pixels as the unit
-      format: [canvasWidth, canvasHeight], // Set PDF page size to canvas dimensions
-    });
-
-    pdf.addImage(canvas, "PNG", 0, 0, canvasWidth, canvasHeight); // Adding the canvas to the PDF
-    const pdfBlob = pdf.output("blob");
-
-    // Convert Blob to Base64
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const base64Data = reader.result.split(",")[1]; // Extract Base64 string
-      const payload = { imgData: `data:application/pdf;base64,${base64Data}` };
-
-      try {
-        const response = await axios.post(
-          "http://localhost:5050/upload-image",
-          payload
-        );
-        const driveLink = response.data.link; // Get the Google Drive link
-        const submissionPayload = {
-          ...formData,
-          participants,
-          template_id: templateId,
-          imgLink: driveLink,
-        };
-
-        await axios.post(
-          "http://localhost:5050/submissions",
-          submissionPayload
-        );
-        toast.success("Form submitted successfully!");
-        setTimeout(() => navigate("/"), 5000);
-      } catch (error) {
-        toast.error("Submission failed!");
-        console.error(error);
-      }
-    };
-    reader.readAsDataURL(pdfBlob);
-  };
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     toast("Submitting form, please wait...");
@@ -293,9 +236,9 @@ const ViewForm = () => {
   return (
     <div className="form__container__main">
       <Box sx={{ maxWidth: 600, mx: "auto", mt: 4, p: 2 }}>
-        <Button variant="contained" type="submit" sx={{ mt: 3 }} fullWidth>
-          Download
-        </Button>
+      <Button variant="contained" type="submit" sx={{ mt: 3 }} fullWidth>
+        Download
+      </Button>
         <Toaster />
         {displayForm ? (
           <Paper elevation={3} sx={{ p: 3 }}>
