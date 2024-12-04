@@ -6,8 +6,17 @@ import toast, { Toaster } from "react-hot-toast";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-import template_config from "../../template_config.json";
+// contains submissions data, will add real later
+import temp from "./Temp.json";
+
+// contains the template
 import config from "./config.json";
+
+const { template_config, template_name } = config;
+
+// console.log(template_config, "config")
+
+console.log(temp, "user data");
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -32,7 +41,7 @@ import deleteIcon from "../assets/delete.png";
 
 const ViewForm = () => {
   const [sign, setSign] = useState(null);
-  const [participants, setParticipants] = useState([]);
+  const [participants, setParticipants] = useState([temp.participants]);
   const [formData, setFormData] = useState({});
   const [companyLogo, setCompanyLogo] = useState();
   const [questions, setQuestions] = useState(null);
@@ -43,7 +52,7 @@ const ViewForm = () => {
   const centerParams = queryParameters.get("center");
   const [displayForm, setDisplayForm] = useState(false);
   const [companyName, setCompanyName] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [templateId, setTemplateId] = useState();
 
   const handleInputChange = (id, value) => {
@@ -211,7 +220,15 @@ const ViewForm = () => {
       data && (await fetchTemplate(data));
     };
 
-    asyncFnStitch();
+    // asyncFnStitch();
+
+    setQuestions(template_config.questions);
+    setCompanyLogo(template_config.company_logo);
+    setExtraFields(template_config.extra_participants_form_fields);
+    setDisplayForm(true);
+    setCompanyName(template_config.company_name);
+
+    setFormData(temp);
   }, []);
 
   return (
@@ -242,23 +259,33 @@ const ViewForm = () => {
                 label="Name"
                 margin="normal"
                 required
-                disabled={true}
+                onChange={(e) =>
+                  handleInputChange("fixed__name", e.target.value)
+                }
+                value={formData['fixed__name']}
+
               />
               <TextField
                 fullWidth
                 label="Email"
                 margin="normal"
                 required
-                disabled={true}
                 type="email"
+                value={formData['fixed__email']}
+                onChange={(e) =>
+                  handleInputChange("fixed__email", e.target.value)
+                }
               />
               <TextField
-                disabled={true}
                 fullWidth
                 label="Mobile Number"
                 margin="normal"
                 required
                 type="tel"
+                value={formData['fixed__number']}
+                onChange={(e) =>
+                  handleInputChange("fixed__number", e.target.value)
+                }
               />
               {questions &&
                 questions.map((question) => (
@@ -287,8 +314,13 @@ const ViewForm = () => {
                         <Typography>{question.label}</Typography>
 
                         <Select
-                          disabled={true}
                           value={formData[question.question_id] || ""}
+                          onChange={(e) =>
+                            handleInputChange(
+                              question.question_id,
+                              e.target.value
+                            )
+                          }
                           displayEmpty
                         >
                           <MenuItem value="" disabled>
@@ -307,7 +339,14 @@ const ViewForm = () => {
                       <FormControl component="fieldset">
                         <Typography>{question.label}</Typography>
 
-                        <RadioGroup>
+                        <RadioGroup
+                          onChange={(e) =>
+                            handleRadioChange(
+                              question.question_id,
+                              e.target.value
+                            )
+                          }
+                        >
                           {question.values.map((option) => (
                             <FormControlLabel
                               key={option}
@@ -338,6 +377,12 @@ const ViewForm = () => {
                           variant="outlined"
                           fullWidth
                           value={formData[question.question_id] || ""}
+                          onChange={(e) =>
+                            handleInputChange(
+                              question.question_id,
+                              e.target.value
+                            )
+                          }
                           placeholder={
                             question.placeholder || "Enter your response"
                           }
@@ -364,6 +409,12 @@ const ViewForm = () => {
                           variant="outlined"
                           fullWidth
                           value={formData[question.question_id] || ""}
+                          onChange={(e) =>
+                            handleInputChange(
+                              question.question_id,
+                              e.target.value
+                            )
+                          }
                           sx={{
                             mt: 2,
                             ...question.customDateStyles,
@@ -381,10 +432,18 @@ const ViewForm = () => {
                           variant="contained"
                           component="label"
                           color="primary"
-                          disabled={true}
                         >
                           Upload File
-                          <input type="file" hidden />
+                          <input
+                            type="file"
+                            hidden
+                            onChange={(e) =>
+                              handleInputChange(
+                                question.question_id,
+                                e.target.files[0]
+                              )
+                            }
+                          />
                         </Button>
                         {formData[question.question_id] && (
                           <Typography variant="body2" marginTop={1}>
@@ -414,6 +473,13 @@ const ViewForm = () => {
                           label={field.label}
                           type={field.type}
                           value={participant[field.label] || ""}
+                          onChange={(e) =>
+                            updateParticipant(
+                              index,
+                              field.label,
+                              e.target.value
+                            )
+                          }
                         />
                       </Grid>
                     ))}
@@ -447,7 +513,12 @@ const ViewForm = () => {
                     className: "sigCanvas",
                   }}
                 />
-                <Button variant="outlined" color="error" sx={{ mt: 1 }}>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => sign?.clear()}
+                  sx={{ mt: 1 }}
+                >
                   Clear
                 </Button>
               </Box>
@@ -455,7 +526,7 @@ const ViewForm = () => {
               <Button
                 variant="contained"
                 type="submit"
-                disabled={true}
+                disabled={disabled}
                 sx={{ mt: 3 }}
                 fullWidth
               >

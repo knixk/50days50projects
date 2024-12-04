@@ -11,8 +11,6 @@ import {
   Grid,
 } from "@mui/material";
 
-import { useNavigate } from "react-router-dom";
-
 import { jsPDF } from "jspdf";
 
 function Search() {
@@ -21,7 +19,6 @@ function Search() {
   const [data, setData] = useState([]);
   const [jwt, setJwt] = useState("");
   const [templateData, setTemplateData] = useState({});
-  const navigate = useNavigate();
 
   const getSubmissions = async (data) => {
     const submissions = `http://localhost:5050/submissions${params}`;
@@ -74,12 +71,23 @@ function Search() {
     setParams(`?${params.toString()}`);
   };
 
+  // const handleDownload = (data) => {
 
+  //   const text = `
+  // Name: ${data.name}
+  // Mobile Number: ${data.mobile_number}
+  // Email: ${data.email}
+  // Submission ID: ${data.id}
+  // Template ID: ${data.template_id}
+  //   `;
+  //   const blob = new Blob([text], { type: "text/plain" });
+  //   const link = document.createElement("a");
+  //   link.href = URL.createObjectURL(blob);
+  //   link.download = `${data.name}_details.txt`;
+  //   link.click();
+  // };
 
   const handleDownload = async (value) => {
-    navigate("/view-form");
-
-    return;
     const params = new URLSearchParams({ mobile_number: value });
     const submissionsUrl = `http://localhost:5050/submissions?${params.toString()}`;
 
@@ -168,14 +176,14 @@ function Search() {
                     <Typography>Mobile Number: {i.mobile_number}</Typography>
                     <Typography>Email: {i.email}</Typography>
                     <Typography>Submission ID: {i.id}</Typography>
-                    {/* <Button
+                    <Button
                       variant="contained"
                       color="primary"
                       sx={{ mt: 2 }}
                       onClick={() => handleDownload(i)}
                     >
                       Download
-                    </Button> */}
+                    </Button>
                     <Button
                       variant="contained"
                       color="primary"
