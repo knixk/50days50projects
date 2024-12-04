@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "emaily-dev-321317",
+  "private_key_id": "994edb5e43505b920020f961b54d33c1397c9736",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDe7J/sgbFHnDA8\nb/nBi99Jl4la1X0vpamnpteqABd/dtqvg+92NnCg6oQQ/0/4Mu1XGqO0sNSBHKSE\nQJ5bp9UOQMXbPxWgKX0WyLNaw654JPqHnoRKZudItWVD8nGG709zFOvrmL1Vf/S2\n/mpohj0V8iEuAWjbN2rhO1TStQauKO3ICRSi8FrcWiyHMPWgrD4j2Y28pepMamwx\nInbR/KFfDmbjGyakJWroyyRXPnU/l50hca8mXqZvlrJ1ajYqMVrX8YN1t4T9iPWv\nQKTj2aTGbzRmkD8hD26fkbMeY1cEIb4qNuySPbdfJMQt8w282MDzLwV68OLsOw3u\nf9/KxUAtAgMBAAECggEADrO/6171VHH4W3AOIoXpTMb1+9vjJPqRyRkPlapqYlFy\nJEu5Bgyamn5FBgL0oPuo3AsJe3ADH93F+uPxHb3gpw8+DVLoh/bchV1ouMZ5kfps\nXHfnpSmKvOibvGK3uoy7am1ZjuD0sbgd6Vi3p1udGT6uEgTtR7HstlyNoFTokyFH\n1wooCU81XGxlW9sLjwTPmC5OXCcOjJ/IemqgpSopcqUzGtSLVJJnSBIrLvtwN+tK\nhjQbZf/8ZumRk1Jh3CsEZcPalBpXfcO8kMWbQPbkBUS+n9qgMTtzhwQYiCygjafm\nPJNoSIQYVhhuoGZLVje9dGynkA0Wn/AWajDs2dHCwQKBgQD9KP0RHXEzaB5MtQa/\nR6qRP0+4/9nSB73y4vppGnv91FtBmxMR6k+SsN79WEXEG+SFherrPBym75yYDt5d\n3OuBxfLB+ELzf3W1R7/AH8KHOAy0TiEhftyhQ9acKnhmx8SH6Howtlv83j1Hv1Sz\nBsa8nJfpfioK6SG25/4kHCJKQQKBgQDhbM6AI9vlTYriElCggsUySlfW/ZkaG8G+\n3z64N9UP8PLreQEvpzV+C3HjytuofFlhHDyevi8Uk5GJPPw4VnXkofq1O3rIH9gX\nq2JFYMzUQGjfryubgJuArJ1edIIL1ZN07AKpS5vJ3K11bGrAnOxhwuXTHAaMYDkc\nIshzCfIC7QKBgC+bGZuyUas9FRWPpSkrLOQLZ85+LlPUqN+X10cUd+SPnmmD494m\nlbgcEpLJmrT6GcsSF88MisbJoETn5uD3vkG1G6VmLhDkExp315MlZctPuvPdDVXj\nKVIaE61iPyn0vvxftzqZ0EqI8DUhwae4yn6FY/vAgd9zX6epkJzxvXEBAoGAdsnm\ne4Hp84iMIhtyn1Kp5ZlldmZGkoqD6zgrDdpmDTN0Xv9xz5G2T4hqaJZScBOu6cx+\naUxg9N/adk5LvshY8bUlrvD7/49ASSDH9TVQWpziZtUhDp2T1BeiCc8tZF0Uii2A\nLYQpQRNn2JPcIUnQCqgwgbGoBbsC/T+bD3vzKvUCgYEAp5PBYoo2MM0PkHyYC1X/\nzbQPDpvxcTo2ygZEddnjMoQNH36Ry31lvtnS5sqClkvxEhMpj5XA49FLwgMqDdXV\nRDcII9fshrGMzN9ptD/lfUdmsGf1PBdNkXZmPpOriqdUvbmSjGPVbhwAJyFEpX0a\nLztY0jNLjeDK+Otd/e41/GI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "indroyd-labs-face-swao@emaily-dev-321317.iam.gserviceaccount.com",
+  "client_id": "107850032656523706514",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/indroyd-labs-face-swao%40emaily-dev-321317.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

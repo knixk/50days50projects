@@ -75,41 +75,125 @@ const Form = () => {
     setParticipants((prev) => prev.filter((p) => p.id !== id));
   };
 
+  const uploadImageToBackend = async (imgData) => {
+    const response = await axios.post("http://localhost:5050/upload-image", {
+      imgData,
+    });
+    return response.data.link; // Backend returns the Google Drive link
+  };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   toast("Submitting form...")
+
+  //   setDisabled(true);
+
+  //   const formElement = document.querySelector("body");
+  //   const canvas = await html2canvas(formElement, {
+  //     useCORS: true, // Enables cross-origin images
+  //     allowTaint: false, // Prevents tainted canvas errors
+  //     backgroundColor: null, // Keeps transparent backgrounds
+  //     scale: 2, // Increases resolution
+  //     logging: true, // Debugging logs (optional)
+  //     ignoreElements: (element) => element.tagName === "SCRIPT", // Ignores script tags
+  //   });
+
+  //   const imgData = canvas.toDataURL("image/png");
+
+  //   const driveLink = await uploadImageToBackend(imgData);
+
+  //   const payload = {
+  //     ...formData,
+  //     participants,
+  //     // signature: sign?.getTrimmedCanvas().toDataURL("image/png"),
+  //     template_id: templateId,
+  //     imgLink: driveLink,
+  //   };
+
+  //   console.log(payload);
+
+  //   try {
+  //     await axios.post("http://localhost:5050/submissions", payload);
+  //     toast.success("Form submitted successfully!");
+  //     setDisabled(true);
+  //     setTimeout(() => navigate("/"), 5000);
+  //   } catch (error) {
+  //     toast.error("Submission failed!");
+  //     console.error(error);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    toast("Submitting form, please wait...");
+    setDisabled(true);
 
-    // Convert form HTML to a PDF
-    const formElement = document.querySelector("body"); // Change to your form's ID
-    console.log(formElement)
-    const canvas = await html2canvas(formElement);
-    const pdf = new jsPDF();
+    const formElement = document.querySelector("body");
+    const canvas = await html2canvas(formElement, {
+      useCORS: true,
+      allowTaint: false,
+      backgroundColor: null,
+      scale: 1.5,
+      logging: true,
+      ignoreElements: (element) => element.tagName === "SCRIPT",
+    });
 
-    // Add the captured canvas as a PDF page
-    const imgData = canvas.toDataURL("image/png");
-    console.log(imgData)
-    pdf.addImage(imgData, "PNG", 10, 10);
+    // Get the dimensions of the canvas
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
 
-    // Convert the PDF to a Blob (or base64 if preferred)
-    // const pdfBlob = pdf.output("blob");
+    const pdf = new jsPDF({
+      unit: "px", // Use pixels as the unit
+      format: [canvasWidth, canvasHeight], // Set PDF page size to canvas dimensions
+    });
 
-    const signatureImg = sign?.getTrimmedCanvas().toDataURL("image/png");
-    const payload = {
-      ...formData,
-      participants,
-      signature: signatureImg,
-      template_id: templateId,
+    // let pageWidth = pdf.internal.pageSize.getWidth();
+    // let pageHeight = pdf.internal.pageSize.getHeight();
+
+    // let imgWidth = pageWidth;
+    // let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    // // If the image height exceeds the page height, scale it down further
+    // if (imgHeight > pageHeight) {
+    //   let scaleFactor = pageHeight / imgHeight;
+    //   imgHeight = pageHeight;
+    //   imgWidth = imgWidth * scaleFactor;
+    // }
+
+    pdf.addImage(canvas, "PNG", 0, 0, canvasWidth, canvasHeight); // Adding the canvas to the PDF
+    const pdfBlob = pdf.output("blob");
+
+    // Convert Blob to Base64
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const base64Data = reader.result.split(",")[1]; // Extract Base64 string
+      const payload = { imgData: `data:application/pdf;base64,${base64Data}` };
+
+      try {
+        const response = await axios.post(
+          "http://localhost:5050/upload-image",
+          payload
+        );
+        const driveLink = response.data.link; // Get the Google Drive link
+        const submissionPayload = {
+          ...formData,
+          participants,
+          template_id: templateId,
+          imgLink: driveLink,
+        };
+
+        await axios.post(
+          "http://localhost:5050/submissions",
+          submissionPayload
+        );
+        toast.success("Form submitted successfully!");
+        setTimeout(() => navigate("/"), 5000);
+      } catch (error) {
+        toast.error("Submission failed!");
+        console.error(error);
+      }
     };
-    console.log(payload);
-
-    try {
-      await axios.post("http://localhost:5050/submissions", payload);
-      toast.success("Form submitted successfully!");
-      setDisabled(true);
-      setTimeout(() => navigate("/"), 5000);
-    } catch (error) {
-      toast.error("Submission failed!");
-      console.error(error);
-    }
+    reader.readAsDataURL(pdfBlob);
   };
 
   useEffect(() => {

@@ -14,7 +14,8 @@ function Home() {
   };
 
   return (
-    <Box className="homepage"
+    <Box
+      className="homepage"
       sx={{
         width: "100vw",
         height: "90vh",
@@ -53,7 +54,7 @@ function Home() {
 
             <Typography color={"gainsboro"} sx={{ mt: 2 }}>
               Don't let queues eat up your time, use online forms instead!
-            </Typography> 
+            </Typography>
 
             <Button variant="contained" onClick={handleNext} sx={{ mt: 4 }}>
               Get Started
@@ -75,14 +76,18 @@ function Home() {
         {layer === 2 && (
           <Box>
             <Typography variant="h4">Ready to Fill the Form?</Typography>
+            <Button variant="contained" color="primary" href="/" sx={{ mt: 4 }}>
+              Go back
+            </Button>
             <Button
               variant="contained"
               color="primary"
               href="/form?center=1"
-              sx={{ mt: 4 }}
+              sx={{ mt: 4, ml: 4 }}
             >
               Fill the Form
             </Button>
+            
           </Box>
         )}
       </Box>

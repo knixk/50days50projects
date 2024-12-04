@@ -343,7 +343,7 @@ input[type="file"] {
 
 @keyframes fade-in {
   0% {
-    opacity: 0;
+    opacity: 1;
   }
 
   100% {
@@ -363,6 +363,8 @@ input[type="file"] {
   display: flex;
   justify-content: center;
   /* height: calc(100vh - 49px); */
+  /* animation: fade-in 1s 0.5s; */
+  /* transition: 1s; */
 }
 
 .main__container {

@@ -5,6 +5,10 @@ const port = process.env.PORT || 5050;
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const env = require("dotenv");
+const { google } = require("googleapis");
+const fs = require("fs");
+const path = require("path");
+
 env.config();
 
 const con = mysql.createConnection({
@@ -12,6 +16,55 @@ const con = mysql.createConnection({
   user: process.env.MY_USER,
   password: process.env.MY_PASSWORD,
 });
+
+const folder__id = "1OYaavNL7ykYk4pJ2o57ypwC0ng-OyHRR";
+
+app.use(express.json({ limit: "50mb" })); // Increase limit for JSON payloads
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+// Google Drive API Configuration
+const auth = new google.auth.GoogleAuth({
+  keyFile: "./creds2.json", // Path to your credentials.json
+  scopes: ["https://www.googleapis.com/auth/drive.file"],
+});
+
+const drive = google.drive({ version: "v3", auth });
+
+const uploadFileToDrive = async (fileName, filePath, mimeType) => {
+  try {
+    const fileMetadata = {
+      name: fileName,
+      parents: [folder__id], // Replace with the folder ID in Google Drive
+    };
+
+    const media = {
+      mimeType: mimeType,
+      body: fs.createReadStream(filePath),
+    };
+
+    const response = await drive.files.create({
+      requestBody: fileMetadata,
+      media: media,
+      fields: "id",
+    });
+
+    // Make the file publicly accessible
+    await drive.permissions.create({
+      fileId: response.data.id,
+      requestBody: {
+        role: "reader",
+        type: "anyone",
+      },
+    });
+
+    // Generate and return the shareable link
+    const shareableLink = `https://drive.google.com/uc?id=${response.data.id}&export=download`;
+    return shareableLink;
+  } catch (error) {
+    console.error("Error uploading file to Google Drive:", error);
+    throw new Error("Failed to upload to Google Drive");
+  }
+};
 
 const secretKey = process.env.SECRET_KEY;
 
@@ -142,9 +195,6 @@ con.connect(function (err) {
   });
 });
 
-// Middleware to parse JSON body
-app.use(express.json());
-
 app.use(cors());
 
 app.listen(port, () => {
@@ -152,6 +202,8 @@ app.listen(port, () => {
 });
 
 app.get("/submissions", async (req, res) => {
+  console.log("========== submitting =========");
+
   const { mobile_number } = req.query;
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -258,7 +310,7 @@ app.post("/template-id-from-center", async (req, res) => {
 app.post("/submissions", async (req, res) => {
   const { fixed__email, fixed__name, fixed__number } = req.body;
 
-  console.log(req.body);
+  console.log(req.body, "===========================================>");
 
   const data = {
     template_id: req.body.template_id,
@@ -395,4 +447,71 @@ app.post("/get-submission-as-file", async (req, res) => {
   //   data:
   // });
   res.sendStatus(200);
+});
+
+// app.post("/upload-image", async (req, res) => {
+//   const { imgData } = req.body;
+
+//   try {
+//     // Save Base64 to a temporary file
+//     const base64Data = imgData.replace(/^data:image\/png;base64,/, "");
+//     const tempFilePath = "./temp-image.png";
+//     fs.writeFileSync(tempFilePath, base64Data, "base64");
+
+//     // Upload to Google Drive
+//     const driveLink = await uploadFileToDrive(
+//       "form-image.png",
+//       tempFilePath,
+//       "image/png"
+//     );
+
+//     // Clean up the temporary file
+//     fs.unlinkSync(tempFilePath);
+
+//     res.status(200).json({ link: driveLink });
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to upload image" });
+//   }
+// });
+
+app.post("/upload-image", async (req, res) => {
+  const { imgData } = req.body;
+
+  try {
+    // Save Base64 PDF data to a temporary file
+    const base64Data = imgData.replace(/^data:application\/pdf;base64,/, "");
+    const tempFilePath = "./temp-file.pdf";
+    fs.writeFileSync(tempFilePath, base64Data, "base64");
+
+    // Upload to Google Drive
+    const driveLink = await uploadFileToDrive(
+      "form-image.pdf", // Change to .pdf
+      tempFilePath,
+      "application/pdf"
+    );
+
+    // Clean up the temporary file
+    fs.unlinkSync(tempFilePath);
+
+    res.status(200).json({ link: driveLink });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to upload PDF" });
+  }
+});
+
+app.get("/submission/ack/:id", async (req, res) => {
+  const { id } = req.params;
+
+  con.query(
+    "SELECT submission_data FROM submissions WHERE id = ?",
+    [id],
+    (err, results) => {
+      if (err) return res.status(500).json({ error: "Database error" });
+      if (results.length === 0)
+        return res.status(404).json({ error: "Not found" });
+
+      const submissionData = JSON.parse(results[0].submission_data);
+      return res.status(200).json({ imgLink: submissionData.imgLink });
+    }
+  );
 });
