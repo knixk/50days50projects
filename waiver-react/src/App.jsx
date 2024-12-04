@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import data from "../template_config.json";
 
-
 import Form from "./pages/Form";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ViewForm from "./pages/ViewForm";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
@@ -19,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/form" element={<Form />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/view-form" element={<ViewForm />} />
       </Routes>
       {/* <Footer /> */}
     </Router>

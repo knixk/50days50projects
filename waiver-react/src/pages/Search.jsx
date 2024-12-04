@@ -11,11 +11,14 @@ import {
   Grid,
 } from "@mui/material";
 
+import { jsPDF } from "jspdf";
+
 function Search() {
   const [input, setInput] = useState("");
   const [params, setParams] = useState("search");
   const [data, setData] = useState([]);
   const [jwt, setJwt] = useState("");
+  const [templateData, setTemplateData] = useState({});
 
   const getSubmissions = async (data) => {
     const submissions = `http://localhost:5050/submissions${params}`;
@@ -26,6 +29,11 @@ function Search() {
           Authorization: `Bearer ${jwt}`,
         },
       });
+
+      const tmp_data = JSON.parse(response.data.data[0].submission_data);
+      setTemplateData(tmp_data);
+      console.log(tmp_data);
+
       return response.data;
     } catch (error) {
       console.error(
@@ -63,24 +71,67 @@ function Search() {
     setParams(`?${params.toString()}`);
   };
 
-  const handleDownload = (data) => {
+  // const handleDownload = (data) => {
 
-    const text = `
-  Name: ${data.name}
-  Mobile Number: ${data.mobile_number}
-  Email: ${data.email}
-  Submission ID: ${data.id}
-  Template ID: ${data.template_id}
-    `;
-    const blob = new Blob([text], { type: "text/plain" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `${data.name}_details.txt`;
-    link.click();
+  //   const text = `
+  // Name: ${data.name}
+  // Mobile Number: ${data.mobile_number}
+  // Email: ${data.email}
+  // Submission ID: ${data.id}
+  // Template ID: ${data.template_id}
+  //   `;
+  //   const blob = new Blob([text], { type: "text/plain" });
+  //   const link = document.createElement("a");
+  //   link.href = URL.createObjectURL(blob);
+  //   link.download = `${data.name}_details.txt`;
+  //   link.click();
+  // };
+
+  const handleDownload = async (value) => {
+    const params = new URLSearchParams({ mobile_number: value });
+    const submissionsUrl = `http://localhost:5050/submissions?${params.toString()}`;
+
+    try {
+      const response = await axios.get(submissionsUrl, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+
+      const submissionData = response.data;
+
+      // Generate PDF from submissionData (same logic as before)
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text("Submission Details", 10, 20);
+
+      let yPosition = 30;
+      Object.entries(submissionData).forEach(([key, value]) => {
+        if (key !== "imgLink") {
+          doc.text(`${key}: ${value}`, 10, yPosition);
+          yPosition += 10;
+        }
+      });
+
+      if (submissionData.imgLink) {
+        const imgLink = submissionData.imgLink;
+        const img = new Image();
+        img.src = imgLink;
+        img.onload = () => {
+          doc.addImage(img, "PNG", 10, yPosition, 180, 100);
+          doc.save(`submission_${value}.pdf`);
+        };
+      } else {
+        doc.save(`submission_${value}.pdf`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Error fetching submission.");
+    }
   };
 
   useEffect(() => {
-    console.log('component rendered')
+    console.log("component rendered");
   }, []);
 
   return (
@@ -125,13 +176,21 @@ function Search() {
                     <Typography>Mobile Number: {i.mobile_number}</Typography>
                     <Typography>Email: {i.email}</Typography>
                     <Typography>Submission ID: {i.id}</Typography>
-                    <Button
+                    {/* <Button
                       variant="contained"
                       color="primary"
                       sx={{ mt: 2 }}
                       onClick={() => handleDownload(i)}
                     >
                       Download
+                    </Button> */}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      sx={{ mt: 2, ml: 2 }}
+                      onClick={() => handleDownload(i)}
+                    >
+                      View
                     </Button>
                   </Paper>
                 </Grid>
