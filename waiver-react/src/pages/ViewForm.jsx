@@ -16,7 +16,7 @@ const { template_config, template_name } = config;
 
 // console.log(template_config, "config")
 
-console.log(temp, "user data");
+console.log(temp.participants, "user data");
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -262,8 +262,7 @@ const ViewForm = () => {
                 onChange={(e) =>
                   handleInputChange("fixed__name", e.target.value)
                 }
-                value={formData['fixed__name']}
-
+                value={formData["fixed__name"]}
               />
               <TextField
                 fullWidth
@@ -271,7 +270,7 @@ const ViewForm = () => {
                 margin="normal"
                 required
                 type="email"
-                value={formData['fixed__email']}
+                value={formData["fixed__email"]}
                 onChange={(e) =>
                   handleInputChange("fixed__email", e.target.value)
                 }
@@ -282,7 +281,7 @@ const ViewForm = () => {
                 margin="normal"
                 required
                 type="tel"
-                value={formData['fixed__number']}
+                value={formData["fixed__number"]}
                 onChange={(e) =>
                   handleInputChange("fixed__number", e.target.value)
                 }
@@ -443,6 +442,7 @@ const ViewForm = () => {
                                 e.target.files[0]
                               )
                             }
+                            value={formData[question.id] || ""}
                           />
                         </Button>
                         {formData[question.question_id] && (
@@ -485,6 +485,7 @@ const ViewForm = () => {
                     ))}
                     <Grid item xs={2}>
                       <IconButton
+                        disabled={true}
                         onClick={() => deleteParticipant(participant.id)}
                       >
                         <img style={{ width: 30 }} src={deleteIcon} />
@@ -496,6 +497,7 @@ const ViewForm = () => {
                   variant="outlined"
                   // startIcon={<AddIcon />}
                   onClick={addParticipant}
+                  disabled={1}
                   sx={{ mt: 2 }}
                 >
                   Add Participant
