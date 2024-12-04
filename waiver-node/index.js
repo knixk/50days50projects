@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const env = require("dotenv");
 env.config();
 
-const con = mysql.createConnection({
+const con = mysql.createConnection({  
   host: process.env.HOST,
   user: process.env.MY_USER,
   password: process.env.MY_PASSWORD,

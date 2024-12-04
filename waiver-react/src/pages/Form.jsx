@@ -167,11 +167,11 @@ const Form = () => {
     formDataToSend.append("fixed__email", formData.fixed__email);
     formDataToSend.append("fixed__number", formData.fixed__number);
     formDataToSend.append("submission_data", JSON.stringify(formData));
-    formDataToSend.append(
-      "acknowledgement",
-      acknowledgementBlob,
-      "acknowledgement.png"
-    );
+    // formDataToSend.append(
+    //   "acknowledgement",
+    //   acknowledgementBlob,
+    //   "acknowledgement.png"
+    // );
     formDataToSend.append("signature", signatureBlob, "signature.png");
 
     try {
