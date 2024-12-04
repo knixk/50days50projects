@@ -204,10 +204,11 @@ app.listen(port, () => {
 app.get("/submissions", async (req, res) => {
   console.log("========== submitting =========");
 
+  // console.log(req.params.id);
   const { mobile_number } = req.query;
   const token = req.headers.authorization?.split(" ")[1];
 
-  console.log("token", token);
+  console.log("token", req.query);
 
   if (!token) {
     return res.status(401).json({ message: "Token is required." });
