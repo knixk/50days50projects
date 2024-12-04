@@ -77,6 +77,36 @@ const ViewForm = () => {
     ]);
   };
 
+  const handleDownload = async () => {
+    const formElement = document.querySelector("body");
+    const canvas = await html2canvas(formElement, {
+      useCORS: true,
+      scale: 0.8,
+    });
+
+    // Get the dimensions of the canvas
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
+    const pdf = new jsPDF({
+      unit: "px", // Use pixels as the unit
+      format: [canvasWidth, canvasHeight], // Set PDF page size to canvas dimensions
+    });
+
+    pdf.addImage(canvas, "PNG", 0, 0, canvasWidth, canvasHeight); // Adding the canvas to the PDF
+    const pdfBlob = pdf.output("blob");
+
+    // Create a downloadable link
+    const url = URL.createObjectURL(pdfBlob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "download.pdf"; // File name for the download
+    document.body.appendChild(a); // Append the link to the body
+    a.click(); // Trigger the download
+    document.body.removeChild(a); // Clean up the link
+    URL.revokeObjectURL(url); // Release the URL
+  };
+
   const updateParticipant = (index, field, value) => {
     const updatedParticipants = [...participants];
     updatedParticipants[index][field] = value;
@@ -138,6 +168,7 @@ const ViewForm = () => {
           participants,
           template_id: templateId,
           imgLink: driveLink,
+          signature_data: sign,
         };
 
         await axios.post(
@@ -195,6 +226,7 @@ const ViewForm = () => {
           setExtraFields(myData.extra_participants_form_fields);
           setDisplayForm(true);
           setCompanyName(myData.company_name);
+          setSign(myData.signature_data);
 
           // use local template
           // setQuestions(template_config.template_config.questions);
@@ -236,9 +268,15 @@ const ViewForm = () => {
   return (
     <div className="form__container__main">
       <Box sx={{ maxWidth: 600, mx: "auto", mt: 4, p: 2 }}>
-      <Button variant="contained" type="submit" sx={{ mt: 3 }} fullWidth>
-        Download
-      </Button>
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{ mt: 3 }}
+          fullWidth
+          onClick={handleDownload}
+        >
+          Download
+        </Button>
         <Toaster />
         {displayForm ? (
           <Paper elevation={3} sx={{ p: 3 }}>
@@ -510,23 +548,18 @@ const ViewForm = () => {
                     alignItems="center"
                     key={participant.id}
                   >
-                    {extraFields.map((field, fieldIndex) => (
-                      <Grid item xs={5} key={fieldIndex}>
-                        <TextField
-                          fullWidth
-                          label={field.label}
-                          type={field.type}
-                          value={participant[participant.id] || ""} // Ensure `label` matches participant keys
-                          onChange={(e) =>
-                            updateParticipant(
-                              index,
-                              field.label,
-                              e.target.value
-                            )
-                          }
-                        />
-                      </Grid>
-                    ))}
+                    {extraFields.map((field, fieldIndex) => {
+                      return (
+                        <Grid item xs={5} key={fieldIndex}>
+                          <TextField
+                            fullWidth
+                            label={field.label}
+                            type={field.type}
+                            value={participant[field.label] || ""} // Ensure `label` matches participant keys
+                          />
+                        </Grid>
+                      );
+                    })}
                     <Grid item xs={2}>
                       <IconButton
                         onClick={() => deleteParticipant(participant.id)}

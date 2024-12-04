@@ -133,7 +133,7 @@ const Form = () => {
       useCORS: true,
       allowTaint: false,
       backgroundColor: null,
-      scale: 1.5,
+      scale: 1,
       logging: true,
       ignoreElements: (element) => element.tagName === "SCRIPT",
     });
@@ -157,16 +157,17 @@ const Form = () => {
       const payload = { imgData: `data:application/pdf;base64,${base64Data}` };
 
       try {
-        const response = await axios.post(
-          "http://localhost:5050/upload-image",
-          payload
-        );
-        const driveLink = response.data.link || ""; // Get the Google Drive link
+        // const response = await axios.post(
+        //   "http://localhost:5050/upload-image",
+        //   payload
+        // );
+        // const driveLink = response.data.link || ""; // Get the Google Drive link
         const submissionPayload = {
           ...formData,
           participants,
           template_id: templateId,
-          imgLink: driveLink,
+          // imgLink: driveLink,
+          signature_data: sign,
         };
 
         console.log(submissionPayload);
