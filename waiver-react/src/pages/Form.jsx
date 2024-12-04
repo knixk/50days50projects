@@ -167,7 +167,7 @@ const Form = () => {
           participants,
           template_id: templateId,
           // imgLink: driveLink,
-          signature_data: sign.current.toData(),
+          signature_data: sign?.getTrimmedCanvas().toDataURL("image/png"),
         };
 
         console.log(submissionPayload);
