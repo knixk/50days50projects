@@ -300,10 +300,11 @@ const Form = () => {
                       </FormControl>
                     )}
 
-                    {question.input_type === "text" && question.label && (
+                    {question.image && (
                       <img className="question__image" src={question.image} />
                     )}
-                    {question.input_type === "dropdown" && (
+
+                    {question.input_type === "text" && question.label && (
                       <FormControl component="fieldset" sx={{ mb: 2 }}>
                         <Typography>{question.label}</Typography>
                         <TextField
@@ -318,7 +319,7 @@ const Form = () => {
                             )
                           }
                           placeholder={
-                            question.placeholder || "Enter your response"
+                            question.input_placeholder || "Enter your response"
                           }
                           sx={{ mt: 2, ...question.customInputStyles }}
                         />
