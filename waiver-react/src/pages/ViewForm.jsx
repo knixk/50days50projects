@@ -12,7 +12,6 @@ import temp from "./Temp.json";
 // contains the template
 import config from "./config.json";
 
-
 // data we will get from submission id
 // config we will get from template id,
 
@@ -24,7 +23,10 @@ const { template_config, template_name, signature_data } = config;
 
 console.log(temp.participants, "user data");
 
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { MyContext } from "../App";
+
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -48,20 +50,43 @@ import deleteIcon from "../assets/delete.png";
 const ViewForm = () => {
   // get sign and set to it from submissions alr?
 
-  const [sign, setSign] = useState(null);
-  const [participants, setParticipants] = useState([temp.participants]);
-  const [formData, setFormData] = useState({});
-  const [companyLogo, setCompanyLogo] = useState();
-  const [questions, setQuestions] = useState(null);
-  const [extraFields, setExtraFields] = useState();
-  const [disabled, setDisabled] = useState(false);
+  const { state } = useLocation();
+
+  console.log(state, "im state");
+  const myState = useContext(MyContext);
+  const {
+    loading,
+    setLoading,
+    companyName,
+    setCompanyName,
+    displayForm,
+    setDisplayForm,
+    disabled,
+    setDisabled,
+    extraFields,
+    setExtraFields,
+    questions,
+    setQuestions,
+    templateId,
+    setTemplateId,
+    sign,
+    setSign,
+    participants,
+    setParticipants,
+    formData,
+    setFormData,
+    companyLogo,
+    setCompanyLogo,
+    submissionID,
+  } = myState;
+  console.log(templateId);
+  console.log(myState);
+
   const navigate = useNavigate();
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
-  const [displayForm, setDisplayForm] = useState(false);
-  const [companyName, setCompanyName] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [templateId, setTemplateId] = useState();
+
+  setParticipants(temp.participants);
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -81,38 +106,6 @@ const ViewForm = () => {
         id: nanoid(),
       },
     ]);
-  };
-
-  const handleDownload = async () => {
-    const btn = document.querySelector(".print__me");
-
-    const formElement = document.querySelector("body");
-    const canvas = await html2canvas(formElement, {
-      useCORS: true,
-      scale: 0.8,
-    });
-
-    // Get the dimensions of the canvas
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-
-    const pdf = new jsPDF({
-      unit: "px", // Use pixels as the unit
-      format: [canvasWidth, canvasHeight], // Set PDF page size to canvas dimensions
-    });
-
-    pdf.addImage(canvas, "PNG", 0, 0, canvasWidth, canvasHeight); // Adding the canvas to the PDF
-    const pdfBlob = pdf.output("blob");
-
-    // Create a downloadable link
-    const url = URL.createObjectURL(pdfBlob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "download.pdf"; // File name for the download
-    document.body.appendChild(a); // Append the link to the body
-    a.click(); // Trigger the download
-    document.body.removeChild(a); // Clean up the link
-    URL.revokeObjectURL(url); // Release the URL
   };
 
   const updateParticipant = (index, field, value) => {
@@ -271,22 +264,12 @@ const ViewForm = () => {
     setCompanyName(template_config.company_name);
 
     setFormData(temp);
+    setLoading(false);
   }, []);
 
   return (
     <div className="form__container__main">
       <Box sx={{ maxWidth: 600, mx: "auto", mt: 4, p: 2 }}>
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{ mt: 3 }}
-          fullWidth
-          id="download__btn"
-          onClick={handleDownload}
-        >
-          PDF
-        </Button>
-        <Toaster />
         {displayForm ? (
           <Paper elevation={3} sx={{ p: 3 }}>
             <div className="print__me">
@@ -306,15 +289,12 @@ const ViewForm = () => {
                 <img className="form__logo" src={companyLogo} alt="" />
               )}
 
-              <form onSubmit={handleSubmit}>
+              <form disabled={true} onSubmit={handleSubmit}>
                 <TextField
                   fullWidth
                   label="Name"
                   margin="normal"
                   required
-                  onChange={(e) =>
-                    handleInputChange("fixed__name", e.target.value)
-                  }
                   value={formData["fixed__name"]}
                 />
                 <TextField
@@ -324,9 +304,6 @@ const ViewForm = () => {
                   required
                   type="email"
                   value={formData["fixed__email"]}
-                  onChange={(e) =>
-                    handleInputChange("fixed__email", e.target.value)
-                  }
                 />
                 <TextField
                   fullWidth
@@ -335,9 +312,6 @@ const ViewForm = () => {
                   required
                   type="tel"
                   value={formData["fixed__number"]}
-                  onChange={(e) =>
-                    handleInputChange("fixed__number", e.target.value)
-                  }
                 />
                 {questions &&
                   questions.map((question) => (
@@ -367,12 +341,6 @@ const ViewForm = () => {
 
                           <Select
                             value={formData[question.question_id] || ""}
-                            onChange={(e) =>
-                              handleInputChange(
-                                question.question_id,
-                                e.target.value
-                              )
-                            }
                             displayEmpty
                           >
                             <MenuItem value="" disabled>
@@ -391,14 +359,7 @@ const ViewForm = () => {
                         <FormControl component="fieldset">
                           <Typography>{question.label}</Typography>
 
-                          <RadioGroup
-                            onChange={(e) =>
-                              handleRadioChange(
-                                question.question_id,
-                                e.target.value
-                              )
-                            }
-                          >
+                          <RadioGroup>
                             {question.values.map((option) => (
                               <FormControlLabel
                                 key={option}
@@ -429,12 +390,6 @@ const ViewForm = () => {
                             variant="outlined"
                             fullWidth
                             value={formData[question.question_id] || ""}
-                            onChange={(e) =>
-                              handleInputChange(
-                                question.question_id,
-                                e.target.value
-                              )
-                            }
                             placeholder={
                               question.placeholder || "Enter your response"
                             }
@@ -461,12 +416,6 @@ const ViewForm = () => {
                             variant="outlined"
                             fullWidth
                             value={formData[question.question_id] || ""}
-                            onChange={(e) =>
-                              handleInputChange(
-                                question.question_id,
-                                e.target.value
-                              )
-                            }
                             sx={{
                               mt: 2,
                               ...question.customDateStyles,
@@ -484,17 +433,12 @@ const ViewForm = () => {
                             variant="contained"
                             component="label"
                             color="primary"
+                            disabled={true}
                           >
                             Upload File
                             <input
                               type="file"
                               hidden
-                              onChange={(e) =>
-                                handleInputChange(
-                                  question.question_id,
-                                  e.target.files[0]
-                                )
-                              }
                               value={formData[question.id] || ""}
                             />
                           </Button>
@@ -593,15 +537,15 @@ const ViewForm = () => {
 
                 <Box sx={{ mt: 3 }}>
                   <Typography variant="h6">Signature</Typography>
-                  <SignatureCanvas
-                    ref={(ref) => setSign(ref)}
-                    penColor="black"
-                    canvasProps={{
-                      width: 500,
-                      height: 200,
-                      className: "sigCanvas",
-                    }}
-                  />
+                  <div className="signature-img__container">
+                    {temp.signature_data && (
+                      <img
+                        className="sig__img"
+                        src={temp.signature_data}
+                        alt=""
+                      />
+                    )}
+                  </div>
                   <Button
                     variant="outlined"
                     color="error"
@@ -618,6 +562,7 @@ const ViewForm = () => {
                   disabled={disabled}
                   sx={{ mt: 3 }}
                   fullWidth
+                  disabled={1}
                 >
                   Submit
                 </Button>

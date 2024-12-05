@@ -34,21 +34,36 @@ import deleteIcon from "../assets/delete.png";
 
 const Form = () => {
   const myState = useContext(MyContext);
+  const {
+    loading,
+    setLoading,
+    companyName,
+    setCompanyName,
+    displayForm,
+    setDisplayForm,
+    disabled,
+    setDisabled,
+    extraFields,
+    setExtraFields,
+    questions,
+    setQuestions,
+    templateId,
+    setTemplateId,
+    sign,
+    setSign,
+    participants,
+    setParticipants,
+    formData,
+    setFormData,
+    companyLogo,
+    setCompanyLogo,
+  } = myState;
+  console.log(templateId);
   console.log(myState);
-  const [sign, setSign] = useState(null);
-  const [participants, setParticipants] = useState([]);
-  const [formData, setFormData] = useState({});
-  const [companyLogo, setCompanyLogo] = useState();
-  const [questions, setQuestions] = useState(null);
-  const [extraFields, setExtraFields] = useState();
-  const [disabled, setDisabled] = useState(false);
+
   const navigate = useNavigate();
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
-  const [displayForm, setDisplayForm] = useState(false);
-  const [companyName, setCompanyName] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [templateId, setTemplateId] = useState();
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));

@@ -461,3 +461,33 @@ img {
 .form__icon {
   width: 30px;
 }
+
+.sig__img {
+  /* background-color: red; */
+  width: 60%;
+}
+
+.signature-img__container {
+  margin: 20px 0;
+  border-radius: 5px;
+}
+
+.nav {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  /* padding: 0 10px; */
+  padding-left: 20px;
+  padding-right: 20px;
+
+  /* background-color: red; */
+}
+
+.btns__container {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  gap: 20px;
+  /* background-color: green; */
+  align-items: center;
+}

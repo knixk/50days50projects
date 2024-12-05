@@ -13,12 +13,21 @@ import {
 
 import { jsPDF } from "jspdf";
 
+import { useNavigate } from "react-router-dom";
+
+import { useContext } from "react";
+import { MyContext } from "../App";
+
 function Search() {
+  const myState = useContext(MyContext);
+  const { submissionID, setSubmissionID } = myState;
+
   const [input, setInput] = useState("");
   const [params, setParams] = useState("search");
   const [data, setData] = useState([]);
   const [jwt, setJwt] = useState("");
   const [templateData, setTemplateData] = useState({});
+  const navigate = useNavigate();
 
   const getSubmissions = async (data) => {
     const submissions = `http://localhost:5050/submissions${params}`;
@@ -176,19 +185,26 @@ function Search() {
                     <Typography>Mobile Number: {i.mobile_number}</Typography>
                     <Typography>Email: {i.email}</Typography>
                     <Typography>Submission ID: {i.id}</Typography>
-                    <Button
+                    {/* <Button
                       variant="contained"
                       color="primary"
                       sx={{ mt: 2 }}
                       onClick={() => handleDownload(i)}
                     >
                       Download
-                    </Button>
+                    </Button> */}
                     <Button
                       variant="contained"
                       color="primary"
                       sx={{ mt: 2, ml: 2 }}
-                      onClick={() => handleDownload(i)}
+                      onClick={() => {
+                        setSubmissionID(i.id);
+                        navigate("/view-form", {
+                          state: {
+                            submission_id: i.id,
+                          },
+                        });
+                      }}
                     >
                       View
                     </Button>

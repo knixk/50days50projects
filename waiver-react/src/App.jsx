@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import data from "../template_config.json";
 
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+
 import Form from "./pages/Form";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
@@ -29,6 +32,39 @@ function App() {
   const [companyName, setCompanyName] = useState("");
   const [loading, setLoading] = useState(true);
   const [templateId, setTemplateId] = useState();
+  const [submissionID, setSubmissionID] = useState();
+
+  const handleDownload = async () => {
+    console.log("i was clicked");
+
+    const formElement = document.querySelector(".form__container__main");
+    const canvas = await html2canvas(formElement, {
+      useCORS: true,
+      scale: 0.65,
+    });
+
+    // Get the dimensions of the canvas
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
+    const pdf = new jsPDF({
+      unit: "px", // Use pixels as the unit
+      format: [canvasWidth, canvasHeight], // Set PDF page size to canvas dimensions
+    });
+
+    pdf.addImage(canvas, "PNG", 0, 0, canvasWidth, canvasHeight); // Adding the canvas to the PDF
+    const pdfBlob = pdf.output("blob");
+
+    // Create a downloadable link
+    const url = URL.createObjectURL(pdfBlob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "download.pdf"; // File name for the download
+    document.body.appendChild(a); // Append the link to the body
+    a.click(); // Trigger the download
+    document.body.removeChild(a); // Clean up the link
+    URL.revokeObjectURL(url); // Release the URL
+  };
 
   return (
     <MyContext.Provider
@@ -55,6 +91,9 @@ function App() {
         setCompanyLogo,
         questions,
         setQuestions,
+        handleDownload,
+        submissionID,
+        setSubmissionID,
       }}
     >
       <Router>
