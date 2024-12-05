@@ -114,6 +114,43 @@ const postACenter = (con, data) => {
   );
 };
 
+// const getSubmissions = async (
+//   con,
+//   { name = null, mobile_number = null, email = null, days = null } = {}
+// ) => {
+//   let getSubmissionsQuery = "SELECT * FROM submissions WHERE 1=1"; // Base query to start with
+
+//   // Filter by name if provided
+//   if (name) {
+//     getSubmissionsQuery += ` AND name LIKE '%${name}%'`; // Using LIKE for partial matching
+//   }
+
+//   // Filter by mobile_number if provided
+//   if (mobile_number) {
+//     getSubmissionsQuery += ` AND mobile_number LIKE '%${mobile_number}%'`;
+//   }
+
+//   // Filter by email if provided
+//   if (email) {
+//     getSubmissionsQuery += ` AND email LIKE '%${email}%'`; // Using LIKE for partial matching
+//   }
+
+//   // Filter by submission date range if provided
+//   if (days) {
+//     getSubmissionsQuery += ` AND submission_date >= CURDATE() - INTERVAL ${days} DAY`;
+//   }
+
+//   return new Promise((resolve, reject) => {
+//     con.query(getSubmissionsQuery, (err, result, fields) => {
+//       if (err) {
+//         reject(err); // Reject promise on error
+//       } else {
+//         resolve(result); // Resolve promise with the result
+//       }
+//     });
+//   });
+// };
+
 const getSubmissions = async (
   con,
   { name = null, mobile_number = null, email = null, days = null } = {}
@@ -139,6 +176,9 @@ const getSubmissions = async (
   if (days) {
     getSubmissionsQuery += ` AND submission_date >= CURDATE() - INTERVAL ${days} DAY`;
   }
+
+  // Order by the latest date
+  getSubmissionsQuery += " ORDER BY submission_date DESC";
 
   return new Promise((resolve, reject) => {
     con.query(getSubmissionsQuery, (err, result, fields) => {
@@ -203,6 +243,7 @@ app.listen(port, () => {
 app.get("/submissions", async (req, res) => {
   console.log("========== submitting =========");
 
+  console.log(req.query);
   // console.log(req.params.id);
   const { mobile_number } = req.query;
   const token = req.headers.authorization?.split(" ")[1];

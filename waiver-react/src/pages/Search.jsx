@@ -44,6 +44,8 @@ function Search() {
         },
       });
 
+      console.log(response.data);
+
       const tmp_data = JSON.parse(response.data.data[0].submission_data);
       setTemplateData(tmp_data);
 
@@ -77,6 +79,7 @@ function Search() {
       toast("No data found.");
     }
 
+    console.log(res.data, "im res ===============>");
     setData(res.data);
     setSubmissions(res.data);
   };
@@ -134,6 +137,10 @@ function Search() {
                       <Typography>Mobile Number: {i.mobile_number}</Typography>
                       <Typography>Email: {i.email}</Typography>
                       <Typography>Submission ID: {i.id}</Typography>
+                      <Typography>
+                        Date: {new Date(i.submission_date).toDateString()}
+                      </Typography>
+
                       <Button
                         variant="contained"
                         color="primary"

@@ -69,6 +69,11 @@ const ViewForm = () => {
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
 
+  // if (submission_data == null) {
+  //   toast.error("Invalid action..");
+  //   return <div>no data...</div>;
+  // }
+
   const temp = JSON.parse(viewParticipant.submission_data);
 
   // console.log(
@@ -165,7 +170,7 @@ const ViewForm = () => {
       }
     };
 
-    fetchTemplateFromSID(1);
+    fetchTemplateFromSID(submissionID);
   }, []);
 
   return (
@@ -436,7 +441,7 @@ const ViewForm = () => {
                 <Button
                   variant="contained"
                   type="submit"
-                  disabled={disabled}
+                  disabled={true}
                   sx={{ mt: 3 }}
                   fullWidth
                 >
