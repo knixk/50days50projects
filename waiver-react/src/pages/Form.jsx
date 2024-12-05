@@ -300,8 +300,29 @@ const Form = () => {
                       </FormControl>
                     )}
 
-                    {question.image && (
+                    {question.input_type === "text" && question.label && (
                       <img className="question__image" src={question.image} />
+                    )}
+                    {question.input_type === "dropdown" && (
+                      <FormControl component="fieldset" sx={{ mb: 2 }}>
+                        <Typography>{question.label}</Typography>
+                        <TextField
+                          type="text"
+                          variant="outlined"
+                          fullWidth
+                          value={formData[question.question_id] || ""}
+                          onChange={(e) =>
+                            handleInputChange(
+                              question.question_id,
+                              e.target.value
+                            )
+                          }
+                          placeholder={
+                            question.placeholder || "Enter your response"
+                          }
+                          sx={{ mt: 2, ...question.customInputStyles }}
+                        />
+                      </FormControl>
                     )}
 
                     {question.input_type === "dropdown" && (

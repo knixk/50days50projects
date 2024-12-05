@@ -1,97 +1,114 @@
 {
-  "template_name": "for science parks",
-  "template_config": {
-    "questions": [
-      {
-        "label": "I had to make a second template to make sure it works..",
-        "image": "https://www.euroschoolindia.com/wp-content/uploads/2023/08/importance-of-learning-science.jpg",
-        "input_type": "label",
-        "input_placeholder": "Enter your text..",
-        "question_id": "some_id4",
-        "required": false
-      },
-      {
-        "label": "Please attach your file here..",
-        "input_type": "file",
-        "question_id": "some_id5"
-      },
-      {
-        "label": "I am above 22 years of age.",
-        "input_type": "dropdown",
-        "values": ["no", "yes", "prefer not to answer"],
-        "question_id": "some_id32",
-        "required": false
-      },
-
-      {
-        "label": "When did u first hear about us??",
-        "input_type": "date",
-        "question_id": "someassdasd_id6"
-      },
-      {
-        "label": "Any message you would like to leave us?",
-        "input_type": "textarea",
-        "image": "https://www.training.com.au/wp-content/uploads/science-stem-feature.png?width=720&height=420",
-        "question_id": "some_id6"
-      },
-      {
-        "label": "Any message you would like to leave us? Any message you would like to leave us? Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?",
-        "input_type": "label",
-        "question_id": "some_i2342s3d6",
-        "fontSize": "1rem",
-        "color": "black",
-        "bold": false,
-        "customStyles": {
-          "textAlign": "center",
-          "marginBottom": "10px"
+    "template_name": "for science parks",
+    "template_config": {
+        "questions": [
+            {
+                "label": "I am above 22 years of age.",
+                "input_type": "dropdown",
+                "values": [
+                    "no",
+                    "yes",
+                    "prefer not to answer"
+                ],
+                "question_id": "some_id32",
+                "required": false
+            },
+            {
+                "label": "I had to make a second template to make sure it works..",
+                "image": "https://www.euroschoolindia.com/wp-content/uploads/2023/08/importance-of-learning-science.jpg",
+                "input_type": "label",
+                "input_placeholder": "Enter your text..",
+                "question_id": "some_id4",
+                "required": false
+            },
+            {
+                "label": "Custom input label type put anything here..",
+                "input_type": "text",
+                "input_placeholder": "Enter your text..",
+                "question_id": "somesdsad52_id4",
+                "required": false
+            },
+            {
+                "label": "Please attach your file here..",
+                "input_type": "file",
+                "question_id": "some_id5"
+            },
+            {
+                "label": "Any message you would like to leave us?",
+                "input_type": "textarea",
+                "image": "https://www.training.com.au/wp-content/uploads/science-stem-feature.png?width=720&height=420",
+                "question_id": "some_id6"
+            },
+            {
+                "label": "When did u first hear about us??",
+                "input_type": "date",
+                "question_id": "someassdasd_id6"
+            },
+            {
+                "label": "Any message you would like to leave us? Any message you would like to leave us? Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?Any message you would like to leave us?",
+                "input_type": "label",
+                "question_id": "some_i2342s3d6",
+                "fontSize": "1rem",
+                "color": "black",
+                "bold": false,
+                "customStyles": {
+                    "textAlign": "center",
+                    "marginBottom": "10px"
+                }
+            },
+            {
+                "label": "Bold disclaimer, to leave us? Any message you would like to leave us?",
+                "input_type": "label",
+                "image": "https://cdn.britannica.com/09/92009-050-122EC720/Enterprise-from-Star-Trek-III-The-Search.jpg",
+                "question_id": "some_i23423d6",
+                "fontSize": "1.5rem",
+                "color": "red",
+                "bold": true,
+                "customStyles": {
+                    "textAlign": "start",
+                    "marginBottom": "10px"
+                }
+            }
+        ],
+        "extra_participants_form_fields": [
+            {
+                "label": "name",
+                "type": "text",
+                "id": 1423123
+            },
+            {
+                "label": "age",
+                "type": "text",
+                "id": 123123523
+            },
+            {
+                "label": "ID CARD",
+                "type": "text",
+                "id": 12242312233,
+                "customInputStyles": {
+                    "backgroundColor": "#fff",
+                    "border": "1px solid #ccc",
+                    "borderRadius": "4px",
+                    "padding": "8px",
+                    "color": "#333"
+                }
+            }
+        ],
+        "company_logo": "https://ugc.production.linktr.ee/89d1512e-17ae-4438-8d83-e799279a7eef_lg7KdovRjixdZs7nekTpsBRztRo5uLJzF7OJ0rr40TswsvOpmJr1DGNjLVfYDzJerpha---jnw-s900-c-k-c0x00ffffff-no-r.jpeg",
+        "company_name": "Science center",
+        "user_data": {
+            "name": {
+                "label": "Enter your full name.",
+                "question_id": "some_id"
+            },
+            "age": {
+                "label": "Enter your age.",
+                "question_id": "some_id1"
+            },
+            "email": {
+                "label": "Enter your email.",
+                "question_id": "some_id2"
+            }
         }
-      },
-      {
-        "label": "Bold disclaimer, to leave us? Any message you would like to leave us?",
-        "input_type": "label",
-        "image": "https://cdn.britannica.com/09/92009-050-122EC720/Enterprise-from-Star-Trek-III-The-Search.jpg",
-        "question_id": "some_i23423d6",
-        "fontSize": "1.5rem",
-        "color": "red",
-        "bold": true,
-        "customStyles": {
-          "textAlign": "start",
-          "marginBottom": "10px"
-        }
-      }
-    ],
-    "extra_participants_form_fields": [
-      {
-        "label": "name",
-        "type": "text",
-        "id": 123123
-      },
-      {
-        "label": "age",
-        "type": "text",
-        "id": 12312323
-      },
-      {
-        "label": "ID CARD",
-        "type": "text",
-        "id": 12312233
-      }
-    ],
-    "company_logo": "https://ugc.production.linktr.ee/89d1512e-17ae-4438-8d83-e799279a7eef_lg7KdovRjixdZs7nekTpsBRztRo5uLJzF7OJ0rr40TswsvOpmJr1DGNjLVfYDzJerpha---jnw-s900-c-k-c0x00ffffff-no-r.jpeg",
-    "company_name": "Science center",
-    "user_data": {
-      "name": {
-        "label": "Enter your full name.",
-        "question_id": "some_id"
-      },
-      "age": {
-        "label": "Enter your age.",
-        "question_id": "some_id1"
-      },
-      "email": {
-        "label": "Enter your email.",
-        "question_id": "some_id2"
-      }
     }
-  }
 }
