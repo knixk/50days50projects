@@ -8,6 +8,9 @@ import html2canvas from "html2canvas";
 
 import template_config from "../../template_config.json";
 
+import { useContext } from "react";
+import { MyContext } from "../App";
+
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -30,6 +33,8 @@ import {
 import deleteIcon from "../assets/delete.png";
 
 const Form = () => {
+  const myState = useContext(MyContext);
+  console.log(myState);
   const [sign, setSign] = useState(null);
   const [participants, setParticipants] = useState([]);
   const [formData, setFormData] = useState({});
