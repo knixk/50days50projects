@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 const env = require("dotenv");
 const { google } = require("googleapis");
 const fs = require("fs");
-const path = require("path");
 
 env.config();
 

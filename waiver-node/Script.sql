@@ -8,7 +8,10 @@ describe templates;
 
 drop table templates;
 
-select * from templates;
+select
+    *
+from
+    templates;
 
 CREATE TABLE templates (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,24 +28,34 @@ CREATE TABLE templates (
 --     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --     FOREIGN KEY (template_id) REFERENCES templates(id)
 -- );
-
-select * from submissions;	
+select
+    *
+from
+    submissions;
 
 -- name contains
-SELECT * 
-FROM submissions
-WHERE name LIKE '%John%';
+SELECT
+    *
+FROM
+    submissions
+WHERE
+    name LIKE '%John%';
 
 -- mobile numbers contains
-SELECT * 
-FROM submissions
-WHERE mobile_number LIKE '%123%';
+SELECT
+    *
+FROM
+    submissions
+WHERE
+    mobile_number LIKE '%123%';
 
 -- last 7 days
-SELECT * 
-FROM submissions
-WHERE submission_date >= CURDATE() - INTERVAL 7 DAY;
-
+SELECT
+    *
+FROM
+    submissions
+WHERE
+    submission_date >= CURDATE() - INTERVAL 7 DAY;
 
 drop table submissions;
 
@@ -56,7 +69,7 @@ CREATE TABLE submissions (
     mobile_number VARCHAR(20) NOT NULL,
     submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (template_id) REFERENCES templates(id)
+    FOREIGN KEY (template_id) REFERENCES templates(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE devices (
@@ -66,7 +79,10 @@ CREATE TABLE devices (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-select * from centers;
+select
+    *
+from
+    centers;
 
 CREATE TABLE centers (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -76,8 +92,6 @@ CREATE TABLE centers (
     template_id INT NOT NULL,
     FOREIGN KEY (template_id) REFERENCES templates(id)
 );
-
-
 
 drop table centers;
 
