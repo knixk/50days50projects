@@ -58,8 +58,6 @@ const Form = () => {
     companyLogo,
     setCompanyLogo,
   } = myState;
-  console.log(templateId);
-  console.log(myState);
 
   const navigate = useNavigate();
   const queryParameters = new URLSearchParams(window.location.search);
@@ -96,52 +94,12 @@ const Form = () => {
   };
 
   const uploadImageToBackend = async (imgData) => {
+    return;
     const response = await axios.post("http://localhost:5050/upload-image", {
       imgData,
     });
     return response.data.link; // Backend returns the Google Drive link
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   toast("Submitting form...")
-
-  //   setDisabled(true);
-
-  //   const formElement = document.querySelector("body");
-  //   const canvas = await html2canvas(formElement, {
-  //     useCORS: true, // Enables cross-origin images
-  //     allowTaint: false, // Prevents tainted canvas errors
-  //     backgroundColor: null, // Keeps transparent backgrounds
-  //     scale: 2, // Increases resolution
-  //     logging: true, // Debugging logs (optional)
-  //     ignoreElements: (element) => element.tagName === "SCRIPT", // Ignores script tags
-  //   });
-
-  //   const imgData = canvas.toDataURL("image/png");
-
-  //   const driveLink = await uploadImageToBackend(imgData);
-
-  //   const payload = {
-  //     ...formData,
-  //     participants,
-  //     // signature: sign?.getTrimmedCanvas().toDataURL("image/png"),
-  //     template_id: templateId,
-  //     imgLink: driveLink,
-  //   };
-
-  //   console.log(payload);
-
-  //   try {
-  //     await axios.post("http://localhost:5050/submissions", payload);
-  //     toast.success("Form submitted successfully!");
-  //     setDisabled(true);
-  //     setTimeout(() => navigate("/"), 5000);
-  //   } catch (error) {
-  //     toast.error("Submission failed!");
-  //     console.error(error);
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -189,8 +147,6 @@ const Form = () => {
           // imgLink: driveLink,
           signature_data: sign?.getTrimmedCanvas().toDataURL("image/png"),
         };
-
-        console.log(submissionPayload);
 
         await axios.post(
           "http://localhost:5050/submissions",

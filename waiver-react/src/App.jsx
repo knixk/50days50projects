@@ -27,7 +27,6 @@ function App() {
   const [extraFields, setExtraFields] = useState();
   const [disabled, setDisabled] = useState(false);
   const queryParameters = new URLSearchParams(window.location.search);
-  const centerParams = queryParameters.get("center");
   const [displayForm, setDisplayForm] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [loading, setLoading] = useState(true);
@@ -37,8 +36,6 @@ function App() {
   const [viewParticipant, setViewParticipant] = useState();
 
   const handleDownload = async () => {
-    console.log("i was clicked");
-
     const formElement = document.querySelector(".form__container__main");
     const canvas = await html2canvas(formElement, {
       useCORS: true,
@@ -112,6 +109,7 @@ function App() {
           <Route path="/view-form" element={<ViewForm />} />
         </Routes>
         {/* <Footer /> */}
+        <Footer />
       </Router>
     </MyContext.Provider>
   );

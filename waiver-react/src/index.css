@@ -182,7 +182,11 @@ canvas {
 }
 
 .footer {
-  margin-top: 30px;
+  /* margin-top: 30px; */
+  /* position: absolute; */
+  /* width: 100%; */
+  /* bottom: 0; */
+  background-color: #333;
 }
 
 button {
@@ -452,6 +456,7 @@ input[type="file"] {
 .form__container__main {
   animation: fade-in 3s !important;
   transition: 1s all;
+  margin-bottom: 30px;
 }
 
 img {
@@ -490,4 +495,14 @@ img {
   gap: 20px;
   /* background-color: green; */
   align-items: center;
+}
+
+
+.footer__icon {
+  width: 20px;
+}
+
+.footer__logo {
+  font-size: 13px;
+  font-weight: 300;
 }

@@ -82,12 +82,10 @@ const ViewForm = () => {
 
   const temp = JSON.parse(viewParticipant.submission_data);
 
-  console.log(
-    JSON.parse(viewParticipant.submission_data),
-    "================> participant"
-  );
-
-  //  need to set participants alr
+  // console.log(
+  //   JSON.parse(viewParticipant.submission_data),
+  //   "================> participant"
+  // );
 
   const addParticipant = () => {};
 
