@@ -220,8 +220,7 @@ const ViewForm = () => {
                   label="Name"
                   margin="normal"
                   required
-                  onChange={handleChange}
-                  defaultValue={formData["fixed__name"]}
+                  onChange={handleChange} value={formData["fixed__name"]}
                 />
                 <TextField
                   fullWidth
@@ -229,8 +228,7 @@ const ViewForm = () => {
                   margin="normal"
                   required
                   type="email"
-                  onChange={handleChange}
-                  defaultValue={formData["fixed__email"]}
+                  onChange={handleChange} value={formData["fixed__email"]}
                 />
                 <TextField
                   fullWidth
@@ -238,9 +236,7 @@ const ViewForm = () => {
                   margin="normal"
                   required
                   type="tel"
-                  onChange={handleChange}
-                  defaultValue={formData["fixed__number"]}
-                  // value={formData["fixed__number"]}
+                  onChange={handleChange} value={formData["fixed__number"]}
                 />
                 {questions &&
                   questions.map((question) => (
@@ -269,22 +265,14 @@ const ViewForm = () => {
                           <Typography>{question.label}</Typography>
 
                           <Select
-                            onChange={handleChange}
-                            defaultValue={formData[question.question_id] || ""}
-                            value={formData[question.question_id] || ""}
+                            onChange={handleChange} value={formData[question.question_id] || ""}
                             displayEmpty
                           >
-                            defaultValue={""}<MenuItem onChange={handleChange} 
-                            value="" >
+                            <MenuItem onChange={handleChange} value="" disabled>
                               Choose
                             </MenuItem>
                             {question.values.map((option) => (
-                              <MenuItem
-                                key={option}
-                                onChange={handleChange}
-                                defaultValue={option}
-                                // value={option}
-                              >
+                              <MenuItem key={option} onChange={handleChange} value={option}>
                                 {option}
                               </MenuItem>
                             ))}
@@ -300,9 +288,7 @@ const ViewForm = () => {
                             {question.values.map((option) => (
                               <FormControlLabel
                                 key={option}
-                                onChange={handleChange}
-                                defaultValue={option}
-                                // value={option}
+                                onChange={handleChange} value={option}
                                 control={<Radio />}
                                 label={option}
                               />
@@ -328,9 +314,7 @@ const ViewForm = () => {
                             rows={question.rows || 4}
                             variant="outlined"
                             fullWidth
-                            onChange={handleChange}
-                            defaultValue={formData[question.question_id] || ""}
-                            // value={formData[question.question_id] || ""}
+                            onChange={handleChange} value={formData[question.question_id] || ""}
                             placeholder={
                               question.placeholder || "Enter your response"
                             }
@@ -356,9 +340,7 @@ const ViewForm = () => {
                             type="date"
                             variant="outlined"
                             fullWidth
-                            onChange={handleChange}
-                            defaultValue={formData[question.question_id] || ""}
-                            // value={formData[question.question_id] || ""}
+                            onChange={handleChange} value={formData[question.question_id] || ""}
                             sx={{
                               mt: 2,
                               ...question.customDateStyles,
@@ -382,9 +364,7 @@ const ViewForm = () => {
                             <input
                               type="file"
                               hidden
-                              onChange={handleChange}
-                              defaultValue={formData[question.id] || ""}
-                              // value={formData[question.id] || ""}
+                              onChange={handleChange} value={formData[question.id] || ""}
                             />
                           </Button>
                           {formData[question.question_id] && (
@@ -415,9 +395,7 @@ const ViewForm = () => {
                               fullWidth
                               label={field.label}
                               type={field.type}
-                              onChange={handleChange}
-                              defaultValue={participant[field.label] || ""}
-                              // value={participant[field.label] || ""} // Ensure `label` matches participant keys
+                              onChange={handleChange} value={participant[field.label] || ""} // Ensure `label` matches participant keys
                             />
                           </Grid>
                         );
