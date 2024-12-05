@@ -519,7 +519,7 @@ app.get("/submission/ack/:id", async (req, res) => {
 
 const getTemplateBySubmissionId = async (con, { submissionId = null } = {}) => {
   const query = `
-    SELECT * 
+    SELECT t.*
     FROM templates t
     INNER JOIN submissions s ON t.id = s.template_id
     WHERE s.id = ?
@@ -539,6 +539,7 @@ const getTemplateBySubmissionId = async (con, { submissionId = null } = {}) => {
 
 // Endpoint to fetch template by submission ID
 app.post("/template-from-sid", async (req, res) => {
+  console.log(req.body);
   const { submissionId } = req.body;
 
   if (!submissionId) {

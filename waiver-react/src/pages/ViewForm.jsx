@@ -19,10 +19,6 @@ import config from "./config.json";
 
 const { template_config, template_name, signature_data } = config;
 
-// console.log(template_config, "config")
-
-console.log(temp.participants, "user data");
-
 import { useContext } from "react";
 import { MyContext } from "../App";
 
@@ -52,7 +48,6 @@ const ViewForm = () => {
 
   const { state } = useLocation();
 
-  console.log(state, "im state");
   const myState = useContext(MyContext);
   const {
     loading,
@@ -79,14 +74,13 @@ const ViewForm = () => {
     setCompanyLogo,
     submissionID,
   } = myState;
-  console.log(templateId);
-  console.log(myState);
 
   const navigate = useNavigate();
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
 
-  setParticipants(temp.participants);
+  //  need to set participants alr
+  // setParticipants(temp.participants);
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -107,6 +101,8 @@ const ViewForm = () => {
       },
     ]);
   };
+
+  const handleChange = () => {};
 
   const updateParticipant = (index, field, value) => {
     const updatedParticipants = [...participants];
@@ -187,23 +183,6 @@ const ViewForm = () => {
   };
 
   useEffect(() => {
-    const fetchTemplateFromSID = async (submissionId) => {
-      const payload = {
-        submissionId: 1,
-      };
-
-      try {
-        const response = await axios.post(`/template-from-sid`, payload);
-        console.log("Template Data:", response.data);
-        return response.data;
-      } catch (error) {
-        console.error(
-          "Error fetching template:",
-          error.response?.data || error.message
-        );
-      }
-    };
-
     const getTemplateIdFromCenterID = async (id) => {
       let ans = null;
       const templates = "http://localhost:5050/template-id-from-center";
@@ -235,8 +214,6 @@ const ViewForm = () => {
       try {
         const response = await axios.post(templates, options);
         const myData = JSON.parse(response.data.data[0].template_config);
-
-        console.log(myData);
 
         if (myData) {
           setQuestions(myData.questions);
@@ -274,17 +251,35 @@ const ViewForm = () => {
 
     // asyncFnStitch();
 
-    setQuestions(template_config.questions);
-    setCompanyLogo(template_config.company_logo);
-    setExtraFields(template_config.extra_participants_form_fields);
-    setDisplayForm(true);
-    setCompanyName(template_config.company_name);
+    const fetchTemplateFromSID = async (submissionId) => {
+      const templatefromSIDURL = "http://localhost:5050/template-from-sid";
+      try {
+        const response = await axios.post(templatefromSIDURL, {
+          submissionId,
+        });
 
-    setFormData(temp);
-    setLoading(false);
+        const tData = JSON.parse(response.data.template[0].template_config);
 
-    fetchTemplateFromSID();
-  }, []);
+        setQuestions(tData.questions);
+        setCompanyLogo(tData.company_logo);
+        setExtraFields(tData.extra_participants_form_fields);
+        setDisplayForm(true);
+        setCompanyName(tData.company_name);
+
+        setFormData(temp);
+        setLoading(false);
+
+        return response.data.template;
+      } catch (error) {
+        console.error(
+          "Error fetching template:",
+          error.response?.data || error.message
+        );
+      }
+    };
+
+    fetchTemplateFromSID(1);
+  }, [submissionID]);
 
   return (
     <div className="form__container__main">
@@ -308,7 +303,11 @@ const ViewForm = () => {
                 <img className="form__logo" src={companyLogo} alt="" />
               )}
 
-              <form disabled={true} onSubmit={handleSubmit}>
+              <form
+                onChange={handleChange}
+                disabled={true}
+                onSubmit={handleSubmit}
+              >
                 <TextField
                   fullWidth
                   label="Name"
@@ -474,45 +473,6 @@ const ViewForm = () => {
                 <Box sx={{ mt: 3 }}>
                   <Typography variant="h6">Participants</Typography>
 
-                  {/* {participants.map((participant, index) => (
-                  <Grid
-                    container
-                    spacing={2}
-                    style={{ marginTop: 10 }}
-                    alignItems="center"
-                    key={participant.id}
-                  >
-
-                    { console.log(participant[0].id) }
-
-                    {extraFields.map((field, fieldIndex) => (
-                      <Grid item xs={5} key={fieldIndex}>
-                        <TextField
-                          fullWidth
-                          label={field.label}
-                          type={field.type}
-                          value={participant[0].id || ""}
-                          onChange={(e) =>
-                            updateParticipant(
-                              index,
-                              field.label,
-                              e.target.value
-                            )
-                          }
-                        />
-                      </Grid>
-                    ))}
-                    <Grid item xs={2}>
-                      <IconButton
-                        disabled={true}
-                        onClick={() => deleteParticipant(participant.id)}
-                      >
-                        <img style={{ width: 30 }} src={deleteIcon} />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
-                ))} */}
-
                   {participants.map((participant, index) => (
                     <Grid
                       container
@@ -545,9 +505,8 @@ const ViewForm = () => {
 
                   <Button
                     variant="outlined"
-                    // startIcon={<AddIcon />}
                     onClick={addParticipant}
-                    disabled={1}
+                    disabled={true}
                     sx={{ mt: 2 }}
                   >
                     Add Participant
@@ -581,7 +540,6 @@ const ViewForm = () => {
                   disabled={disabled}
                   sx={{ mt: 3 }}
                   fullWidth
-                  disabled={1}
                 >
                   Submit
                 </Button>
