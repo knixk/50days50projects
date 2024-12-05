@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 // contains submissions data, will add real later
-import temp from "./Temp.json";
+// import temp from "./Temp.json";
 
 // contains the template
 import config from "./config.json";
@@ -73,114 +73,29 @@ const ViewForm = () => {
     companyLogo,
     setCompanyLogo,
     submissionID,
+    viewParticipant,
   } = myState;
 
   const navigate = useNavigate();
   const queryParameters = new URLSearchParams(window.location.search);
   const centerParams = queryParameters.get("center");
 
+  const temp = JSON.parse(viewParticipant.submission_data);
+
+  console.log(
+    JSON.parse(viewParticipant.submission_data),
+    "================> participant"
+  );
+
   //  need to set participants alr
-  // setParticipants(temp.participants);
 
-  const handleInputChange = (id, value) => {
-    setFormData((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const handleRadioChange = (questionId, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [questionId]: value,
-    }));
-  };
-
-  const addParticipant = () => {
-    setParticipants((prev) => [
-      ...prev,
-      {
-        id: nanoid(),
-      },
-    ]);
-  };
+  const addParticipant = () => {};
 
   const handleChange = () => {};
 
-  const updateParticipant = (index, field, value) => {
-    const updatedParticipants = [...participants];
-    updatedParticipants[index][field] = value;
-    setParticipants(updatedParticipants);
-  };
+  const deleteParticipant = (id) => {};
 
-  const deleteParticipant = (id) => {
-    setParticipants((prev) => prev.filter((p) => p.id !== id));
-  };
-
-  const uploadImageToBackend = async (imgData) => {
-    const response = await axios.post("http://localhost:5050/upload-image", {
-      imgData,
-    });
-    return response.data.link; // Backend returns the Google Drive link
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    toast("Submitting form, please wait...");
-    setDisabled(true);
-
-    const formElement = document.querySelector("body");
-    const canvas = await html2canvas(formElement, {
-      useCORS: true,
-      allowTaint: false,
-      backgroundColor: null,
-      scale: 1.5,
-      logging: true,
-      ignoreElements: (element) => element.tagName === "SCRIPT",
-    });
-
-    // Get the dimensions of the canvas
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-
-    const pdf = new jsPDF({
-      unit: "px", // Use pixels as the unit
-      format: [canvasWidth, canvasHeight], // Set PDF page size to canvas dimensions
-    });
-
-    pdf.addImage(canvas, "PNG", 0, 0, canvasWidth, canvasHeight); // Adding the canvas to the PDF
-    const pdfBlob = pdf.output("blob");
-
-    // Convert Blob to Base64
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const base64Data = reader.result.split(",")[1]; // Extract Base64 string
-      const payload = { imgData: `data:application/pdf;base64,${base64Data}` };
-
-      try {
-        const response = await axios.post(
-          "http://localhost:5050/upload-image",
-          payload
-        );
-        const driveLink = response.data.link; // Get the Google Drive link
-        const submissionPayload = {
-          ...formData,
-          participants,
-          template_id: templateId,
-          imgLink: driveLink,
-          signature_data: sign,
-        };
-
-        await axios.post(
-          "http://localhost:5050/submissions",
-          submissionPayload
-        );
-        toast.success("Form submitted successfully!");
-        setTimeout(() => navigate("/"), 5000);
-      } catch (error) {
-        toast.error("Submission failed!");
-        console.error(error);
-      }
-    };
-    reader.readAsDataURL(pdfBlob);
-  };
+  const handleSubmit = async (e) => {};
 
   useEffect(() => {
     const getTemplateIdFromCenterID = async (id) => {
@@ -222,17 +137,10 @@ const ViewForm = () => {
           setDisplayForm(true);
           setCompanyName(myData.company_name);
           setSign(myData.signature_data);
-
-          // use local template
-          // setQuestions(template_config.template_config.questions);
-          // setCompanyLogo(template_config.template_config.company_logo);
-          // setExtraFields(
-          //   template_config.template_config.extra_participants_form_fields
-          // );
-          // setDisplayForm(true);
-          // setCompanyName(template_config.template_config.company_name);
-
           setLoading(false);
+          if (!participants) {
+            setParticipants(temp.participants);
+          }
         }
       } catch (error) {
         toast("template doesn't exist");
@@ -279,7 +187,7 @@ const ViewForm = () => {
     };
 
     fetchTemplateFromSID(1);
-  }, [submissionID]);
+  }, []);
 
   return (
     <div className="form__container__main">
@@ -292,7 +200,6 @@ const ViewForm = () => {
                 component="h1"
                 gutterBottom
                 align="center"
-                // fontWeight="bold"
                 color="black"
                 marginTop={2}
                 letterSpacing={1.5}
@@ -313,7 +220,8 @@ const ViewForm = () => {
                   label="Name"
                   margin="normal"
                   required
-                  value={formData["fixed__name"]}
+                  onChange={handleChange}
+                  defaultValue={formData["fixed__name"]}
                 />
                 <TextField
                   fullWidth
@@ -321,7 +229,8 @@ const ViewForm = () => {
                   margin="normal"
                   required
                   type="email"
-                  value={formData["fixed__email"]}
+                  onChange={handleChange}
+                  defaultValue={formData["fixed__email"]}
                 />
                 <TextField
                   fullWidth
@@ -329,7 +238,9 @@ const ViewForm = () => {
                   margin="normal"
                   required
                   type="tel"
-                  value={formData["fixed__number"]}
+                  onChange={handleChange}
+                  defaultValue={formData["fixed__number"]}
+                  // value={formData["fixed__number"]}
                 />
                 {questions &&
                   questions.map((question) => (
@@ -358,14 +269,22 @@ const ViewForm = () => {
                           <Typography>{question.label}</Typography>
 
                           <Select
+                            onChange={handleChange}
+                            defaultValue={formData[question.question_id] || ""}
                             value={formData[question.question_id] || ""}
                             displayEmpty
                           >
-                            <MenuItem value="" disabled>
+                            defaultValue={""}<MenuItem onChange={handleChange} 
+                            value="" >
                               Choose
                             </MenuItem>
                             {question.values.map((option) => (
-                              <MenuItem key={option} value={option}>
+                              <MenuItem
+                                key={option}
+                                onChange={handleChange}
+                                defaultValue={option}
+                                // value={option}
+                              >
                                 {option}
                               </MenuItem>
                             ))}
@@ -381,7 +300,9 @@ const ViewForm = () => {
                             {question.values.map((option) => (
                               <FormControlLabel
                                 key={option}
-                                value={option}
+                                onChange={handleChange}
+                                defaultValue={option}
+                                // value={option}
                                 control={<Radio />}
                                 label={option}
                               />
@@ -407,7 +328,9 @@ const ViewForm = () => {
                             rows={question.rows || 4}
                             variant="outlined"
                             fullWidth
-                            value={formData[question.question_id] || ""}
+                            onChange={handleChange}
+                            defaultValue={formData[question.question_id] || ""}
+                            // value={formData[question.question_id] || ""}
                             placeholder={
                               question.placeholder || "Enter your response"
                             }
@@ -433,7 +356,9 @@ const ViewForm = () => {
                             type="date"
                             variant="outlined"
                             fullWidth
-                            value={formData[question.question_id] || ""}
+                            onChange={handleChange}
+                            defaultValue={formData[question.question_id] || ""}
+                            // value={formData[question.question_id] || ""}
                             sx={{
                               mt: 2,
                               ...question.customDateStyles,
@@ -457,7 +382,9 @@ const ViewForm = () => {
                             <input
                               type="file"
                               hidden
-                              value={formData[question.id] || ""}
+                              onChange={handleChange}
+                              defaultValue={formData[question.id] || ""}
+                              // value={formData[question.id] || ""}
                             />
                           </Button>
                           {formData[question.question_id] && (
@@ -488,7 +415,9 @@ const ViewForm = () => {
                               fullWidth
                               label={field.label}
                               type={field.type}
-                              value={participant[field.label] || ""} // Ensure `label` matches participant keys
+                              onChange={handleChange}
+                              defaultValue={participant[field.label] || ""}
+                              // value={participant[field.label] || ""} // Ensure `label` matches participant keys
                             />
                           </Grid>
                         );

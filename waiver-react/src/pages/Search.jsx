@@ -20,7 +20,13 @@ import { MyContext } from "../App";
 
 function Search() {
   const myState = useContext(MyContext);
-  const { submissionID, setSubmissionID, setSubmissions } = myState;
+  const {
+    submissionID,
+    setSubmissionID,
+    setSubmissions,
+    viewParticipant,
+    setViewParticipant,
+  } = myState;
 
   const [input, setInput] = useState("");
   const [params, setParams] = useState("search");
@@ -31,7 +37,6 @@ function Search() {
 
   const getSubmissions = async (data) => {
     const submissions = `http://localhost:5050/submissions${params}`;
-    // console.log(jwt);
     try {
       const response = await axios.get(submissions, {
         headers: {
@@ -41,7 +46,6 @@ function Search() {
 
       const tmp_data = JSON.parse(response.data.data[0].submission_data);
       setTemplateData(tmp_data);
-      console.log(tmp_data);
 
       return response.data;
     } catch (error) {
@@ -61,7 +65,8 @@ function Search() {
     const res = await getSubmissions(data);
 
     if (!res) {
-      // console.error("Error fetching data");
+      
+      console.error("Error fetching data");
       return;
     }
 
@@ -69,7 +74,6 @@ function Search() {
       toast("No data found.");
     }
 
-    console.log(res.data);
     setData(res.data);
     setSubmissions(res.data);
   };
@@ -82,68 +86,7 @@ function Search() {
     setParams(`?${params.toString()}`);
   };
 
-  // const handleDownload = (data) => {
-
-  //   const text = `
-  // Name: ${data.name}
-  // Mobile Number: ${data.mobile_number}
-  // Email: ${data.email}
-  // Submission ID: ${data.id}
-  // Template ID: ${data.template_id}
-  //   `;
-  //   const blob = new Blob([text], { type: "text/plain" });
-  //   const link = document.createElement("a");
-  //   link.href = URL.createObjectURL(blob);
-  //   link.download = `${data.name}_details.txt`;
-  //   link.click();
-  // };
-
-  const handleDownload = async (value) => {
-    const params = new URLSearchParams({ mobile_number: value });
-    const submissionsUrl = `http://localhost:5050/submissions?${params.toString()}`;
-
-    try {
-      const response = await axios.get(submissionsUrl, {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
-
-      const submissionData = response.data;
-
-      // Generate PDF from submissionData (same logic as before)
-      const doc = new jsPDF();
-      doc.setFontSize(18);
-      doc.text("Submission Details", 10, 20);
-
-      let yPosition = 30;
-      Object.entries(submissionData).forEach(([key, value]) => {
-        if (key !== "imgLink") {
-          doc.text(`${key}: ${value}`, 10, yPosition);
-          yPosition += 10;
-        }
-      });
-
-      if (submissionData.imgLink) {
-        const imgLink = submissionData.imgLink;
-        const img = new Image();
-        img.src = imgLink;
-        img.onload = () => {
-          doc.addImage(img, "PNG", 10, yPosition, 180, 100);
-          doc.save(`submission_${value}.pdf`);
-        };
-      } else {
-        doc.save(`submission_${value}.pdf`);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Error fetching submission.");
-    }
-  };
-
-  useEffect(() => {
-    console.log("component rendered");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
@@ -181,7 +124,6 @@ function Search() {
           {data && data.length > 0 ? (
             <Grid container spacing={3}>
               {data.map((i) => {
-                console.log(JSON.parse(i.submission_data));
                 return (
                   <Grid item xs={12} key={i.id}>
                     <Paper elevation={2} sx={{ p: 3 }}>
@@ -189,19 +131,12 @@ function Search() {
                       <Typography>Mobile Number: {i.mobile_number}</Typography>
                       <Typography>Email: {i.email}</Typography>
                       <Typography>Submission ID: {i.id}</Typography>
-                      {/* <Button
-                      variant="contained"
-                      color="primary"
-                      sx={{ mt: 2 }}
-                      onClick={() => handleDownload(i)}
-                    >
-                      Download
-                    </Button> */}
                       <Button
                         variant="contained"
                         color="primary"
                         sx={{ mt: 2, ml: 2 }}
                         onClick={() => {
+                          setViewParticipant(i);
                           setSubmissionID(i.id);
                           navigate("/view-form", {
                             state: {
