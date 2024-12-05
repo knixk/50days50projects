@@ -516,3 +516,45 @@ app.get("/submission/ack/:id", async (req, res) => {
     }
   );
 });
+
+const getTemplateBySubmissionId = async (con, { submissionId = null } = {}) => {
+  const query = `
+    SELECT * 
+    FROM templates t
+    INNER JOIN submissions s ON t.id = s.template_id
+    WHERE s.id = ?
+  `;
+
+  console.log("Fetching template for submission ID:", submissionId);
+  return new Promise((resolve, reject) => {
+    con.query(query, [submissionId], (err, result) => {
+      if (err) {
+        reject(err); // Reject the promise on error
+      } else {
+        resolve(result); // Resolve the promise with the result
+      }
+    });
+  });
+};
+
+// Endpoint to fetch template by submission ID
+app.post("/template-from-sid", async (req, res) => {
+  const { submissionId } = req.body;
+
+  if (!submissionId) {
+    return res.status(400).json({ error: "Submission ID is required" });
+  }
+
+  try {
+    const template = await getTemplateBySubmissionId(con, { submissionId });
+    if (template.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "Template not found for the given submission ID" });
+    }
+    res.json({ template });
+  } catch (error) {
+    console.error("Error fetching template:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});

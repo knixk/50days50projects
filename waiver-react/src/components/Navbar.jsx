@@ -3,7 +3,7 @@ import React from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   Box,
@@ -32,7 +32,11 @@ import { MyContext } from "../App";
 function Navbar() {
   const myState = useContext(MyContext);
   const { handleDownload } = myState;
+  const navigate = useNavigate();
+
   // console.log(myState);
+  let location = useLocation();
+  console.log(location.pathname);
 
   return (
     <nav className="nav">
@@ -44,24 +48,30 @@ function Navbar() {
       </div>
 
       <div className="btns__container">
-        <Button
-          variant="contained"
-          type="submit"
-          id="download__btn"
-          onClick={handleDownload}
-        >
-          Back
-        </Button>
+        {location.pathname != "/" && (
+          <Button
+            variant="contained"
+            type="submit"
+            id="download__btn"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            Back
+          </Button>
+        )}
 
-        <Button
-          variant="contained"
-          type="submit"
-          fullWidth
-          id="download__btn"
-          onClick={handleDownload}
-        >
-          Download
-        </Button>
+        {location.pathname == "/view-form" && (
+          <Button
+            variant="contained"
+            type="submit"
+            fullWidth
+            id="download__btn"
+            onClick={handleDownload}
+          >
+            Download
+          </Button>
+        )}
       </div>
     </nav>
   );

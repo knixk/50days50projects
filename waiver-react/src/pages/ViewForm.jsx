@@ -187,6 +187,23 @@ const ViewForm = () => {
   };
 
   useEffect(() => {
+    const fetchTemplateFromSID = async (submissionId) => {
+      const payload = {
+        submissionId: 1,
+      };
+
+      try {
+        const response = await axios.post(`/template-from-sid`, payload);
+        console.log("Template Data:", response.data);
+        return response.data;
+      } catch (error) {
+        console.error(
+          "Error fetching template:",
+          error.response?.data || error.message
+        );
+      }
+    };
+
     const getTemplateIdFromCenterID = async (id) => {
       let ans = null;
       const templates = "http://localhost:5050/template-id-from-center";
@@ -265,6 +282,8 @@ const ViewForm = () => {
 
     setFormData(temp);
     setLoading(false);
+
+    fetchTemplateFromSID();
   }, []);
 
   return (

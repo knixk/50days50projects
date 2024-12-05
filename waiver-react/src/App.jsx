@@ -33,6 +33,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [templateId, setTemplateId] = useState();
   const [submissionID, setSubmissionID] = useState();
+  const [submissions, setSubmissions] = useState();
 
   const handleDownload = async () => {
     console.log("i was clicked");
@@ -94,6 +95,8 @@ function App() {
         handleDownload,
         submissionID,
         setSubmissionID,
+        submissions,
+        setSubmissions,
       }}
     >
       <Router>

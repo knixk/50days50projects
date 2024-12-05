@@ -20,7 +20,7 @@ import { MyContext } from "../App";
 
 function Search() {
   const myState = useContext(MyContext);
-  const { submissionID, setSubmissionID } = myState;
+  const { submissionID, setSubmissionID, setSubmissions } = myState;
 
   const [input, setInput] = useState("");
   const [params, setParams] = useState("search");
@@ -69,7 +69,9 @@ function Search() {
       toast("No data found.");
     }
 
+    console.log(res.data);
     setData(res.data);
+    setSubmissions(res.data);
   };
 
   const handleChange = (e) => {
@@ -178,14 +180,16 @@ function Search() {
         <Box mt={4}>
           {data && data.length > 0 ? (
             <Grid container spacing={3}>
-              {data.map((i) => (
-                <Grid item xs={12} key={i.id}>
-                  <Paper elevation={2} sx={{ p: 3 }}>
-                    <Typography variant="h6">Name: {i.name}</Typography>
-                    <Typography>Mobile Number: {i.mobile_number}</Typography>
-                    <Typography>Email: {i.email}</Typography>
-                    <Typography>Submission ID: {i.id}</Typography>
-                    {/* <Button
+              {data.map((i) => {
+                console.log(JSON.parse(i.submission_data));
+                return (
+                  <Grid item xs={12} key={i.id}>
+                    <Paper elevation={2} sx={{ p: 3 }}>
+                      <Typography variant="h6">Name: {i.name}</Typography>
+                      <Typography>Mobile Number: {i.mobile_number}</Typography>
+                      <Typography>Email: {i.email}</Typography>
+                      <Typography>Submission ID: {i.id}</Typography>
+                      {/* <Button
                       variant="contained"
                       color="primary"
                       sx={{ mt: 2 }}
@@ -193,24 +197,25 @@ function Search() {
                     >
                       Download
                     </Button> */}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      sx={{ mt: 2, ml: 2 }}
-                      onClick={() => {
-                        setSubmissionID(i.id);
-                        navigate("/view-form", {
-                          state: {
-                            submission_id: i.id,
-                          },
-                        });
-                      }}
-                    >
-                      View
-                    </Button>
-                  </Paper>
-                </Grid>
-              ))}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{ mt: 2, ml: 2 }}
+                        onClick={() => {
+                          setSubmissionID(i.id);
+                          navigate("/view-form", {
+                            state: {
+                              submission_id: i.id,
+                            },
+                          });
+                        }}
+                      >
+                        View
+                      </Button>
+                    </Paper>
+                  </Grid>
+                );
+              })}
             </Grid>
           ) : (
             <Typography variant="body1" color="textSecondary">
