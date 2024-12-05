@@ -242,7 +242,6 @@ const Form = () => {
               component="h1"
               gutterBottom
               align="center"
-              // fontWeight="bold"
               color="black"
               marginTop={2}
               letterSpacing={1.5}
@@ -490,7 +489,6 @@ const Form = () => {
                 ))}
                 <Button
                   variant="outlined"
-                  // startIcon={<AddIcon />}
                   onClick={addParticipant}
                   sx={{ mt: 2 }}
                 >

@@ -1,29 +1,6 @@
 import React from "react";
-
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-
 import { useLocation, useNavigate } from "react-router-dom";
-
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  Paper,
-  Grid,
-  IconButton,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  TextareaAutosize,
-} from "@mui/material";
-
-const logo = "https://dypdvfcjkqkg2.cloudfront.net/large/5862799-1989.jpg";
+import { Button } from "@mui/material";
 import formIcon from "../assets/contact-form.png";
 
 import { useContext } from "react";
@@ -34,13 +11,10 @@ function Navbar() {
   const { handleDownload } = myState;
   const navigate = useNavigate();
 
-  // console.log(myState);
   let location = useLocation();
 
   return (
     <nav className="nav">
-      {/* <img className="company__logo" src={logo} alt="" /> */}
-
       <div className="waiver__logo">
         <img className="form__icon" src={formIcon} alt="form-icon" />
         <p>Waiver form</p>

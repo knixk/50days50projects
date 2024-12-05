@@ -1,9 +1,6 @@
-import { useState, useEffect } from "react";
-import data from "../template_config.json";
-
+import { useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-
 import Form from "./pages/Form";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
@@ -18,6 +15,8 @@ export const MyContext = createContext();
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
+// context api allows us to use state from one place in every component, which is very handy
+
 function App() {
   const [sign, setSign] = useState(null);
   const [participants, setParticipants] = useState([]);
@@ -26,7 +25,6 @@ function App() {
   const [questions, setQuestions] = useState(null);
   const [extraFields, setExtraFields] = useState();
   const [disabled, setDisabled] = useState(false);
-  const queryParameters = new URLSearchParams(window.location.search);
   const [displayForm, setDisplayForm] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [loading, setLoading] = useState(true);
@@ -100,7 +98,6 @@ function App() {
       }}
     >
       <Router>
-        {/* nav here */}
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -108,7 +105,6 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/view-form" element={<ViewForm />} />
         </Routes>
-        {/* <Footer /> */}
         <Footer />
       </Router>
     </MyContext.Provider>

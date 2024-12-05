@@ -1,23 +1,16 @@
-import React, { useState, useEffect } from "react";
-import SignatureCanvas from "react-signature-canvas";
-import { nanoid } from "nanoid";
+import { useEffect } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 
-// contains submissions data, will add real later
+// contains dummy submissions data
 // import temp from "./Temp.json";
 
-// contains the template
-import config from "./config.json";
-
-// data we will get from submission id
-// config we will get from template id,
+// contains the dummy template
+// import config from "./config.json";
 
 // get the template id from submissions
 
-const { template_config, template_name, signature_data } = config;
+// const { template_config, template_name, signature_data } = config;
 
 import { useContext } from "react";
 import { MyContext } from "../App";
@@ -33,19 +26,15 @@ import {
   IconButton,
   Select,
   MenuItem,
-  InputLabel,
   FormControl,
   RadioGroup,
   FormControlLabel,
   Radio,
-  TextareaAutosize,
 } from "@mui/material";
 
 import deleteIcon from "../assets/delete.png";
 
 const ViewForm = () => {
-  // get sign and set to it from submissions alr?
-
   const { state } = useLocation();
 
   const myState = useContext(MyContext);
@@ -149,14 +138,6 @@ const ViewForm = () => {
       }
     };
 
-    const asyncFnStitch = async () => {
-      const data =
-        centerParams && (await getTemplateIdFromCenterID(centerParams));
-      data && (await fetchTemplate(data));
-    };
-
-    // asyncFnStitch();
-
     const fetchTemplateFromSID = async (submissionId) => {
       const templatefromSIDURL = "http://localhost:5050/template-from-sid";
       try {
@@ -218,7 +199,8 @@ const ViewForm = () => {
                   label="Name"
                   margin="normal"
                   required
-                  onChange={handleChange} value={formData["fixed__name"]}
+                  onChange={handleChange}
+                  value={formData["fixed__name"]}
                 />
                 <TextField
                   fullWidth
@@ -226,7 +208,8 @@ const ViewForm = () => {
                   margin="normal"
                   required
                   type="email"
-                  onChange={handleChange} value={formData["fixed__email"]}
+                  onChange={handleChange}
+                  value={formData["fixed__email"]}
                 />
                 <TextField
                   fullWidth
@@ -234,7 +217,8 @@ const ViewForm = () => {
                   margin="normal"
                   required
                   type="tel"
-                  onChange={handleChange} value={formData["fixed__number"]}
+                  onChange={handleChange}
+                  value={formData["fixed__number"]}
                 />
                 {questions &&
                   questions.map((question) => (
@@ -263,14 +247,19 @@ const ViewForm = () => {
                           <Typography>{question.label}</Typography>
 
                           <Select
-                            onChange={handleChange} value={formData[question.question_id] || ""}
+                            onChange={handleChange}
+                            value={formData[question.question_id] || ""}
                             displayEmpty
                           >
                             <MenuItem onChange={handleChange} value="" disabled>
                               Choose
                             </MenuItem>
                             {question.values.map((option) => (
-                              <MenuItem key={option} onChange={handleChange} value={option}>
+                              <MenuItem
+                                key={option}
+                                onChange={handleChange}
+                                value={option}
+                              >
                                 {option}
                               </MenuItem>
                             ))}
@@ -286,7 +275,8 @@ const ViewForm = () => {
                             {question.values.map((option) => (
                               <FormControlLabel
                                 key={option}
-                                onChange={handleChange} value={option}
+                                onChange={handleChange}
+                                value={option}
                                 control={<Radio />}
                                 label={option}
                               />
@@ -312,7 +302,8 @@ const ViewForm = () => {
                             rows={question.rows || 4}
                             variant="outlined"
                             fullWidth
-                            onChange={handleChange} value={formData[question.question_id] || ""}
+                            onChange={handleChange}
+                            value={formData[question.question_id] || ""}
                             placeholder={
                               question.placeholder || "Enter your response"
                             }
@@ -338,7 +329,8 @@ const ViewForm = () => {
                             type="date"
                             variant="outlined"
                             fullWidth
-                            onChange={handleChange} value={formData[question.question_id] || ""}
+                            onChange={handleChange}
+                            value={formData[question.question_id] || ""}
                             sx={{
                               mt: 2,
                               ...question.customDateStyles,
@@ -362,7 +354,8 @@ const ViewForm = () => {
                             <input
                               type="file"
                               hidden
-                              onChange={handleChange} value={formData[question.id] || ""}
+                              onChange={handleChange}
+                              value={formData[question.id] || ""}
                             />
                           </Button>
                           {formData[question.question_id] && (
@@ -393,7 +386,8 @@ const ViewForm = () => {
                               fullWidth
                               label={field.label}
                               type={field.type}
-                              onChange={handleChange} value={participant[field.label] || ""} // Ensure `label` matches participant keys
+                              onChange={handleChange}
+                              value={participant[field.label] || ""} // Ensure `label` matches participant keys
                             />
                           </Grid>
                         );
