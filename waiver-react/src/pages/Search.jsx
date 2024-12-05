@@ -51,13 +51,15 @@ function Search() {
 
       return response.data;
     } catch (error) {
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      );
-
       if (error.status == 403) {
         toast.error("You're not authorized.");
+      } else {
+        toast.error("Data not found...");
+
+        console.error(
+          "Error:",
+          error.response ? error.response.data : error.message
+        );
       }
     }
   };
@@ -70,7 +72,6 @@ function Search() {
     const res = await getSubmissions(data);
 
     if (!res) {
-      toast("No data found...");
       console.error("Error fetching data..");
       return;
     }

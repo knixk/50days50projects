@@ -89,6 +89,8 @@ const ViewForm = () => {
 
   const handleSubmit = async (e) => {};
 
+  const handleInputChange = async (e) => {};
+
   useEffect(() => {
     const getTemplateIdFromCenterID = async (id) => {
       let ans = null;
@@ -245,6 +247,29 @@ const ViewForm = () => {
 
                       {question.image && (
                         <img className="question__image" src={question.image} />
+                      )}
+
+                      {question.input_type === "text" && question.label && (
+                        <FormControl component="fieldset" sx={{ mb: 2 }}>
+                          <Typography>{question.label}</Typography>
+                          <TextField
+                            type="text"
+                            variant="outlined"
+                            fullWidth
+                            value={formData[question.question_id] || ""}
+                            onChange={(e) =>
+                              handleInputChange(
+                                question.question_id,
+                                e.target.value
+                              )
+                            }
+                            placeholder={
+                              question.input_placeholder ||
+                              "Enter your response"
+                            }
+                            sx={{ mt: 2, ...question.customInputStyles }}
+                          />
+                        </FormControl>
                       )}
 
                       {question.input_type === "dropdown" && (
