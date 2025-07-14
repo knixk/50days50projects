@@ -21,6 +21,8 @@ function showError(input, message) {
   we do not need to specify which small tag it is..
   */
 
+  //   console.log("im message", message);
+
   const small = formControl.querySelector("small");
   small.innerText = message;
 }
@@ -41,6 +43,19 @@ function isValidEmail(email) {
     );
 }
 
+function checkRequired(inputArr) {
+  inputArr.forEach(function (input) {
+    // console.log(input.value);
+    if (input.value.trim() === "") {
+      //   console.log(input.id);
+      //   console.log("showing err");
+      showError(input, `${input.id} is required`);
+    } else {
+      showSuccess(input);
+    }
+  });
+}
+
 // Event listeners
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -48,6 +63,8 @@ form.addEventListener("submit", (e) => {
   //   console.log(e);
   //
   //   console.log(username.value);
+
+  checkRequired([username, email, password, password2]);
 
   if (username.value === "") {
     showError(username, "Username is required");
