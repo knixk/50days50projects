@@ -87,7 +87,8 @@ h2 {
 the message (small tag) will be visible..
 */
 .form-control.error small {
-    /* visibility: visible; */
+    /* if u unchek this, it won't work */
+    visibility: visible;
 }
 
 

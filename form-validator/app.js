@@ -20,13 +20,26 @@ function showError(input, message) {
   since we are under the scope of this formControl,
   we do not need to specify which small tag it is..
   */
- 
+
   const small = formControl.querySelector("small");
   small.innerText = message;
 }
 
 // show input success message
-function showSuccess() {}
+function showSuccess(input) {
+  const formControl = input.parentElement;
+  // we added this classname manually here..
+  //   this will turn it to green!!
+  formControl.className = "form-control success";
+}
+
+function isValidEmail(email) {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+}
 
 // Event listeners
 form.addEventListener("submit", (e) => {
@@ -40,5 +53,25 @@ form.addEventListener("submit", (e) => {
     showError(username, "Username is required");
   } else {
     showSuccess(username);
+  }
+
+  if (email.value === "") {
+    showError(email, "Email is required");
+  } else if (!isValidEmail(email.value)) {
+    showError(email, "Email isn't valid");
+  } else {
+    showSuccess(email);
+  }
+
+  if (password.value === "") {
+    showError(password, "Email is required");
+  } else {
+    showSuccess(password);
+  }
+
+  if (password2.value === "") {
+    showError(password2, "Email is required");
+  } else {
+    showSuccess(password2);
   }
 });
