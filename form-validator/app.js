@@ -92,3 +92,8 @@ form.addEventListener("submit", (e) => {
     showSuccess(password2);
   }
 });
+
+
+
+// we will get back to this,
+// this was good
