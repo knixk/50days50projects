@@ -1,0 +1,15 @@
+{
+    "email_template_id": "011d98c1-400f-430c-91ba-081865895473",
+    "template_name": "coupon code",
+    "description": "",
+    "subject": "",
+    "preheader": "",
+    "body": "<html>\n  <body style=\"font-family: sans-serif; background-color: #f9f9f9; padding: 20px;\">\n    <table style=\"max-width: 600px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 10px;\">\n      <tr>\n        <td>\n          <h2 style=\"color: #333333;\">Hi {{first_name | default: \"there\"}},</h2>\n          <p style=\"font-size: 16px; color: #555555;\">\n            We noticed you haven’t been around for a while, and we miss you! 👀  \n            As a thank-you for being part of our community, here’s a special <strong>20% off</strong> just for you.\n          </p>\n          <p style=\"font-size: 16px; color: #555555;\">\n            Use code <strong>COMEBACK20</strong> at checkout — but hurry, this offer expires in 3 days.\n          </p>\n          <div style=\"text-align: center; margin: 30px 0;\">\n            <a href=\"https://yourstore.com/redeem?user_id={{user_id}}\" \n               style=\"background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px;\">\n              Redeem My 20% Off\n            </a>\n          </div>\n          <p style=\"font-size: 14px; color: #999999;\">\n            If you're having trouble clicking the button, just copy and paste this link into your browser:<br>\n            https://yourstore.com/redeem?user_id={{user_id}}\n          </p>\n        </td>\n      </tr>\n    </table>\n  </body>\n</html>",
+    "plaintext_body": null,
+    "should_inline_css": true,
+    "tags": [],
+    "created_at": "2025-07-15T09:14:25.253+00:00",
+    "updated_at": "2025-07-15T09:14:25.253+00:00",
+    "amp_body": "",
+    "message": "success"
+}
