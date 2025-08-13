@@ -1,0 +1,167 @@
+{
+    "segments": [
+        {
+            "id": "9296a26c-e66e-4570-8d6d-7cf9d4a04c0f",
+            "name": "Lapsed Users - 7 days",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "8fea6c97-ebb4-4455-81d7-a60f9dbbbd97",
+            "name": "Lapsed Users - 30 days",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "d4d90961-dc46-40b0-851f-3a27047a2013",
+            "name": "User Onboarding - First Week",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "08eaadd5-ff1a-42e9-b3d7-32ce6002c1be",
+            "name": "User Onboarding - Second Week",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "e5390c6e-e1c3-4f4f-8393-ca8506021b39",
+            "name": "Engaged Recent Users",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "61818203-8221-4042-90bc-511cf5435aa1",
+            "name": "All Users (Test - Android)",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "763ba166-bc69-44ba-be92-6318a32b6338",
+            "name": "All Users (Test - iOS)",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "c85cface-5cdb-449f-bce9-b33f1dd38958",
+            "name": "All Users (Test - Web)",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "ca25ba75-634e-4674-9d34-ebb189227410",
+            "name": "All Users (Test - Kindle)",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "fad12f47-b82b-44e1-b9a0-8698b15425a6",
+            "name": "All Users (Srijan_test apps - tvOS)",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "bb7ad929-86c3-40ef-8dec-1263dd6c349c",
+            "name": "test",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "743a7b45-1d1c-4100-9580-44383c95a9bb",
+            "name": "Active Email Subscriber with a Loyalty Account ( Has opened the email in last 26 weeks)",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "b0e000ae-3f1a-4663-9917-57f1ca0bdabc",
+            "name": "All Shopify Subscriber without a Loyal Account",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "570127a7-e04e-48a8-978b-7dbca765a573",
+            "name": "Ordered 2+ times in past 7 days",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "f6c64414-3b1d-4dc4-9607-0cd9ad952f87",
+            "name": "All Users (Landing Page - Landing Page)",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "08423351-880d-4d65-8fd2-851d151943e3",
+            "name": "Suppression_made_purchase_last_30 days",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "c0352ac2-901b-4f04-9f6d-ad80c7b126c6",
+            "name": "Made one purchase but hasn't return last 30 days",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "766b43fa-6cf7-4f5b-ab43-218902005574",
+            "name": "All Users (Kanishk's Web App - Web)",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "273bec81-62da-4931-8032-a27b1fd51485",
+            "name": "test_kan",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "3917e430-e344-4e02-b777-2fd7495bcfa7",
+            "name": "Last seen 30 days ago",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "09433015-d4f9-4f0c-bfda-3182e5d1b006",
+            "name": "Birthday is Today",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "2680c354-36e1-406f-a4e5-ae22f60b99a9",
+            "name": "Added to cart but didn't purchase",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "99ab7150-e6a9-463d-9525-f1053d446442",
+            "name": "Recently active",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "fff65984-956e-4ee9-855a-86bf67ec92bd",
+            "name": "Users with high churn risk",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "02b7beee-216b-4a90-9457-4dd686c01204",
+            "name": "High Avg Order Value",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "ec75cf0c-2b08-4454-99ce-1a0e249c9ce0",
+            "name": "daily active",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        },
+        {
+            "id": "684f840f-1290-4914-a9bb-8ee6943218ac",
+            "name": "Churn Risk Users (via Snowflake)",
+            "analytics_tracking_enabled": false,
+            "tags": []
+        }
+    ],
+    "message": "success"
+}

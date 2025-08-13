@@ -1,0 +1,65 @@
+{
+    "created_at": "2025-07-07T06:41:14+00:00",
+    "updated_at": "2025-07-07T09:10:20+00:00",
+    "name": "in app push campaign test",
+    "description": "",
+    "archived": false,
+    "enabled": false,
+    "draft": true,
+    "has_post_launch_draft": false,
+    "schedule_type": "action_based",
+    "channels": [
+        "trigger_in_app_message"
+    ],
+    "first_sent": null,
+    "last_sent": null,
+    "tags": [],
+    "teams": [],
+    "messages": {
+        "fd3125c9-60f6-4965-aeb0-eb67a8d04f79": {
+            "channel": "trigger_in_app_message",
+            "name": "Variant 1",
+            "message": {
+                "type": "Survey",
+                "data": {
+                    "pages": [
+                        {
+                            "header": {
+                                "text": "test"
+                            },
+                            "choices": [
+                                {
+                                    "choice_id": "17338e22-3291-4d1a-bf7c-540a7a328977",
+                                    "text": "test",
+                                    "custom_attribute_key": "name",
+                                    "custom_attribute_value": "",
+                                    "deleted": false
+                                },
+                                {
+                                    "choice_id": "36986ebd-8a17-4f20-aec9-e83943aef86d",
+                                    "text": "test",
+                                    "custom_attribute_key": "name",
+                                    "custom_attribute_value": "",
+                                    "deleted": false
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "44a21afc-2119-46d3-9605-f2b867c2450d": {
+            "channel": "trigger_in_app_message",
+            "name": "Control Group",
+            "type": "control"
+        }
+    },
+    "conversion_behaviors": [
+        {
+            "window": 259200,
+            "type": "Starts Session",
+            "app_ids": null
+        }
+    ],
+    "message": "success"
+}
