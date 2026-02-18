@@ -1,0 +1,10 @@
+{% connected_content https://www.stuff.co.nz/api/v1.0/stuff/page?path=home :save topstory :cache_max_age 300 %} 
+{% if topstory == Nil %} {% abort_message() %} 
+{% endif %} 
+{%- assign defcon_on = false -%} 
+{%- for frame in topstory.page.frames -%} 
+{%- if frame.moduleTitle == "Defcon" -%} 
+{%- assign defcon_on = true -%} 
+{%- endif -%} 
+{%- endfor -%} 
+{% assign top-stories_position = 0 %}{% for frame in topstory.page.frames %}{% if frame.moduleTitle == "Defcon" %}{% assign defcon_position = forloop.index0 %}{% endif %}{% endfor %} {% assign top-stories_position = 0 %}{% for frame in topstory.page.frames %}{% if frame.moduleTitle == "Stuff homepage top stories" %}{% assign top-stories_position = forloop.index0 %}{% endif %}{% endfor %} {%- if defcon_on -%} {{ topstory.data[defcon_position].stories[0].teaser.title }} {% else %} {{ topstory.data[top-stories_position].stories[0].teaser.title }} {% endif%}
