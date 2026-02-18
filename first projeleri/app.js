@@ -30,7 +30,7 @@ window.onload = function () {
   ctx.beginPath(); // start something
   ctx.strokeStyle = "skyblue"; // color of stroke
   ctx.moveTo(170, 90); // start point
-  ctx.lineTo(100, 100); // end point
+  ctx.lineTo(100, 150); // end point
   ctx.stroke(); // the actual draw fn
 
   //   and so on
