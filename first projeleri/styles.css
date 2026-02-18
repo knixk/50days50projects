@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+    border: 1px solid plum;
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+
+  #hello-world-canvas {
+    display: block;
+    width: 600px;
+    height: 300px;
+  }
