@@ -23,10 +23,16 @@ window.addEventListener("load", function () {
   class Particle {}
 
   class Player {
+
     constructor(game) {
       this.game = game;
       this.height = PLAYER_HEIGHT;
       this.width = PLAYER_WIDTH;
+      this.x = 20;
+      this.y = 100;
+      this.speedY = 0;
+      
+
     }
   }
 
