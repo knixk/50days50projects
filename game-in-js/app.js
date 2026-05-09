@@ -17,13 +17,10 @@ window.addEventListener("load", function () {
   //   defining the classes we're going to use extensively and makes our lives easier
 
   class InputHandler {}
-
   class Projectile {}
-
   class Particle {}
 
   class Player {
-
     constructor(game) {
       this.game = game;
       this.height = PLAYER_HEIGHT;
@@ -31,18 +28,18 @@ window.addEventListener("load", function () {
       this.x = 20;
       this.y = 100;
       this.speedY = 0;
-      
-
+    }
+    update() {
+      this.y += this.speedY;
+    }
+    draw(context) {
+      // drawing our player
+      context.fillReact(this.x, this.y, this.width, this.height);
     }
   }
-
   class Enemy {}
-
   class Layer {}
-
   class Background {}
-
   class UI {}
-
   class Game {}
 });
