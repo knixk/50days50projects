@@ -1,8 +1,5 @@
 /* */
-
-/*
-we an onload function so that we know our window has been succesfully painted onto the browser, then we perform the actions we intend to.
-*/
+// we an onload function so that we know our window has been succesfully painted onto the browser, then we perform the actions we intend to.
 
 window.onload = function () {
   // defining our canvas
