@@ -41,5 +41,23 @@ window.addEventListener("load", function () {
   class Layer {}
   class Background {}
   class UI {}
-  class Game {}
+  class Game {
+    constructor(height, width) {
+      this.height = height;
+      this.width = width;
+      this.player = new Player(this);
+      // q. what does this this keyword do?
+      /*
+      so basically, i believe, it will give the player the current instance of the object of game?
+      */
+    }
+
+    update() {
+      this.player.update(); // calling the player's update method
+    }
+
+    draw(context) {
+      this.player.draw(context);
+    }
+  }
 });
