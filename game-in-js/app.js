@@ -41,6 +41,7 @@ window.addEventListener("load", function () {
   class Layer {}
   class Background {}
   class UI {}
+
   class Game {
     constructor(height, width) {
       this.height = height;
@@ -60,4 +61,17 @@ window.addEventListener("load", function () {
       this.player.draw(context);
     }
   }
+
+  // Take note that now we're using these classes we defined in conjunction
+  const game = new Game(canvas.height, canvas.width);
+
+  function animate() {
+    // update the game frame by frame is it?
+
+    game.update();
+    game.animate();
+    requestAnimationFrame();
+  }
+
+  animate(); // we called this only once
 });
